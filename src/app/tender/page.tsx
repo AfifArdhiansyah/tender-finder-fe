@@ -4,7 +4,7 @@ import TenderData from "@/constants/dump-data"
 
 export default function Tender(){
     const tableHeads = ["Nama Tender", "Pemenang Tender", "Alamat Pemenang", "Harga Tender (Rp.)", "Status"]
-    const tableColumns = ["nama", "nama_pemenang", "alamat_pemenang", "nilai_teder", "status"]
+    const tableColumns = ["nama", "nama_pemenang", "alamat_pemenang", "nilai_tender", "status"]
     const tableDatas = TenderData
     return(
         <DashboardLayout sideNavIndex={1}>
