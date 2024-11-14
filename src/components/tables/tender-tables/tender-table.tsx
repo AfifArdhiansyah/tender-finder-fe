@@ -2,8 +2,8 @@
 
 import Table from "../table"
 import StatusAction from "./status-action"
-import ChooseAOModal from "@/components/items/modals/choose-ao-modal"
-import TenderInfoModal from "@/components/items/modals/tender-info-modal"
+import ChooseAOModal from "@/components/items/modals/ao-modals/choose-ao-modal"
+import TenderInfoModal from "@/components/items/modals/tender-modals/tender-info-modal"
 import { useState } from "react"
 
 interface TenderTableProps{

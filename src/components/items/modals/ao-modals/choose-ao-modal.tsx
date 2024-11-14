@@ -1,4 +1,4 @@
-import Modal from "./modal"
+import Modal from "../modal"
 import AOListTable from "@/components/tables/ao-tables/ao-list-table"
 import AOListData from "@/constants/ao-list-dump-data"
 

@@ -1,11 +1,11 @@
 const MessageDatas = [
     {
-        "message": "Terdapat pemenang tender baru di daerah anda. Nama tender adalah 'Pembangunan Bank Sampah Induk (DAK)'. Lakukan kerahkan Account Officer anda untuk melakukan penawaran produk bank bjb",
+        "message": "Terdapat pemenang tender baru di daerah anda. Nama tender adalah 'Pembangunan Bank Sampah Induk (DAK)'. Kerahkan Account Officer anda untuk melakukan penawaran produk bank bjb",
         "isRead": false,
         "datetime": "2024-11-14 12:00:00"
     },
     {
-        "message": "Terdapat pemenang tender baru di daerah anda. Nama tender adalah 'Pengembangan Ekonomi Kawasan Situ Bagendit (BKK Jabar)'. Lakukan kerahkan Account Officer anda untuk melakukan penawaran produk bank bjb",
+        "message": "Terdapat pemenang tender baru di daerah anda. Nama tender adalah 'Pengembangan Ekonomi Kawasan Situ Bagendit (BKK Jabar)'. Kerahkan Account Officer anda untuk melakukan penawaran produk bank bjb",
         "isRead": false,
         "datetime": "2024-11-14 11:00:00"
     },
