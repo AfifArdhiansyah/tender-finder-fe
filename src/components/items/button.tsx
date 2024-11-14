@@ -19,7 +19,7 @@ export default function Button(props: ButtonProps){
             case "success":
                 return "bg-green-100 text-green-700" 
             case "primary":
-                return "bg-blue-100 text-blue-700" 
+                return "bg-blue-600 text-white" 
             default:
                 return "bg-gray-100 text-gray-700"
         }
@@ -38,8 +38,12 @@ export default function Button(props: ButtonProps){
         }
     }
 
+    function buttonClicked(){
+        props.onClick()
+    }
+
     return(
-        <button className={"rounded-md px-3 py-1 flex items-center h-fit " + switchButtonType(props.type) + " " + switchButtonSize(props.size)}>
+        <button className={"rounded-md px-3 py-1 flex items-center h-fit " + switchButtonType(props.type) + " " + switchButtonSize(props.size)} onClick={buttonClicked}>
             {props.children}
         </button>
     )
