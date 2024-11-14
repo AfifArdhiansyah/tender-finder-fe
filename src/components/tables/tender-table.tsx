@@ -3,6 +3,7 @@
 import Table from "./table"
 import StatusAction from "./status-action"
 import ChooseAOModal from "../items/modals/choose-ao-modal"
+import TenderInfoModal from "../items/modals/tender-info-modal"
 import { useState } from "react"
 
 interface TenderTableProps{
@@ -12,17 +13,26 @@ interface TenderTableProps{
 }
 
 export default function TenderTable(props: TenderTableProps){
-    const [isOpenModal, setIsOpenModal] = useState(false)
-    const [selectedTender, setSelectedTender] = useState("")
-    const showModal = () => {
-        setIsOpenModal(true);
+    const [selectedTender, setSelectedTender] = useState({})
+    const [selectedTenderName, setSelectedTenderName] = useState("")
+    const [isOpenModalAO, setIsOpenModalAO] = useState(false)
+    const showModalAO = () => {
+        setIsOpenModalAO(true);
     };
-    const closeModal = () => {
-        setIsOpenModal(false);
+    const closeModalAO = () => {
+        setIsOpenModalAO(false);
     };
-    const onSetTenderSelect = (name:string, id: string) =>{
-        setSelectedTender(name + " - " + id)
+    const onSetTenderSelect = (name:string, id: string, data:any) =>{
+        setSelectedTender(data)
+        setSelectedTenderName(name + " - " + id)
     }
+    const [isOpenModalTenderDetail, setIsOpenModalTenderDetail] = useState(false)
+    const showModalTenderDetail = () => {
+        setIsOpenModalTenderDetail(true);
+    };
+    const closeModalTenderDetail = () => {
+        setIsOpenModalTenderDetail(false);
+    };
     return(
         <>
             <Table headers={props.headers} columns={props.columns} datas={props.datas}>
@@ -31,7 +41,9 @@ export default function TenderTable(props: TenderTableProps){
                         {props.columns.map((col,j)=>(
                             <td key={i.toString() + j.toString()} className="px-2 py-2 text-sm">
                                 {col == "status" && (
-                                    <StatusAction status={data[col]} tenderId={data["id"]} tenderName={data["nama"]} isOpenModal={isOpenModal} showModal={showModal} closeModal={closeModal} setSelectedTender={onSetTenderSelect}/>
+                                    <div className="flex justify-center">
+                                        <StatusAction status={data[col]} tenderId={data["id"]} tenderName={data["nama"]} dataTender={data} isOpenModalAO={isOpenModalAO} isOpenModalTenderDetail={isOpenModalTenderDetail} showModalAO={showModalAO} closeModalAO={closeModalAO} setSelectedTender={onSetTenderSelect} showModalTenderDetail={showModalTenderDetail} closeModalTenderDetail={closeModalTenderDetail}/>
+                                    </div>
                                 )}
                                 {
                                     col != "status" && (
@@ -45,7 +57,10 @@ export default function TenderTable(props: TenderTableProps){
             </Table>
             {/* Modal */}
             {
-                isOpenModal ? <ChooseAOModal open={isOpenModal} onCancel={closeModal} tenderName={selectedTender}/> : null
+                isOpenModalAO ? <ChooseAOModal open={isOpenModalAO} onCancel={closeModalAO} tenderName={selectedTenderName}/> : null
+            }
+            {
+                isOpenModalTenderDetail ? <TenderInfoModal open={isOpenModalTenderDetail} onCancel={closeModalTenderDetail} dataTender={selectedTender}/> : null
             }
         </>
     )

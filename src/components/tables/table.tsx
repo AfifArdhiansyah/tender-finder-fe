@@ -10,7 +10,7 @@ interface TableProps{
 export default function Table(props: TableProps){
 
     return (
-        <table className="table-fixed w-full">
+        <table className="table-auto w-full">
             <thead className="rounded-lg bg-gray-100">
                 <tr>
                     {props.headers.map((head, i)=>(

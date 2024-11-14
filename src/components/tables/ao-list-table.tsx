@@ -13,16 +13,18 @@ export default function AOListTable(props: AOListTableProps){
             {props.datas.map((data,i)=>(
                 <tr key={"row-"+i}>
                     {props.columns.map((col,j)=>(
-                        <td key={i.toString() + j.toString()} className="px-2 py-2 text-sm">
+                        <td key={i.toString() + j.toString()} className={"px-2 py-2 text-sm"}>
                             {col == "status" && (
                                 data[col] == "aktif" ? (
-                                    <p className="text-green-600">Aktif</p>
+                                    <p className="text-green-600 text-center">Aktif</p>
                                 ) : (
-                                    <p className="text-red-600">Tidak Aktif</p>
+                                    <p className="text-red-600 text-center">Tidak Aktif</p>
                                 )
                             )}
                             {col == "action" && (
-                                <StatusAOAction status={data["status"]}/>
+                                <div className="flex justify-center">
+                                    <StatusAOAction status={data["status"]}/>
+                                </div>
                             )}
                             {
                                 !(col == "status" || col == "action") && (
