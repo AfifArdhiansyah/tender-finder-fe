@@ -1,4 +1,4 @@
-import Table from "./table"
+import Table from "../table"
 import StatusAOAction from "./status-ao-action"
 
 interface AOListTableProps{
