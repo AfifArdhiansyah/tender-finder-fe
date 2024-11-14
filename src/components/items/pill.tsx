@@ -9,15 +9,15 @@ interface PillProps {
 function switchPillType(type: string):string{
     switch(type){
         case "general":
-            return "bg-gray-200 text-gray-600"
+            return "bg-gray-100 text-gray-700"
         case "alert":
-            return "bg-yellow-200 text-yellow-600" 
+            return "bg-yellow-100 text-yellow-700" 
         case "danger":
-            return "bg-red-200 text-red-600" 
+            return "bg-red-100 text-red-700" 
         case "success":
-            return "bg-green-200 text-green-600" 
+            return "bg-green-100 text-green-700" 
         default:
-            return "bg-gray-200 text-gray-600"
+            return "bg-gray-100 text-gray-700"
     }
 }
 
