@@ -37,7 +37,7 @@ function switchPillSize(size: string):string{
 export default function Pill(pillProps : PillProps){
     
     return (
-        <div className={"rounded-full px-2 py-1 flex items-center h-fit " + switchPillType(pillProps.type) + " " + switchPillSize(pillProps.size)}>
+        <div className={"rounded-full px-3 py-1 flex items-center h-fit " + switchPillType(pillProps.type) + " " + switchPillSize(pillProps.size)}>
            {pillProps.children}
         </div>
     )

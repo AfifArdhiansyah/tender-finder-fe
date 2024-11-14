@@ -14,7 +14,7 @@ interface SidebarProps{
 export default function Sidebar(props: SidebarProps){
 
     return(
-        <div className="flex flex-col px-6 py-8 items-center gap-6">
+        <div className="flex flex-col px-10 py-8 items-center gap-6">
             <Image src={"/logo-bank-bjb.png"} width={110} height={200} alt='logo bank bjb' />
             <div className='flex justify-between w-full'>
                 <div className='flex gap-4'>
