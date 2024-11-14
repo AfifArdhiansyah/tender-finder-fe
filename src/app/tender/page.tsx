@@ -1,5 +1,5 @@
 import DashboardLayout from "@/layouts/dashboard-layout"
-import TenderTable from "@/components/tables/tender.table"
+import TenderTable from "@/components/tables/tender-table"
 import TenderData from "@/constants/dump-data"
 
 export default function Tender(){
