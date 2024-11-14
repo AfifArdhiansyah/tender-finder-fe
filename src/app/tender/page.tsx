@@ -1,5 +1,5 @@
 import DashboardLayout from "@/layouts/dashboard-layout"
-import Table from "@/components/tables/table"
+import TenderTable from "@/components/tables/tender.table"
 import TenderData from "@/constants/dump-data"
 
 export default function Tender(){
@@ -8,7 +8,7 @@ export default function Tender(){
     const tableDatas = TenderData
     return(
         <DashboardLayout sideNavIndex={1}>
-            <Table headers={tableHeads} columns={tableColumns} datas={tableDatas}/>
+            <TenderTable headers={tableHeads} columns={tableColumns} datas={tableDatas}/>
         </DashboardLayout>
         
     )
