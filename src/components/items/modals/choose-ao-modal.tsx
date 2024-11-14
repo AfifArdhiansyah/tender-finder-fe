@@ -1,4 +1,6 @@
 import Modal from "./modal"
+import AOListTable from "@/components/tables/ao-list-table"
+import AOListData from "@/constants/ao-list-dump-data"
 
 interface ChooseAOModalProps{
     tenderName: string,
@@ -11,10 +13,14 @@ export default function ChooseAOModal(props: ChooseAOModalProps){
         props.onCancel()
     }
 
+    const tableHeads = ["Nama", "NIP", "Status", "Action"]
+    const tableColumns = ["nama", "nip", "status", "action"]
+    const tableDatas = AOListData
+
     return(
         <Modal open={props.open} onCancel={onModalClose} title={"Pilih Account Officer"} subTitle={props.tenderName}>
-            <div>
-                <p>ini konteng</p>
+            <div className="w-full">
+                <AOListTable headers={tableHeads} columns={tableColumns} datas={tableDatas}/>
             </div>
         </Modal>
     )

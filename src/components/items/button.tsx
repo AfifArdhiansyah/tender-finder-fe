@@ -1,9 +1,11 @@
+'use client'
 import { ReactNode } from "react"
 
 interface ButtonProps{
-    type: "general" | "alert" | "danger" | "success" | "primary",
+    type: "general" | "alert" | "danger" | "success" | "primary" | "disable",
     size: "small" | "medium" | "large"
     onClick: Function,
+    disabled?: boolean,
     children?: ReactNode
 }
 
@@ -20,6 +22,8 @@ export default function Button(props: ButtonProps){
                 return "bg-green-100 text-green-700" 
             case "primary":
                 return "bg-blue-600 text-white" 
+            case "disable":
+                return "bg-gray-100 text-gray-300" 
             default:
                 return "bg-gray-100 text-gray-700"
         }
@@ -43,7 +47,7 @@ export default function Button(props: ButtonProps){
     }
 
     return(
-        <button className={"rounded-md px-3 py-1 flex items-center h-fit " + switchButtonType(props.type) + " " + switchButtonSize(props.size)} onClick={buttonClicked}>
+        <button className={"rounded-md px-3 py-1 flex items-center h-fit " + switchButtonType(props.type) + " " + switchButtonSize(props.size)} onClick={buttonClicked} disabled={props.disabled}>
             {props.children}
         </button>
     )
