@@ -37,7 +37,7 @@ export default function Modal(props: ModalProps){
                 </button>
               </div>
               {/*body*/}
-              <div className="relative p-6 flex-auto w-full">
+              <div className="relative p-6 flex-auto w-full overflow-x-auto">
                 {props.children}
               </div>
               {/*footer*/}
