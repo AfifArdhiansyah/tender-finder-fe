@@ -14,17 +14,17 @@ interface SidebarProps{
 export default function Sidebar(props: SidebarProps){
 
     return(
-        <div className="flex flex-col px-10 py-8 items-center gap-6">
-            <Image src={"/logo-bank-bjb.png"} width={110} height={200} alt='logo bank bjb' />
+        <div className="flex flex-col px-10 py-8 items-center gap-6 max-lg:px-3">
+            <Image src={"/logo-bank-bjb.png"} width={110} height={200} className='max-lg:w-[70px]' alt='logo bank bjb' />
             <div className='flex justify-between w-full'>
-                <div className='flex gap-4'>
+                <div className='flex gap-4 max-lg:flex-col max-lg:items-center'>
                     <Image src={"/manager.png"} width={50} height={50} className='rounded-full' alt='foto-profile' />
-                    <div className='flex flex-col gap-2'>
+                    <div className='flex flex-col gap-2 max-lg:items-center'>
                         <p className='font-bold'>Claudia</p>
                         <Pill type='general' size='small'>manager</Pill>
                     </div>
                 </div>
-                <ArrowToggle start='up' direction='y' />
+                <ArrowToggle className='max-lg:hidden' start='up' direction='y' />
             </div>
             <div className='h-[2px] w-full bg-gray-200'></div>
             <SidebarList>

@@ -37,7 +37,7 @@ export default function MessageTable(props: MessageTableProps){
                             <td key={i.toString() + j.toString()} className={"px-2 py-2 text-sm"}>
                                 {
                                     col == "message" && (
-                                        <MessageAction dataMessage={data} dataIndex={i} hoverBGColor="blue-300" hoverTextColor="white" onClick={onMessageSelected}>
+                                        <MessageAction className="flex justify-between items-center" dataMessage={data} dataIndex={i} hoverBGColor="blue-300" hoverTextColor="white" onClick={onMessageSelected}>
                                             <div className="w-[95%]">
                                                 <p className={"line-clamp-1 " + (data["isRead"] ? "text-gray-400":"text-black")}>{data["message"]}</p>
                                             </div>

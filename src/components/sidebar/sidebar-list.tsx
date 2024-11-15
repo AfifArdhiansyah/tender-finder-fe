@@ -6,7 +6,7 @@ interface SidebarListProps {
 
 export default function SidebarList(props: SidebarListProps) {
     return(
-        <div className="w-full flex flex-col gap-2">
+        <div className="w-full flex flex-col gap-2 items-center">
             {props.children}
         </div>
     )
