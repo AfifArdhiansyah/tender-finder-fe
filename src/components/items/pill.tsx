@@ -3,7 +3,8 @@ import { ReactNode } from "react"
 interface PillProps {
     type : "general" | "alert" | "danger" | "success",
     size : "large" | "medium" | "small"
-    children : ReactNode
+    className? : string,
+    children? : ReactNode
 }
 
 function switchPillType(type: string):string{
@@ -37,7 +38,7 @@ function switchPillSize(size: string):string{
 export default function Pill(pillProps : PillProps){
     
     return (
-        <div className={"rounded-full px-3 py-1 flex items-center h-fit " + switchPillType(pillProps.type) + " " + switchPillSize(pillProps.size)}>
+        <div className={"rounded-full px-3 py-1 flex items-center h-fit " + pillProps.className + " " + switchPillType(pillProps.type) + " " + switchPillSize(pillProps.size)}>
            {pillProps.children}
         </div>
     )

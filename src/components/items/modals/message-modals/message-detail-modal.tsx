@@ -13,7 +13,7 @@ export default function MessageDetailModal(props: MessageDetailModalProps){
 
     return(
         <Modal open={props.open} onCancel={onModalClose} title={"Message"}>
-            <table className="table-auto mb-4">
+            <table className="table-auto mb-4 max-w-[50vw] max-lg:max-w-[80vw]">
                 <tbody className="text-sm">
                     <tr>
                         <td className="py-2 font-bold">Pesan</td>

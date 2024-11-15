@@ -7,6 +7,7 @@ interface MessageActionInterface{
     hoverBGColor: string,
     hoverTextColor: string,
     onClick: Function,
+    className?: string,
     disabled?: boolean,
     children?: ReactNode
 }
@@ -16,7 +17,7 @@ export default function MessageAction(props: MessageActionInterface){
         props.onClick(props.dataIndex, props.dataMessage)
     }
     return (
-        <TransparentButton hoverBGColor="blue-600" hoverTextColor="white" onClick={onMessageClicked}>
+        <TransparentButton className={props.className} hoverBGColor="blue-600" hoverTextColor="white" onClick={onMessageClicked}>
             <div className="w-[95%]">
                 <p className={"line-clamp-1 " + (props.dataMessage["isRead"] ? "text-gray-400":"text-black")}>{props.dataMessage["message"]}</p>
             </div>
