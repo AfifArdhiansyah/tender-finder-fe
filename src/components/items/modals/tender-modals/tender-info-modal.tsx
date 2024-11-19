@@ -12,7 +12,7 @@ export default function TenderInfoModal(props: TenderInfoModalProps){
     }
 
     return(
-        <Modal open={props.open} onCancel={onModalClose} title={"Proogres Tender"}>
+        <Modal open={props.open} onCancel={onModalClose} title={"Progres Tender"}>
             <table className="table-auto mb-4">
                 <tbody className="text-sm">
                     <tr>

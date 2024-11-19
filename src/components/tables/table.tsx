@@ -14,7 +14,7 @@ export default function Table(props: TableProps){
             <thead className="rounded-lg bg-gray-100">
                 <tr>
                     {props.headers.map((head, i)=>(
-                        <th key={"head-"+i} className="px-2 py-2 text-sm min-w-[150px]">{head}</th>
+                        <th key={"head-"+i} className="px-2 py-2 text-sm max-md:min-w-[150px]">{head}</th>
                     ))}
                 </tr>
             </thead>
