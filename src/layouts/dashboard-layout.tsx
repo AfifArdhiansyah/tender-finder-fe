@@ -27,7 +27,7 @@ export default function DashboardLayout(layoutProps: LayoutProps){
                     <h2 className="font-bold text-lg max-md:text-md">{SidebarNavigator[indexList].name}</h2>
                 </div>
                 {/* Main Content */}
-                <div className="rounded-md bg-white mx-6 p-4 max-md:overflow-x-auto">
+                <div className="mx-6">
                     {layoutProps.children}
                 </div>
             </div>

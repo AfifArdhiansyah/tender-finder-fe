@@ -4,6 +4,7 @@ import DashboardLayout from "@/layouts/dashboard-layout"
 import TenderTable from "@/components/tables/tender-tables/tender-table"
 import TenderData from "@/constants/dump-data"
 import { useTenderProjects } from "@/hooks/useTenderProjects"
+import Paper from "@/components/frames/papes"
 
 export default function Tender(){
     // const tableHeads = ["Nama Tender", "Pemenang Tender", "Alamat Pemenang", "Harga Tender (Rp.)", "Status"]
@@ -19,15 +20,17 @@ export default function Tender(){
     
     return(
         <DashboardLayout sideNavIndex={1}>
-            {
-                loading ? (
-                    <div>Loading...</div>
-                ) : error ? (
-                    <div>Error: {error}</div>
-                ) : (
-                    <TenderTable headers={tableHeads} columns={tableColumns} datas={tableDatas}/>
-                )
-            }
+            <Paper className="mb-4 max-md:overflow-x-auto">
+                {
+                    loading ? (
+                        <div>Loading...</div>
+                    ) : error ? (
+                        <div>Error: {error}</div>
+                    ) : (
+                        <TenderTable headers={tableHeads} columns={tableColumns} datas={tableDatas}/>
+                    )
+                }
+            </Paper>
         </DashboardLayout>
         
     )
