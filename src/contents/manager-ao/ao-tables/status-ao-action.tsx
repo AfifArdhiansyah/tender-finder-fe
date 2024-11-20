@@ -1,4 +1,4 @@
-import Button from "../../items/buttons/button"
+import Button from "@/components/items/buttons/button"
 
 interface StatusAOActionInterface{
     status: string,

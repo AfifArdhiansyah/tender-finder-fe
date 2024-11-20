@@ -14,6 +14,7 @@ interface MessageActionInterface{
 
 export default function MessageAction(props: MessageActionInterface){
     function onMessageClicked(){
+        console.log("woooyy", props.dataIndex)
         props.onClick(props.dataIndex, props.dataMessage)
     }
     return (

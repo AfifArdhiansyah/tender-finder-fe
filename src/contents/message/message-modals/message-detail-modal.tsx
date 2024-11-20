@@ -1,4 +1,4 @@
-import Modal from "../modal"
+import Modal from "@/components/items/modals/modal"
 
 interface MessageDetailModalProps{
     dataMessage: any,
