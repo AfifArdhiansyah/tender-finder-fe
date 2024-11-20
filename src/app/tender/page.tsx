@@ -1,7 +1,7 @@
 'use client'
 
 import DashboardLayout from "@/layouts/dashboard-layout"
-import TenderTable from "@/components/tables/tender-tables/tender-table"
+import TenderTable from "@/contents/tender/tender-tables/tender-table"
 import TenderData from "@/constants/dump-data"
 import { useTenderProjects } from "@/hooks/useTenderProjects"
 import Paper from "@/components/frames/papes"

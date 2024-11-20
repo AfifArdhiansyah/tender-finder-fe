@@ -1,5 +1,5 @@
-import TextButton from "../../items/buttons/text-button"
-import Button from "../../items/buttons/button"
+import TextButton from "@/components/items/buttons/text-button"
+import Button from "@/components/items/buttons/button"
 
 interface StatusActionInterface{
     tenderId: string,

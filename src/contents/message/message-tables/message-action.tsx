@@ -21,7 +21,7 @@ export default function MessageAction(props: MessageActionInterface){
             <div className="w-[95%]">
                 <p className={"line-clamp-1 " + (props.dataMessage["isRead"] ? "text-gray-400":"text-black")}>{props.dataMessage["message"]}</p>
             </div>
-            <div className={`h-2 w-2 rounded-full ${props.dataMessage["isRead"] ? null : "bg-blue-600"}`}></div>
+            <div className={`h-2 w-2 rounded-full animate-ping ${props.dataMessage["isRead"] ? null : "bg-blue-600"}`}></div>
         </TransparentButton>
     )
 }

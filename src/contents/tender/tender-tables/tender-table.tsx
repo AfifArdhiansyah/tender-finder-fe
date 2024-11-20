@@ -1,9 +1,9 @@
 'use client'
 
-import Table from "../table"
+import Table from "@/components/tables/table"
 import StatusAction from "./status-action"
-import ChooseAOModal from "@/components/items/modals/ao-modals/choose-ao-modal"
-import TenderInfoModal from "@/components/items/modals/tender-modals/tender-info-modal"
+import ChooseAOModal from "@/contents/manager-ao/ao-modals/choose-ao-modal"
+import TenderInfoModal from "../tender-modals/tender-info-modal"
 import { useState } from "react"
 
 interface TenderTableProps{
@@ -35,7 +35,7 @@ export default function TenderTable(props: TenderTableProps){
     };
     return(
         <>
-            <Table headers={props.headers} columns={props.columns} datas={props.datas}>
+            <Table headers={props.headers} datas={props.datas}>
                 {props.datas.map((data,i)=>(
                     <tr key={"row-"+i}>
                         {props.columns.map((col,j)=>(
