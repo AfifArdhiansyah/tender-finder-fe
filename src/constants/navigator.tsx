@@ -2,8 +2,8 @@
 
 export const SidebarNavigator = [
     {
-        iconPath: "/icons/dashboard",
-        name: "Dashboard",
+        iconPath: "/icons/monitor",
+        name: "Monitoring",
         ref: "/dashboard"
     },
     {
