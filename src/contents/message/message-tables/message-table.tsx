@@ -22,7 +22,6 @@ export default function MessageTable(props: MessageTableProps){
         setIsOpenModalMessage(false);
     };
     const onMessageSelected = (index:number, messageData: any) =>{
-        console.log("owyeah", index)
         setSelectedMessage(messageData)
         const newMessageData = props.datas
         newMessageData[index]["isRead"] = true
@@ -31,7 +30,7 @@ export default function MessageTable(props: MessageTableProps){
     }
     return(
         <>
-            <Table headers={props.headers} columns={props.columns} datas={props.datas}>
+            <Table headers={props.headers} datas={props.datas}>
                 {props.datas.map((data,i)=>(
                     <tr key={"row-"+i}>
                         {props.columns.map((col,j)=>(

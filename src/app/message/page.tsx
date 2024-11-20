@@ -7,10 +7,9 @@ import Paper from "@/components/frames/papes"
 
 export default function Message(){
     const [messageDatas, setMessageDatas] = useState(MessageDatas)
-    const headers = ["Message"]
+    const headers = ["Message", ""]
     const columns = ["message", "isRead"]
     function onSetMessage(data: any){
-        console.log("hmmmm")
         setMessageDatas(data)
     }
     return(

@@ -35,7 +35,7 @@ export default function TenderTable(props: TenderTableProps){
     };
     return(
         <>
-            <Table headers={props.headers} columns={props.columns} datas={props.datas}>
+            <Table headers={props.headers} datas={props.datas}>
                 {props.datas.map((data,i)=>(
                     <tr key={"row-"+i}>
                         {props.columns.map((col,j)=>(

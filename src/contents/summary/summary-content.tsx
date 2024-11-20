@@ -5,101 +5,48 @@ import { FaRegThumbsUp, FaRegThumbsDown } from "react-icons/fa";
 import { FaXmark } from "react-icons/fa6";
 import { PiTarget } from "react-icons/pi";
 import PieChartSummary from "./components/pie-chart-summary";
+import SummaryData from "@/constants/monitoring/summary-data";
+import MonitoringChartData from "@/constants/monitoring/monitoring-chart-data";
 
 export default function SummaryContent(){
-    const pieData = [
-        {
-            title: "Success Rate",
-            data: [
-                {
-                    name: "Mengajukan Kredit",
-                    color: "#B64BA2",
-                    textColor: "text-[#B64BA2]",
-                    value: 20
-                },
-                {
-                    name: "Tidak Mengajukan Kredit",
-                    color: "#E5CC13",
-                    textColor: "text-[#E5CC13]",
-                    value: 80
-                }
-            ]
-        },
-        {
-            title: "Daya Serap",
-            data: [
-                {
-                    name: "Diserap",
-                    color:"#89C0FF",
-                    textColor:"text-[#89C0FF]",
-                    value: 70
-                },
-                {
-                    name: "Tidak Diserap",
-                    color: "#4A5260",
-                    textColor: "text-[#4A5260]",
-                    value: 30
-                }
-            ]
-        },
-        {
-            title: "Penyetujuan Kredit",
-            data: [
-                {
-                    name: "Kredit Disetujui",
-                    color:"#21BC16",
-                    textColor:"text-[#21BC16]",
-                    value: 40
-                },
-                {
-                    name: "Kredit Ditolak",
-                    color: "#E5131D",
-                    textColor: "text-[#E5131D]",
-                    value: 60
-                }
-            ]
+    const pieData = MonitoringChartData
+    const switchColor = (id:number):string[]=>{
+        switch(id){
+            case 1:
+                return ["text-black", "bg-black"]
+            case 2:
+                return ["text-green-700", "bg-green-700"]
+            case 3:
+                return ["text-blue-500", "bg-blue-500"]
+            case 4:
+                return ["text-yellow-500", "bg-yellow-500"]
+            case 5:
+                return ["text-green-500", "bg-green-500"]
+            case 6:
+                return ["text-red-500", "bg-red-500"]
+            default:
+                return ["text-black", "bg-black"]
         }
-    ]
+    }
     return(
         <div className="flex flex-col gap-4">
             <h1 className="font-bold text-sm">Semua Wilayah</h1>
             <div className="grid grid-cols-3 gap-4">
-                <SummaryBox count={50} color="text-black">
-                    <div className="p-1 rounded-full bg-black">
-                        <FaBoxArchive className="text-white" size={18}/>
-                    </div>
-                    <p>Pemenang Tender Baru</p>
-                </SummaryBox>
-                <SummaryBox count={25} color="text-green-700">
-                    <div className="p-1 rounded-full bg-green-700">
-                        <FaHandshake className="text-white" size={18}/>
-                    </div>
-                    <p>Penawaran Kredit</p>
-                </SummaryBox>
-                <SummaryBox count={10} color="text-blue-500">
-                    <div className="p-1 rounded-full bg-blue-500">
-                        <FaRegThumbsUp className="text-white" size={18}/>
-                    </div>
-                    <p>Mengajukan Kredit</p>
-                </SummaryBox>
-                <SummaryBox count={10} color="text-yellow-500">
-                    <div className="p-1 rounded-full bg-yellow-500">
-                        <FaRegThumbsDown className="text-white" size={18}/>
-                    </div>
-                    <p>Tidak Mengajukan Kredit</p>
-                </SummaryBox>
-                <SummaryBox count={5} color="text-green-500">
-                    <div className="p-1 rounded-full bg-green-500">
-                        <PiTarget className="text-white" size={18}/>
-                    </div>
-                    <p>Kredit Disetujui</p>
-                </SummaryBox>
-                <SummaryBox count={5} color="text-red-500">
-                    <div className="p-1 rounded-full bg-red-500">
-                        <FaXmark className="text-white" size={18}/>
-                    </div>
-                    <p>Kredit Ditolak</p>
-                </SummaryBox>
+                {
+                    SummaryData.map((data, i)=>(
+                        <SummaryBox key={i} count={data.count} color={switchColor(data.id)[0]}>
+                            <div className={"p-1 rounded-full " + switchColor(data.id)[1]}>
+                                {data.id==1 && <FaBoxArchive className="text-white" size={18}/>}
+                                {data.id==2 && <FaHandshake className="text-white" size={18}/>}
+                                {data.id==3 && <FaRegThumbsUp className="text-white" size={18}/>}
+                                {data.id==4 && <FaRegThumbsDown className="text-white" size={18}/>}
+                                {data.id==5 && <PiTarget className="text-white" size={18}/>}
+                                {data.id==6 && <FaXmark className="text-white" size={18}/>}
+                            </div>
+                            <p>{data.title}</p>
+                        </SummaryBox>
+                    ))
+                }
             </div>
             <div className="grid grid-cols-3">
                 {

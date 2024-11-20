@@ -2,7 +2,6 @@ import { ReactNode } from "react"
 
 interface TableProps{
     headers: string[],
-    columns: string[]
     datas: any[],
     children: ReactNode
 }

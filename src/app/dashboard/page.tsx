@@ -1,6 +1,7 @@
 import DashboardLayout from "@/layouts/dashboard-layout"
 import Paper from "@/components/frames/papes"
 import SummaryContent from "@/contents/summary/summary-content"
+import SummaryTable from "@/contents/summary/summary-table"
 
 export default function Dashboard(){
     return(
@@ -10,7 +11,7 @@ export default function Dashboard(){
                     <SummaryContent/>
                 </Paper>
                 <Paper className="">
-                    <p>ini dasboard data</p>
+                    <SummaryTable/>
                 </Paper>
             </div>
         </DashboardLayout>

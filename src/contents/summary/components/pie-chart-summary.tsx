@@ -19,7 +19,7 @@ export default function PieChartSummary(props: PieChartSummaryProps) {
             <PieChart
                 series={[
                     {
-                        innerRadius:50,
+                        innerRadius:52,
                         outerRadius: 80,
                         data: props.data.map((d, i)=>(
                             {
