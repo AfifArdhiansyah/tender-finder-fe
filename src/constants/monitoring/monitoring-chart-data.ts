@@ -4,14 +4,12 @@ const MonitoringChartData = [
         data: [
             {
                 name: "Mengajukan Kredit",
-                color: "#B64BA2",
-                textColor: "text-[#B64BA2]",
+                color: "rgb(34 197 94)",
                 value: 20
             },
             {
                 name: "Tidak Mengajukan Kredit",
-                color: "#E5CC13",
-                textColor: "text-[#E5CC13]",
+                color: "rgb(250 204 21)",
                 value: 80
             }
         ]
@@ -21,14 +19,12 @@ const MonitoringChartData = [
         data: [
             {
                 name: "Diserap",
-                color:"#89C0FF",
-                textColor:"text-[#89C0FF]",
+                color:"rgb(34 197 94)",
                 value: 70
             },
             {
                 name: "Tidak Diserap",
                 color: "#4A5260",
-                textColor: "text-[#4A5260]",
                 value: 30
             }
         ]
@@ -38,14 +34,12 @@ const MonitoringChartData = [
         data: [
             {
                 name: "Kredit Disetujui",
-                color:"#21BC16",
-                textColor:"text-[#21BC16]",
+                color:"rgb(34 197 94)",
                 value: 40
             },
             {
                 name: "Kredit Ditolak",
                 color: "#E5131D",
-                textColor: "text-[#E5131D]",
                 value: 60
             }
         ]

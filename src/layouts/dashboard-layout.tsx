@@ -5,14 +5,19 @@ import Navbar from "@/components/navbar";
 import { ReactNode } from "react";
 import { useState } from "react";
 import { SidebarNavigator } from "@/constants/navigator";
+import Breadcrumb from "@/components/breadcrumb/breadcrumb";
+import { BreadcrumbItem } from "@/components/breadcrumb/breadcrumb";
 
 interface LayoutProps {
-    sideNavIndex: number,
-    children: ReactNode;
+    sideNavIndex: number;
+    children?: ReactNode;
+    bcItems: BreadcrumbItem[]
+    onClickBC?: Function;
 }
 
 export default function DashboardLayout(layoutProps: LayoutProps){
     const [indexList, setIndexList] = useState(layoutProps.sideNavIndex)
+    
     return(
         <div className="flex gap-1 min-h-screen primary-bg">
             {/* Sidebar */}
@@ -24,7 +29,7 @@ export default function DashboardLayout(layoutProps: LayoutProps){
                 <Navbar/>
                 <div className="px-6 flex gap-2">
                     <div className="w-[4px] h-full blue-bg"></div>
-                    <h2 className="font-bold text-lg max-md:text-md">{SidebarNavigator[indexList].name}</h2>
+                    <Breadcrumb items={layoutProps.bcItems} onClick={layoutProps.onClickBC} />
                 </div>
                 {/* Main Content */}
                 <div className="mx-6">
