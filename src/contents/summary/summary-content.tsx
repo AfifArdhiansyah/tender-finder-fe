@@ -1,15 +1,41 @@
-import SummaryBox from "./components/summary-box"
-import { FaBoxArchive } from "react-icons/fa6";
-import { FaHandshake } from "react-icons/fa";
-import { FaRegThumbsUp, FaRegThumbsDown } from "react-icons/fa";
-import { FaXmark } from "react-icons/fa6";
-import { PiTarget } from "react-icons/pi";
-import PieChartSummary from "./components/pie-chart-summary";
-import SummaryData from "@/constants/monitoring/summary-data";
-import MonitoringChartData from "@/constants/monitoring/monitoring-chart-data";
+'use client'
 
-export default function SummaryContent(){
-    const pieData = MonitoringChartData
+import SummaryBox from "./components/summary-box"
+import { SummaryDataPusat, SummaryDataKanwil, SummaryDataKC } from "@/constants/monitoring/summary-data";
+import { MonitoringChartDataPusat, MonitoringChartDataKanwil, MonitoringChartDataKC } from "@/constants/monitoring/monitoring-chart-data";
+import Image from "next/image";
+import PieChartSummary from "./components/pie-chart-summary";
+
+interface SummaryContentProps{
+    title: string
+    stateIndex: number
+}
+
+export default function SummaryContent(props: SummaryContentProps){
+    function switchDataChart(){
+        switch(props.stateIndex){
+            case 0:
+                return MonitoringChartDataPusat
+            case 1:
+                return MonitoringChartDataKanwil
+            case 2:
+                return MonitoringChartDataKC
+            default:
+                return MonitoringChartDataPusat
+        }
+    }
+    function switchDataSum(){
+        switch(props.stateIndex){
+            case 0:
+                return SummaryDataPusat
+            case 1:
+                return SummaryDataKanwil
+            case 2:
+                return SummaryDataKC
+            default:
+                return SummaryDataPusat
+        }
+    }
     const switchColor = (id:number):string[]=>{
         switch(id){
             case 1:
@@ -30,18 +56,18 @@ export default function SummaryContent(){
     }
     return(
         <div className="flex flex-col gap-4">
-            <h1 className="font-bold text-sm">Semua Wilayah</h1>
+            <h1 className="font-bold text-sm">{props.title}</h1>
             <div className="grid grid-cols-3 gap-4">
                 {
-                    SummaryData.map((data, i)=>(
+                    switchDataSum().map((data, i)=>(
                         <SummaryBox key={i} count={data.count} color={switchColor(data.id)[0]}>
                             <div className={"p-1 rounded-full " + switchColor(data.id)[1]}>
-                                {data.id==1 && <FaBoxArchive className="text-white" size={18}/>}
-                                {data.id==2 && <FaHandshake className="text-white" size={18}/>}
-                                {data.id==3 && <FaRegThumbsUp className="text-white" size={18}/>}
-                                {data.id==4 && <FaRegThumbsDown className="text-white" size={18}/>}
-                                {data.id==5 && <PiTarget className="text-white" size={18}/>}
-                                {data.id==6 && <FaXmark className="text-white" size={18}/>}
+                                {data.id==1 && <Image src={"/icons/briefcase.svg"} height={18} width={18} alt="sum-icon"/>}
+                                {data.id==2 && <Image src={"/icons/map-pin.svg"} height={18} width={18} alt="sum-icon"/>}
+                                {data.id==3 && <Image src={"/icons/thumbs-up.svg"} height={18} width={18} alt="sum-icon"/>}
+                                {data.id==4 && <Image src={"/icons/thumbs-down.svg"} height={18} width={18} alt="sum-icon"/>}
+                                {data.id==5 && <Image src={"/icons/check-circle.svg"} height={18} width={18} alt="sum-icon"/>}
+                                {data.id==6 && <Image src={"/icons/x-circle.svg"} height={18} width={18} alt="sum-icon"/>}
                             </div>
                             <p>{data.title}</p>
                         </SummaryBox>
@@ -50,12 +76,11 @@ export default function SummaryContent(){
             </div>
             <div className="grid grid-cols-3">
                 {
-                    pieData.map((pie, i)=>(
+                    switchDataChart().map((pie, i)=>(
                         <PieChartSummary key={i} title={pie.title} data={pie.data.map((d)=>({
                             value: d.value,
                             label: d.name,
-                            color: d.color,
-                            textColor: d.textColor
+                            color: d.color
                         }))}/>
                     ))
                 }
