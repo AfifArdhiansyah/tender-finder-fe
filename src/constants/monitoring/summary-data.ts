@@ -1,4 +1,4 @@
-const SummaryData = [
+const SummaryDataPusat = [
     {
         id: 1,
         title: 'Pemenang Tender Baru',
@@ -31,4 +31,70 @@ const SummaryData = [
     },
 ]
 
-export default SummaryData
+const SummaryDataKanwil = [
+    {
+        id: 1,
+        title: 'Pemenang Tender Baru',
+        count: 40
+    },
+    {
+        id: 2,
+        title: 'Penawaran Kredit',
+        count: 30
+    },
+    {
+        id: 3,
+        title: 'Mengajukan Kredit',
+        count: 27
+    },
+    {
+        id: 4,
+        title: 'Tidak Mengajukan Kredit',
+        count: 3
+    },
+    {
+        id: 5,
+        title: 'Kredit Disetujui',
+        count: 20
+    },
+    {
+        id: 6,
+        title: 'Kredit Ditolak',
+        count: 7
+    },
+]
+
+const SummaryDataKC = [
+    {
+        id: 1,
+        title: 'Pemenang Tender Baru',
+        count: 38
+    },
+    {
+        id: 2,
+        title: 'Penawaran Kredit',
+        count: 37
+    },
+    {
+        id: 3,
+        title: 'Mengajukan Kredit',
+        count: 30
+    },
+    {
+        id: 4,
+        title: 'Tidak Mengajukan Kredit',
+        count: 7
+    },
+    {
+        id: 5,
+        title: 'Kredit Disetujui',
+        count: 22
+    },
+    {
+        id: 6,
+        title: 'Kredit Ditolak',
+        count: 8
+    },
+]
+
+export {SummaryDataPusat, SummaryDataKanwil, SummaryDataKC}

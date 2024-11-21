@@ -1,17 +1,41 @@
 'use client'
 
 import SummaryBox from "./components/summary-box"
-import SummaryData from "@/constants/monitoring/summary-data";
-import MonitoringChartData from "@/constants/monitoring/monitoring-chart-data";
+import { SummaryDataPusat, SummaryDataKanwil, SummaryDataKC } from "@/constants/monitoring/summary-data";
+import { MonitoringChartDataPusat, MonitoringChartDataKanwil, MonitoringChartDataKC } from "@/constants/monitoring/monitoring-chart-data";
 import Image from "next/image";
 import PieChartSummary from "./components/pie-chart-summary";
 
 interface SummaryContentProps{
     title: string
+    stateIndex: number
 }
 
 export default function SummaryContent(props: SummaryContentProps){
-    const pieData = MonitoringChartData
+    function switchDataChart(){
+        switch(props.stateIndex){
+            case 0:
+                return MonitoringChartDataPusat
+            case 1:
+                return MonitoringChartDataKanwil
+            case 2:
+                return MonitoringChartDataKC
+            default:
+                return MonitoringChartDataPusat
+        }
+    }
+    function switchDataSum(){
+        switch(props.stateIndex){
+            case 0:
+                return SummaryDataPusat
+            case 1:
+                return SummaryDataKanwil
+            case 2:
+                return SummaryDataKC
+            default:
+                return SummaryDataPusat
+        }
+    }
     const switchColor = (id:number):string[]=>{
         switch(id){
             case 1:
@@ -35,7 +59,7 @@ export default function SummaryContent(props: SummaryContentProps){
             <h1 className="font-bold text-sm">{props.title}</h1>
             <div className="grid grid-cols-3 gap-4">
                 {
-                    SummaryData.map((data, i)=>(
+                    switchDataSum().map((data, i)=>(
                         <SummaryBox key={i} count={data.count} color={switchColor(data.id)[0]}>
                             <div className={"p-1 rounded-full " + switchColor(data.id)[1]}>
                                 {data.id==1 && <Image src={"/icons/briefcase.svg"} height={18} width={18} alt="sum-icon"/>}
@@ -52,7 +76,7 @@ export default function SummaryContent(props: SummaryContentProps){
             </div>
             <div className="grid grid-cols-3">
                 {
-                    pieData.map((pie, i)=>(
+                    switchDataChart().map((pie, i)=>(
                         <PieChartSummary key={i} title={pie.title} data={pie.data.map((d)=>({
                             value: d.value,
                             label: d.name,

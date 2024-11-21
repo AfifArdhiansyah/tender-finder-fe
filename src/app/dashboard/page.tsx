@@ -70,7 +70,7 @@ export default function Dashboard(){
         <DashboardLayout sideNavIndex={index} bcItems={breadcrumbItems} onClickBC={handleBreadcrumbClick}>
             <div className="flex flex-col gap-4">
                 <Paper className="">
-                    <SummaryContent title={currState}/>
+                    <SummaryContent title={currState} stateIndex={bcIndex}/>
                 </Paper>
                 <Paper className="">
                     <SummaryTable datas={summaryDatas} bcIndex={bcIndex} openDetail={openDetail}/>
