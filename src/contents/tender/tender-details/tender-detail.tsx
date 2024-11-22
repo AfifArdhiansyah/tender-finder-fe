@@ -1,75 +1,19 @@
-import { useGetTenderById } from "@/hooks/useTenderProjects"
+import TenderDetailTable from "./tender-detail-table"
+import ProgressTrack from "./progress-track/progress-track"
+import { TenderTrackDumpData } from "@/constants/tender/tender-track-data"
 
 interface TenderDetailContentProps{
     idTender: string
 }
 
 export default function TenderDetailContent(props: TenderDetailContentProps){
-    const { tenderProject, loading, error } = useGetTenderById(props.idTender);
     return(
-        <>
-            {
-                loading ? (
-                    <div>Loading...</div>
-                ) : error ? (
-                    <div>Error: {error}</div>
-                ) : (
-                    <table className="table-auto mb-4">
-                        <tbody className="text-sm">
-                            <tr>
-                                <td className="py-2 font-bold">Nomor Tender</td>
-                                <td className="py-2 px-2 font-bold">:</td>
-                                <td className="py-2 text-gray-500">{tenderProject?.id}</td>
-                            </tr>
-                            <tr>
-                                <td className="py-2 font-bold">Nama Tender</td>
-                                <td className="py-2 px-2 font-bold">:</td>
-                                <td className="py-2 text-gray-500">{tenderProject?.nama}</td>
-                            </tr>
-                            <tr>
-                                <td className="py-2 font-bold">Nama Pemenang</td>
-                                <td className="py-2 px-2 font-bold">:</td>
-                                <td className="py-2 text-gray-500">{tenderProject?.nama_pemenang}</td>
-                            </tr>
-                            <tr>
-                                <td className="py-2 font-bold">Nominal Tender</td>
-                                <td className="py-2 px-2 font-bold">:</td>
-                                <td className="py-2 text-gray-500">Rp. {parseFloat(tenderProject?.nilai_tender as string).toLocaleString('id-ID')}</td>
-                            </tr>
-                            <tr>
-                                <td className="py-2 font-bold">Alamat Tender</td>
-                                <td className="py-2 px-2 font-bold">:</td>
-                                <td className="py-2 text-gray-500">{tenderProject?.lokasi_pekerjaan}</td>
-                            </tr>
-                            <tr>
-                                <td className="py-2 font-bold">Nama AO</td>
-                                <td className="py-2 px-2 font-bold">:</td>
-                                <td className="py-2 text-gray-500">{tenderProject?.ao_id}</td>
-                            </tr>
-                            <tr>
-                                <td className="py-2 font-bold">Dokumen Tanda Terima</td>
-                                <td className="py-2 px-2 font-bold">:</td>
-                                <td className="py-2 text-gray-500">ini dokumen tanda terima</td>
-                            </tr>
-                            <tr>
-                                <td className="py-2 font-bold">Foto Follow Up</td>
-                                <td className="py-2 px-2 font-bold">:</td>
-                                <td className="py-2 text-gray-500">ini data follow up</td>
-                            </tr>
-                            <tr>
-                                <td className="py-2 font-bold">Status Penerimaan</td>
-                                <td className="py-2 px-2 font-bold">:</td>
-                                <td className="py-2 text-gray-500">{tenderProject?.status}</td>
-                            </tr>
-                            <tr>
-                                <td className="py-2 font-bold">Produk Yang Dipilih</td>
-                                <td className="py-2 px-2 font-bold">:</td>
-                                <td className="py-2 text-gray-500">{"KMKK"}</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                )
-            }
-        </>
+        <div className="flex flex-col gap-4 pb-6">
+            <h2 className="font-bold text-xl">Progres Tender</h2>
+            <TenderDetailTable idTender={props.idTender}/>
+            <hr />
+            <h2 className="font-bold text-xl">Tracking</h2>
+            <ProgressTrack datas={TenderTrackDumpData}/>
+        </div>
     )
 }
