@@ -4,7 +4,7 @@ import DashboardLayout from "@/layouts/dashboard-layout"
 import { SidebarNavigator } from "@/constants/navigator"
 import { BreadcrumbItem } from "@/components/breadcrumb/breadcrumb"
 import Paper from "@/components/frames/papes"
-import TenderDetailContent from "@/contents/tender/tender-details/tender-detail";
+import TenderDetailContent from "@/contents/tender/tender-details/tender-detail"
 import { useParams } from 'next/navigation';
 
 export default function TenderDetail(){
