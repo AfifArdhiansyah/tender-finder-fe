@@ -33,10 +33,29 @@ export default function TenderTable(props: TenderTableProps){
     const closeModalTenderDetail = () => {
         setIsOpenModalTenderDetail(false);
     };
+
+    // pagination purpose
+    const [currentPage, setCurrentPage] = useState(1); 
+    const [itemsPerPage, setItemsPerPage] = useState(10); 
+    const totalPages = Math.ceil(props.datas.length / itemsPerPage);
+    const paginatedData = props.datas.slice(
+        (currentPage - 1) * itemsPerPage,
+        currentPage * itemsPerPage
+    );
+    const handleNext = () => {
+        if (currentPage < totalPages) setCurrentPage((prev) => prev + 1);
+    };
+    const handlePrevious = () => {
+        if (currentPage > 1) setCurrentPage((prev) => prev - 1);
+    };
+    const handleItemsPerPageChange = (val: any) => {
+        setItemsPerPage(Number(val));
+        setCurrentPage(1);
+    };
     return(
         <>
-            <Table headers={props.headers} datas={props.datas}>
-                {props.datas.map((data,i)=>(
+            <Table headers={props.headers} datas={props.datas} usePagination itemsPerPage={itemsPerPage} currentPage={currentPage} totalPages={totalPages} handleItemsPerPageChange={handleItemsPerPageChange} handlePrevious={handlePrevious} handleNext={handleNext}>
+                {paginatedData.map((data,i)=>(
                     <tr key={"row-"+i}>
                         {props.columns.map((col,j)=>(
                             <td key={i.toString() + j.toString()} className="px-2 py-2 text-sm">
