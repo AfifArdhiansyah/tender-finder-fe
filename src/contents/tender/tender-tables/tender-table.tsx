@@ -58,14 +58,19 @@ export default function TenderTable(props: TenderTableProps){
                 {paginatedData.map((data,i)=>(
                     <tr key={"row-"+i}>
                         {props.columns.map((col,j)=>(
-                            <td key={i.toString() + j.toString()} className="px-2 py-2 text-sm">
+                            <td key={i.toString() + j.toString()} className="px-2 py-2 text-sm border-b-[1px]">
                                 {col == "status" && (
                                     <div className="flex justify-center">
                                         <StatusAction status={data[col]} tenderId={data["id"]} tenderName={data["nama"]} dataTender={data} isOpenModalAO={isOpenModalAO} isOpenModalTenderDetail={isOpenModalTenderDetail} showModalAO={showModalAO} closeModalAO={closeModalAO} setSelectedTender={onSetTenderSelect} showModalTenderDetail={showModalTenderDetail} closeModalTenderDetail={closeModalTenderDetail}/>
                                     </div>
                                 )}
                                 {
-                                    col != "status" && (
+                                    col == "nilai_tender" && (
+                                        parseFloat(data[col]).toLocaleString('id-ID')
+                                    )
+                                }
+                                {
+                                    !((col == "status") || (col == "nilai_tender")) && (
                                         data[col]
                                     )
                                 }

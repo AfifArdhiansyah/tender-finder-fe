@@ -11,5 +11,6 @@ export interface TenderProjectModel {
   nilai_tender: string;
   branch_id: number;
   ao_id: number;
+  status: string;
 }
   

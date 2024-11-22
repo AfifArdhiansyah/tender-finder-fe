@@ -32,7 +32,7 @@ export default function DashboardLayout(layoutProps: LayoutProps){
                     <Breadcrumb items={layoutProps.bcItems} onClick={layoutProps.onClickBC} />
                 </div>
                 {/* Main Content */}
-                <div className="mx-6 mb-10">
+                <div className="mx-6 mb-10 h-full">
                     {layoutProps.children}
                 </div>
             </div>
