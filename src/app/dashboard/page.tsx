@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import DashboardLayout from "@/layouts/dashboard-layout"
 import Paper from "@/components/frames/papes"
 import SummaryContent from "@/contents/summary/summary-content"
@@ -68,7 +68,7 @@ export default function Dashboard(){
     }
     return(
         <DashboardLayout sideNavIndex={index} bcItems={breadcrumbItems} onClickBC={handleBreadcrumbClick}>
-            <div className="flex flex-col gap-4">
+            <div className="flex flex-col gap-4 h-full">
                 <Paper className="">
                     <SummaryContent title={currState} stateIndex={bcIndex}/>
                 </Paper>

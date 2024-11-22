@@ -2,7 +2,6 @@
 
 import DashboardLayout from "@/layouts/dashboard-layout"
 import TenderTable from "@/contents/tender/tender-tables/tender-table"
-import TenderData from "@/constants/dump-data"
 import { useTenderProjects } from "@/hooks/useTenderProjects"
 import Paper from "@/components/frames/papes"
 import { SidebarNavigator } from "@/constants/navigator"
@@ -23,7 +22,7 @@ export default function Tender(){
 
     return(
         <DashboardLayout sideNavIndex={index} bcItems={breadcrumbItems}>
-            <Paper className="mb-4 max-md:overflow-x-auto">
+            <Paper className="mb-4 max-md:overflow-x-auto h-full">
                 {
                     loading ? (
                         <div>Loading...</div>

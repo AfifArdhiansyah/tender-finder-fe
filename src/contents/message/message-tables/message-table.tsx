@@ -30,7 +30,7 @@ export default function MessageTable(props: MessageTableProps){
     }
     return(
         <>
-            <Table headers={props.headers} datas={props.datas}>
+            <Table headers={props.headers} datas={props.datas} usePagination={false}>
                 {props.datas.map((data,i)=>(
                     <tr key={"row-"+i}>
                         {props.columns.map((col,j)=>(

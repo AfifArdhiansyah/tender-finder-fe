@@ -1,5 +1,6 @@
 import TextButton from "@/components/items/buttons/text-button"
 import Button from "@/components/items/buttons/button"
+import { useRouter } from "next/navigation"
 
 interface StatusActionInterface{
     tenderId: string,
@@ -16,6 +17,7 @@ interface StatusActionInterface{
 }
 
 export default function StatusAction(props: StatusActionInterface){
+    const router = useRouter()
     function onShowClickedAO(){
         props.setSelectedTender(props.tenderName, props.tenderId, props.dataTender)
         props.showModalAO()
@@ -24,13 +26,16 @@ export default function StatusAction(props: StatusActionInterface){
         props.setSelectedTender(props.tenderName, props.tenderId, props.dataTender)
         props.showModalTenderDetail()
     }
+    function goToDetail(){
+        router.push("/tender/"+props.tenderId)
+    }
     switch(props.status){
         case "dalam proses":
-            return <TextButton size="medium" type="alert" onClick={onShowClickedTenderDetail}>{props.status}</TextButton>
+            return <TextButton size="medium" type="alert" onClick={goToDetail}>{props.status}</TextButton>
         case "selesai":
-            return <TextButton size="medium" type="primary" onClick={onShowClickedTenderDetail}>{props.status}</TextButton>
+            return <TextButton size="medium" type="primary" onClick={goToDetail}>{props.status}</TextButton>
         case "batal":
-            return <TextButton size="medium" type="danger" onClick={onShowClickedTenderDetail}>{props.status}</TextButton>
+            return <TextButton size="medium" type="danger" onClick={goToDetail}>{props.status}</TextButton>
         case "baru":
             return <Button type="alert" size="medium" onClick={onShowClickedAO}>tawarkan</Button>
         default:

@@ -5,6 +5,7 @@ interface TableProps{
     datas: any[],
     children: ReactNode
     usePagination: boolean
+    className?: string
     itemsPerPage?: number
     currentPage?: number
     totalPages?: number
@@ -24,7 +25,7 @@ export default function Table(props: TableProps){
         props.handleNext? props.handleNext(): null
     }
     return (
-        <div className="flex flex-col min-h-[70vh] justify-between">
+        <div className={"flex flex-col min-h-[100%] justify-between " + props.className}>
             <table className="table-auto min-w-full">
                 <thead className="rounded-lg bg-gray-100">
                     <tr>

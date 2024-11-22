@@ -30,7 +30,7 @@ export default function SummaryTable(props: SummaryContentProps) {
     }
 
     return(
-        <Table headers={props.bcIndex == 2 ? headers : headerKC} datas={props.datas}>
+        <Table className="h-full" headers={props.bcIndex == 2 ? headers : headerKC} datas={props.datas} usePagination={false}>
             {props.datas.map((data,i)=>(
                 props.bcIndex == 2 ? (
                     <tr key={"row-"+i}>
