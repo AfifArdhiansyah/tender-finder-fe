@@ -1,5 +1,6 @@
 import { TenderTrackModel } from "@/models/tender-track-model";
 import Image from "next/image";
+import MapMini from "@/components/maps/map-mini";
 
 interface ProgressTrackProps{
     datas: TenderTrackModel[]
@@ -43,6 +44,11 @@ export default function ProgressTrack(props: ProgressTrackProps){
                                                 <p className="text-gray-500">Pengajuan kredit: {data.nilai_kredit}</p>
                                             </>
                                         )}
+                                        {
+                                            (index==0 || index==1) && (
+                                                <MapMini latitude={parseFloat(data.ltd_loc as string)} longitude={parseFloat(data.lng_loc as string)} />
+                                            )
+                                        }
                                     </>
                                 )
                             }
