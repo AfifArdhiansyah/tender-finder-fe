@@ -24,7 +24,7 @@ export default function Table(props: TableProps){
         props.handleNext? props.handleNext(): null
     }
     return (
-        <div>
+        <div className="flex flex-col min-h-[70vh] justify-between">
             <table className="table-auto min-w-full">
                 <thead className="rounded-lg bg-gray-100">
                     <tr>
@@ -40,10 +40,10 @@ export default function Table(props: TableProps){
             {/* Pagination Controls */}
             {
                 props.usePagination && (
-                    <div className="flex items-center justify-between mt-4">
+                    <div className="flex items-center justify-between mt-4 bg-gray-100 px-6 py-2 rounded-lg">
                         <div>
                             <label htmlFor="itemsPerPage" className="mr-2 text-sm font-medium">
-                                Show:
+                                Jumlah Data:
                             </label>
                             <select
                                 id="itemsPerPage"
@@ -60,7 +60,7 @@ export default function Table(props: TableProps){
                             <button
                                 onClick={handlePrevious}
                                 disabled={props.currentPage === 1}
-                                className="px-3 py-1 text-sm border rounded-md bg-gray-100 hover:bg-gray-200 disabled:opacity-50"
+                                className="px-3 py-1 text-sm border rounded-md bg-white hover:bg-gray-200 disabled:opacity-50"
                             >
                                 Previous
                             </button>
@@ -70,7 +70,7 @@ export default function Table(props: TableProps){
                             <button
                                 onClick={handleNext}
                                 disabled={props.currentPage === props.totalPages}
-                                className="px-3 py-1 text-sm border rounded-md bg-gray-100 hover:bg-gray-200 disabled:opacity-50"
+                                className="px-3 py-1 text-sm border rounded-md bg-white hover:bg-gray-200 disabled:opacity-50"
                             >
                                 Next
                             </button>
