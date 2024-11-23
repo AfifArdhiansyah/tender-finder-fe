@@ -4,6 +4,7 @@ import Table from "@/components/tables/table"
 import StatusAction from "./status-action"
 import ChooseAOModal from "@/contents/manager-ao/ao-modals/choose-ao-modal"
 import TenderInfoModal from "../tender-modals/tender-info-modal"
+import SearchBar from "@/components/items/search-bars/search-bar"
 import { useState } from "react"
 
 interface TenderTableProps{
@@ -13,6 +14,22 @@ interface TenderTableProps{
 }
 
 export default function TenderTable(props: TenderTableProps){
+    //search purpose
+    const [filteredData, setFilteredData] = useState(props.datas);
+    function handleSearch(query: string){
+        if (query.trim() === "") {
+            setFilteredData(props.datas); // Reset to original data if query is empty
+        } else {
+            const lowercasedQuery = query.toLowerCase();
+            const filtered = props.datas.filter((data) =>
+                Object.values(data).some((value) =>
+                    String(value).toLowerCase().includes(lowercasedQuery)
+                )
+            );
+            setFilteredData(filtered);
+        }
+    };
+
     const [selectedTender, setSelectedTender] = useState({})
     const [selectedTenderName, setSelectedTenderName] = useState("")
     const [isOpenModalAO, setIsOpenModalAO] = useState(false)
@@ -37,8 +54,8 @@ export default function TenderTable(props: TenderTableProps){
     // pagination purpose
     const [currentPage, setCurrentPage] = useState(1); 
     const [itemsPerPage, setItemsPerPage] = useState(10); 
-    const totalPages = Math.ceil(props.datas.length / itemsPerPage);
-    const paginatedData = props.datas.slice(
+    const totalPages = Math.ceil(filteredData.length / itemsPerPage);
+    const paginatedData = filteredData.slice(
         (currentPage - 1) * itemsPerPage,
         currentPage * itemsPerPage
     );
@@ -54,6 +71,7 @@ export default function TenderTable(props: TenderTableProps){
     };
     return(
         <>
+            <SearchBar onSearch={handleSearch} className="w-[400px]"/>
             <Table headers={props.headers} datas={props.datas} usePagination itemsPerPage={itemsPerPage} currentPage={currentPage} totalPages={totalPages} handleItemsPerPageChange={handleItemsPerPageChange} handlePrevious={handlePrevious} handleNext={handleNext}>
                 {paginatedData.map((data,i)=>(
                     <tr key={"row-"+i}>
