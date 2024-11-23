@@ -23,7 +23,7 @@ export default function DashboardLayout(layoutProps: LayoutProps){
         <div className="flex gap-1 min-h-screen primary-bg">
             {/* Sidebar */}
             <div className="bg-white min-w-fit">
-                <Sidebar indexNav={indexList} setIndexList={setIndexList} isSidebarOpen={isSidebarOpen}/>
+                <Sidebar indexNav={indexList} setIndexList={setIndexList} isSidebarOpen={isSidebarOpen} setSidebarOpen={setIsSidebarOpen}/>
             </div>
             <div className="flex flex-col gap-6 w-full">
                 {/* Navbar */}

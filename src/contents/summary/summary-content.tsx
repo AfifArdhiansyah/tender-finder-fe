@@ -57,7 +57,7 @@ export default function SummaryContent(props: SummaryContentProps){
     return(
         <div className="flex flex-col gap-4">
             <h1 className="font-bold text-sm">{props.title}</h1>
-            <div className="grid grid-cols-3 gap-4">
+            <div className="grid grid-cols-3 max-lg:grid-cols-2 max-md:grid-cols-1 gap-4">
                 {
                     switchDataSum().map((data, i)=>(
                         <SummaryBox key={i} count={data.count} color={switchColor(data.id)[0]}>
@@ -74,7 +74,7 @@ export default function SummaryContent(props: SummaryContentProps){
                     ))
                 }
             </div>
-            <div className="grid grid-cols-3">
+            <div className="grid grid-cols-3 max-lg:grid-cols-2 max-md:grid-cols-1">
                 {
                     switchDataChart().map((pie, i)=>(
                         <PieChartSummary key={i} title={pie.title} data={pie.data.map((d)=>({

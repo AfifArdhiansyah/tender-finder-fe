@@ -5,6 +5,8 @@ import TenderTable from "@/contents/tender/tender-tables/tender-table"
 import { useTenderProjects } from "@/hooks/useTenderProjects"
 import Paper from "@/components/frames/papes"
 import { SidebarNavigator } from "@/constants/navigator"
+import Response from "@/components/items/responses/response"
+import Loading from "@/components/items/progress/loading"
 
 export default function Tender(){
     // const tableHeads = ["Nama Tender", "Pemenang Tender", "Alamat Pemenang", "Harga Tender (Rp.)", "Status"]
@@ -25,9 +27,9 @@ export default function Tender(){
             <Paper className="mb-4 max-md:overflow-x-auto h-full flex flex-col gap-4">
                 {
                     loading ? (
-                        <div>Loading...</div>
+                        <Loading/>
                     ) : error ? (
-                        <div>Error: {error}</div>
+                       <Response type="error" message={error}/>
                     ) : (
                         <TenderTable headers={tableHeads} columns={tableColumns} datas={tableDatas}/>
                     )

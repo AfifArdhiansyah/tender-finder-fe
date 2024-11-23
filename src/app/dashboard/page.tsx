@@ -72,7 +72,7 @@ export default function Dashboard(){
                 <Paper className="">
                     <SummaryContent title={currState} stateIndex={bcIndex}/>
                 </Paper>
-                <Paper className="">
+                <Paper className="max-md:overflow-x-auto">
                     <SummaryTable datas={summaryDatas} bcIndex={bcIndex} openDetail={openDetail}/>
                 </Paper>
             </div>
