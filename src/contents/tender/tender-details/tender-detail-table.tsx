@@ -14,60 +14,37 @@ export default function TenderDetailTable(props: TenderDetailTableProps){
                 ) : error ? (
                     <div>Error: {error}</div>
                 ) : (
-                    <table className="table-auto mb-4">
-                        <tbody className="text-sm">
-                            <tr>
-                                <td className="py-2 font-bold">Nomor Tender</td>
-                                <td className="py-2 px-2 font-bold">:</td>
-                                <td className="py-2 text-gray-500">{tenderProject?.id}</td>
-                            </tr>
-                            <tr>
-                                <td className="py-2 font-bold">Nama Tender</td>
-                                <td className="py-2 px-2 font-bold">:</td>
-                                <td className="py-2 text-gray-500">{tenderProject?.nama}</td>
-                            </tr>
-                            <tr>
-                                <td className="py-2 font-bold">Nama Pemenang</td>
-                                <td className="py-2 px-2 font-bold">:</td>
-                                <td className="py-2 text-gray-500">{tenderProject?.nama_pemenang}</td>
-                            </tr>
-                            <tr>
-                                <td className="py-2 font-bold">Nominal Tender</td>
-                                <td className="py-2 px-2 font-bold">:</td>
-                                <td className="py-2 text-gray-500">Rp. {parseFloat(tenderProject?.nilai_tender as string).toLocaleString('id-ID')}</td>
-                            </tr>
-                            <tr>
-                                <td className="py-2 font-bold">Alamat Tender</td>
-                                <td className="py-2 px-2 font-bold">:</td>
-                                <td className="py-2 text-gray-500">{tenderProject?.lokasi_pekerjaan}</td>
-                            </tr>
-                            <tr>
-                                <td className="py-2 font-bold">Nama AO</td>
-                                <td className="py-2 px-2 font-bold">:</td>
-                                <td className="py-2 text-gray-500">{tenderProject?.ao_id}</td>
-                            </tr>
-                            <tr>
-                                <td className="py-2 font-bold">Dokumen Tanda Terima</td>
-                                <td className="py-2 px-2 font-bold">:</td>
-                                <td className="py-2 text-gray-500">ini dokumen tanda terima</td>
-                            </tr>
-                            <tr>
-                                <td className="py-2 font-bold">Foto Follow Up</td>
-                                <td className="py-2 px-2 font-bold">:</td>
-                                <td className="py-2 text-gray-500">ini data follow up</td>
-                            </tr>
-                            <tr>
-                                <td className="py-2 font-bold">Status Penerimaan</td>
-                                <td className="py-2 px-2 font-bold">:</td>
-                                <td className="py-2 text-gray-500">{tenderProject?.status}</td>
-                            </tr>
-                            <tr>
-                                <td className="py-2 font-bold">Produk Yang Dipilih</td>
-                                <td className="py-2 px-2 font-bold">:</td>
-                                <td className="py-2 text-gray-500">{"KMKK"}</td>
-                            </tr>
-                        </tbody>
-                    </table>
+                    <div className="grid grid-cols-12 gap-y-2 text-sm">
+                        <p className="font-bold col-span-2">Nomor Tender</p>
+                        <p className="text-gray-500 col-span-10"><span className="font-bold mr-2">:</span> {tenderProject?.id}</p>
+
+                        <p className="font-bold col-span-2">Nama Tender</p>
+                        <p className="text-gray-500 col-span-10"><span className="font-bold mr-2">:</span> {tenderProject?.nama}</p>
+
+                        <p className="font-bold col-span-2">Nama Pemenang</p>
+                        <p className="text-gray-500 col-span-10"><span className="font-bold mr-2">:</span> {tenderProject?.nama_pemenang}</p>
+
+                        <p className="font-bold col-span-2">Nominal Tender</p>
+                        <p className="text-gray-500 col-span-10"><span className="font-bold mr-2">:</span> Rp. {parseFloat(tenderProject?.nilai_tender as string).toLocaleString('id-ID')}</p>
+
+                        <p className="font-bold col-span-2">Alamat Tender</p>
+                        <p className="text-gray-500 col-span-10"><span className="font-bold mr-2">:</span> {tenderProject?.lokasi_pekerjaan}</p>
+
+                        <p className="font-bold col-span-2">Nama AO</p>
+                        <p className="text-gray-500 col-span-10"><span className="font-bold mr-2">:</span> {tenderProject?.ao_id}</p>
+
+                        <p className="font-bold col-span-2">Dokumen Tanda Terima</p>
+                        <p className="text-gray-500 col-span-10"><span className="font-bold mr-2">:</span> ini dokumen tanda terima</p>
+
+                        <p className="font-bold col-span-2">Foto Follow Up</p>
+                        <p className="text-gray-500 col-span-10"><span className="font-bold mr-2">:</span> ini data follow up</p>
+
+                        <p className="font-bold col-span-2">Status Penerimaan</p>
+                        <p className="text-gray-500 col-span-10"><span className="font-bold mr-2">:</span> {tenderProject?.status}</p>
+
+                        <p className="font-bold col-span-2">Produk Yang Dipilih</p>
+                        <p className="text-gray-500 col-span-10"><span className="font-bold mr-2">:</span> {"KMKK"}</p>
+                    </div>
                 )
             }
         </>
