@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import 'leaflet/dist/leaflet.css';
 import localFont from "next/font/local";
 import "./globals.css";
 import { Poppins } from 'next/font/google'

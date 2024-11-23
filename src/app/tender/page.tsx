@@ -22,7 +22,7 @@ export default function Tender(){
 
     return(
         <DashboardLayout sideNavIndex={index} bcItems={breadcrumbItems}>
-            <Paper className="mb-4 max-md:overflow-x-auto h-full">
+            <Paper className="mb-4 max-md:overflow-x-auto h-full flex flex-col gap-4">
                 {
                     loading ? (
                         <div>Loading...</div>
