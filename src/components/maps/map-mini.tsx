@@ -22,7 +22,7 @@ export default function MapMini({ latitude, longitude, onMapClick }: MapMiniProp
     });
 
     return (
-        <div onClick={onMapClick} className="cursor-pointer">
+        <div onClick={onMapClick} className="cursor-pointer z-0">
             <MapContainer
                 center={position}
                 zoom={13}

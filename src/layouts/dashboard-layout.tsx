@@ -12,6 +12,7 @@ interface LayoutProps {
     children?: ReactNode;
     bcItems: BreadcrumbItem[]
     onClickBC?: Function;
+    role?: 'manager-pusat' | 'manager-kanwil' | 'manager-kc' | 'ao'
 }
 
 export default function DashboardLayout(layoutProps: LayoutProps){
@@ -23,17 +24,17 @@ export default function DashboardLayout(layoutProps: LayoutProps){
         <div className="flex gap-1 min-h-screen primary-bg">
             {/* Sidebar */}
             <div className="bg-white min-w-fit">
-                <Sidebar indexNav={indexList} setIndexList={setIndexList} isSidebarOpen={isSidebarOpen}/>
+                <Sidebar indexNav={indexList} setIndexList={setIndexList} isSidebarOpen={isSidebarOpen} setSidebarOpen={setIsSidebarOpen} role={layoutProps.role}/>
             </div>
             <div className="flex flex-col gap-6 w-full">
                 {/* Navbar */}
-                <Navbar toggleSidebar={()=>toggleSidebar}/>
-                <div className="px-6 flex gap-2">
+                <Navbar toggleSidebar={()=>toggleSidebar} role={layoutProps.role}/>
+                <div className="mx-6 flex gap-2 max-md:mx-4">
                     <div className="w-[4px] h-full blue-bg"></div>
                     <Breadcrumb items={layoutProps.bcItems} onClick={layoutProps.onClickBC} />
                 </div>
                 {/* Main Content */}
-                <div className="mx-6 mb-10 h-full">
+                <div className="mx-6 mb-10 h-full max-md:mx-4">
                     {layoutProps.children}
                 </div>
             </div>

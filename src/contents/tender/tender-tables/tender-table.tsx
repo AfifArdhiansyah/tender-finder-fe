@@ -71,8 +71,8 @@ export default function TenderTable(props: TenderTableProps){
     };
     return(
         <>
-            <SearchBar onSearch={handleSearch} className="w-[400px]"/>
-            <Table headers={props.headers} datas={props.datas} usePagination itemsPerPage={itemsPerPage} currentPage={currentPage} totalPages={totalPages} handleItemsPerPageChange={handleItemsPerPageChange} handlePrevious={handlePrevious} handleNext={handleNext}>
+            <SearchBar onSearch={handleSearch} className="w-[400px] max-md:w-[300px]"/>
+            <Table className="h-full" headers={props.headers} datas={props.datas} usePagination itemsPerPage={itemsPerPage} currentPage={currentPage} totalPages={totalPages} handleItemsPerPageChange={handleItemsPerPageChange} handlePrevious={handlePrevious} handleNext={handleNext}>
                 {paginatedData.map((data,i)=>(
                     <tr key={"row-"+i}>
                         {props.columns.map((col,j)=>(

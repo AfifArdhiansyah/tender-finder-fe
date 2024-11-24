@@ -27,7 +27,7 @@ export default function Table(props: TableProps){
         props.handleNext? props.handleNext(): null
     }
     return (
-        <div className={"flex flex-col min-h-[100%] justify-between " + props.className}>
+        <div className={"flex flex-col justify-between min-w-full w-fit " + props.className}>
             <table className="table-auto min-w-full">
                 <thead className="rounded-lg bg-gray-100">
                     <tr>
@@ -43,7 +43,7 @@ export default function Table(props: TableProps){
             {/* Pagination Controls */}
             {
                 props.usePagination && (
-                    <div className="flex items-center justify-between mt-4 bg-gray-100 px-6 py-2 rounded-lg">
+                    <div className="flex items-center justify-between mt-4 bg-gray-100 px-6 py-2 rounded-lg w-full">
                         <div>
                             <label htmlFor="itemsPerPage" className="mr-2 text-sm font-medium">
                                 Jumlah Data:
