@@ -1,7 +1,7 @@
 import { ReactNode } from "react"
 
 interface PillProps {
-    type : "general" | "alert" | "danger" | "success",
+    type : "general" | "alert" | "danger" | "success" | "primary",
     size : "large" | "medium" | "small"
     className? : string,
     children? : ReactNode
@@ -17,6 +17,8 @@ function switchPillType(type: string):string{
             return "bg-red-100 text-red-700" 
         case "success":
             return "bg-green-100 text-green-700" 
+        case "primary":
+            return "bg-blue-100 text-blue-700" 
         default:
             return "bg-gray-100 text-gray-700"
     }

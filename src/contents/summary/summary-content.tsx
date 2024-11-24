@@ -1,7 +1,7 @@
 'use client'
 
 import SummaryBox from "./components/summary-box"
-import { SummaryDataPusat, SummaryDataKanwil, SummaryDataKC } from "@/constants/monitoring/summary-data";
+import { SummaryDataPusat, SummaryDataKanwil, SummaryDataKC, SummaryDataAO } from "@/constants/monitoring/summary-data";
 import { MonitoringChartDataPusat, MonitoringChartDataKanwil, MonitoringChartDataKC } from "@/constants/monitoring/monitoring-chart-data";
 import Image from "next/image";
 import PieChartSummary from "./components/pie-chart-summary";
@@ -32,6 +32,8 @@ export default function SummaryContent(props: SummaryContentProps){
                 return SummaryDataKanwil
             case 2:
                 return SummaryDataKC
+            case 3:
+                return SummaryDataAO
             default:
                 return SummaryDataPusat
         }
@@ -74,17 +76,21 @@ export default function SummaryContent(props: SummaryContentProps){
                     ))
                 }
             </div>
-            <div className="grid grid-cols-3 max-lg:grid-cols-2 max-md:grid-cols-1">
-                {
-                    switchDataChart().map((pie, i)=>(
-                        <PieChartSummary key={i} title={pie.title} data={pie.data.map((d)=>({
-                            value: d.value,
-                            label: d.name,
-                            color: d.color
-                        }))}/>
-                    ))
-                }
-            </div>
+            {
+                props.title != "AO" &&(
+                    <div className="grid grid-cols-3 max-lg:grid-cols-2 max-md:grid-cols-1">
+                        {
+                            switchDataChart().map((pie, i)=>(
+                                <PieChartSummary key={i} title={pie.title} data={pie.data.map((d)=>({
+                                    value: d.value,
+                                    label: d.name,
+                                    color: d.color
+                                }))}/>
+                            ))
+                        }
+                    </div>
+                )
+            }
         </div>
     )
 }

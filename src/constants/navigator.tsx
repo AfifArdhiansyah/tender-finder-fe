@@ -17,3 +17,21 @@ export const SidebarNavigator = [
         ref: "/message"
     }
 ]
+
+export const SidebarNavigatorAO = [
+    {
+        iconPath: "/icons/monitor",
+        name: "Monitoring",
+        ref: "/ao-dashboard"
+    },
+    {
+        iconPath: "/icons/list",
+        name: "Daftar Tender",
+        ref: "/ao-tender"
+    },
+    {
+        iconPath: "/icons/message",
+        name: "Notifikasi",
+        ref: "/ao-message"
+    }
+]

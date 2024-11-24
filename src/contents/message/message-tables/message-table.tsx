@@ -1,7 +1,7 @@
 'use client'
 
 import Table from "@/components/tables/table"
-import MessageAction from "./message-action"
+import MessageListItem from "../components/message-list-item"
 import MessageDetailModal from "../message-modals/message-detail-modal"
 import { useState } from "react"
 
@@ -37,7 +37,7 @@ export default function MessageTable(props: MessageTableProps){
                             <td key={i.toString() + j.toString()} className={"px-2 py-2 text-sm"}>
                                 {
                                     col == "message" && (
-                                        <MessageAction className="flex justify-between items-center" dataMessage={data} dataIndex={i} hoverBGColor="blue-300" hoverTextColor="white" onClick={onMessageSelected}/>
+                                        <MessageListItem className="flex justify-between items-center" dataMessage={data} dataIndex={i} hoverBGColor="blue-300" hoverTextColor="white" onClick={onMessageSelected}/>
                                     )
                                 }
                             </td>
