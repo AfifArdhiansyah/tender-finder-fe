@@ -9,7 +9,7 @@ interface PaperProps{
 
 export default function Paper(props: PaperProps){
     return(
-        <div className={props.className + " bg-white rounded-md p-4"}>
+        <div className={ "bg-white rounded-md p-4 " + props.className}>
             {props.children}
         </div>
     )

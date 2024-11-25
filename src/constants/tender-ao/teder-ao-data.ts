@@ -25,7 +25,7 @@ export const TenderAODumpData = [
         "produk": null
     },
     {
-        "id": "92102102",
+        "id": "92102103",
         "nama": "Pengembangan Ekonomi Kawasan Situ Bagendit (BKK Jabar)",
         "nama_pemenang": "Waskita Karya",
         "alamat_pemenang": "dusun parapat rt. 003 rw. 008 desa pangandaran kecamatan pangandara kabupaten pangandaran ",
@@ -40,7 +40,7 @@ export const TenderAODumpData = [
         }
     },
     {
-        "id": "3902020",
+        "id": "3902024",
         "nama": "Pembangunan Bank Sampah Induk (DAK)",
         "nama_pemenang": "Virama Karya",
         "alamat_pemenang": "Jl leuwidaun Indah blok AS RT/RW 02/02 NO 5 - Garut (Kab.) - Jawa Barat",

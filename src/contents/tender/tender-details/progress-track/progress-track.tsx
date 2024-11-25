@@ -41,7 +41,7 @@ export default function ProgressTrack(props: ProgressTrackProps){
                                         {index==2 && (
                                             <>
                                                 <p className="text-gray-500">Produk yang dipilih: {data.produk}</p>
-                                                <p className="text-gray-500">Pengajuan kredit: {data.nilai_kredit}</p>
+                                                <p className="text-gray-500">Pengajuan kredit: Rp. {parseFloat(data.nilai_kredit as string).toLocaleString('id-ID')}</p>
                                             </>
                                         )}
                                         {
