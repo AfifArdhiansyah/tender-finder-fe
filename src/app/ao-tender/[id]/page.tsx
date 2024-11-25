@@ -9,6 +9,11 @@ import BorderedBox from "@/components/boxes/bordered-box"
 import { TenderAODumpData } from "@/constants/tender-ao/teder-ao-data"
 import { useState } from "react"
 import Progress from "@/components/progresses/progress"
+import TenderProgresPenawaran from "@/contents/tender-ao/tender-progresses/tender-progres-penawaran"
+import TenderProgresPengajuan from "@/contents/tender-ao/tender-progresses/tender-progres-pengajuan"
+import TenderProgresTindakLanjut from "@/contents/tender-ao/tender-progresses/tender-progres-tindak-lanjut"
+import TenderProgresPenyetujuan from "@/contents/tender-ao/tender-progresses/tender-progres-penyetujuan"
+import ProgressButton from "@/contents/tender-ao/components/progress-button"
 
 export default function AOTenderDetail(){
     const index = 1
@@ -18,6 +23,13 @@ export default function AOTenderDetail(){
         {label: SidebarNavigatorAO[index].name, path: SidebarNavigatorAO[index].ref},
         {label: "Progres Tender", path: SidebarNavigatorAO[index].ref+"/"+id}
     ] as BreadcrumbItem[]
+    const [contentIndex, setContentIndex] = useState(0)
+    function contentPrev(){
+        if(contentIndex!=0) setContentIndex(contentIndex-1)
+    }
+    function contentNext(){
+        if(contentIndex!=3) setContentIndex(contentIndex+1)
+    }
     const [tenderData, setTenderData] = useState(TenderAODumpData.find((tender)=>tender.id==id))
     const dataProgress = [
         {label:"Penawaran", successed:false},
@@ -61,6 +73,21 @@ export default function AOTenderDetail(){
         }
         return newData
     }
+    function getProgressContent(){
+        switch(contentIndex){
+            case 0:
+                return <TenderProgresPenawaran/>
+            case 1:
+                return <TenderProgresTindakLanjut/>
+            case 2:
+                return <TenderProgresPengajuan/>
+            case 3:
+                return <TenderProgresPenyetujuan/>
+            default:
+                return <TenderProgresPenawaran/>
+        }
+    }
+
     return(
         <DashboardLayout sideNavIndex={index} bcItems={bcItems} role={role}>
             <div className="flex flex-col gap-4 h-full">
@@ -74,7 +101,11 @@ export default function AOTenderDetail(){
                         <p className="text-xs text-gray-500">{tenderData?.alamat_pemenang}</p>
                     </BorderedBox>
                     <p className="text-sm font-bold">Progres</p>
-                    <Progress items={getDataProgress()} visitedIndex={0}/>
+                    <Progress items={getDataProgress()} visitedIndex={contentIndex}/>
+                    {
+                        getProgressContent()
+                    }
+                    <ProgressButton className="w-full" progressIndex={contentIndex} setIndexPrev={contentPrev} setIndexNext={contentNext}/>
                 </Paper>
             </div>
         </DashboardLayout>

@@ -15,7 +15,7 @@ export default function Progress(props: ProgressProps){
                     props.items.map((item, i)=>(
                         <div key={i} className="flex flex-col items-center gap-2">
                             <div className="w-[20vw] text-center">
-                                <p className={"text-xs " + (i==props.visitedIndex ? "text-blue-500":"text-gray-500")}>{item.label}</p>
+                                <p className={"text-xs " + (i==props.visitedIndex ? "text-blue-500 font-bold":"text-gray-500")}>{item.label}</p>
                             </div>
                         </div>
                     ))

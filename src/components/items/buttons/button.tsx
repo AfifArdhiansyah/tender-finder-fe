@@ -7,6 +7,7 @@ interface ButtonProps{
     onClick: Function,
     disabled?: boolean,
     children?: ReactNode
+    className?: string
 }
 
 export default function Button(props: ButtonProps){
@@ -47,7 +48,7 @@ export default function Button(props: ButtonProps){
     }
 
     return(
-        <button className={"rounded-md px-3 py-1 flex items-center h-fit " + switchButtonType(props.type) + " " + switchButtonSize(props.size)} onClick={buttonClicked} disabled={props.disabled}>
+        <button className={"rounded-md px-3 py-1 flex items-center h-fit justify-center " + switchButtonType(props.type) + " " + switchButtonSize(props.size) + " " + props.className} onClick={buttonClicked} disabled={props.disabled}>
             {props.children}
         </button>
     )
