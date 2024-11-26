@@ -91,7 +91,7 @@ export default function AOTenderDetail(){
     return(
         <DashboardLayout sideNavIndex={index} bcItems={bcItems} role={role}>
             <div className="flex flex-col gap-4 h-full">
-                <Paper className="p-2 flex flex-col gap-2">
+                <Paper className="p-2 flex flex-col gap-4">
                     <BorderedBox className="text-sm flex flex-col gap-2">
                         <h2 className="font-bold">Biodata Tender</h2>
                         <p>{tenderData?.nama}</p>
