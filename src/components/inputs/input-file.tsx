@@ -7,6 +7,7 @@ interface FileUploadProps {
 
 const FileUpload: React.FC<FileUploadProps> = ({ onFileUpload }) => {
   const [isDragging, setIsDragging] = useState(false);
+  const [uploadedFile, setUploadedFile] = useState<File | null>(null);
 
   const handleDragEnter = useCallback((e: React.DragEvent<HTMLDivElement>) => {
     e.preventDefault();
@@ -27,6 +28,8 @@ const FileUpload: React.FC<FileUploadProps> = ({ onFileUpload }) => {
       setIsDragging(false);
       const files = e.dataTransfer.files;
       if (files && files[0]) {
+        const file = files[0];
+        setUploadedFile(file); // Set uploaded file
         onFileUpload(files[0]);
       }
     },
@@ -36,7 +39,9 @@ const FileUpload: React.FC<FileUploadProps> = ({ onFileUpload }) => {
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files;
     if (files && files[0]) {
-      onFileUpload(files[0]);
+        const file = files[0];
+        setUploadedFile(file); // Set uploaded file
+        onFileUpload(files[0]);
     }
   };
 
@@ -56,16 +61,24 @@ const FileUpload: React.FC<FileUploadProps> = ({ onFileUpload }) => {
         className="hidden"
         onChange={handleFileChange}
       />
-      <label
-        htmlFor="fileInput"
-        className="flex flex-col items-center justify-center cursor-pointer"
-      >
-        <div className="text-blue-500">
-          <IoMdCloudUpload size={30} />
-        </div>
-        <p className="mt-2 text-blue-500 font-semibold">Upload Dokumen</p>
-        <p className="text-gray-400">upload dokumen tanda terima</p>
-      </label>
+      {uploadedFile ? (
+        <label className="text-center">
+          <p className="text-gray-400 font-medium">
+            File uploaded: <span className="text-blue-500">{uploadedFile.name}</span>
+          </p>
+        </label>
+      ) : (
+        <label
+            htmlFor="fileInput"
+            className="flex flex-col items-center justify-center cursor-pointer"
+        >
+            <div className="text-blue-500">
+                <IoMdCloudUpload size={30} />
+            </div>
+            <p className="mt-2 text-blue-500 font-semibold">Upload Dokumen</p>
+            <p className="text-gray-400">upload dokumen tanda terima</p>
+        </label>
+      )}
     </div>
   );
 };
