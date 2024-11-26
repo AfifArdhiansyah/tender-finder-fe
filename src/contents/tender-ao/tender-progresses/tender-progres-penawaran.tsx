@@ -19,7 +19,7 @@ export default function TenderProgresPenawaran(){
                 <FiDownload className="text-black" size={16}/>
             </TransparentButton>
             <p className="font-bold">Upload Dokumen Tanda Terima:</p>
-            <FileUpload onFileUpload={()=>{uploadFile()}}/>
+            <FileUpload onFileUpload={()=>{uploadFile()}} label="Upload Dokumen" placeholder="upload dokumen tanda terima"/>
         </div>
     )
 }

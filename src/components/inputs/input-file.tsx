@@ -3,9 +3,11 @@ import { IoMdCloudUpload } from "react-icons/io";
 
 interface FileUploadProps {
   onFileUpload: (file: File) => void;
+  label?: string;
+  placeholder?: string;
 }
 
-const FileUpload: React.FC<FileUploadProps> = ({ onFileUpload }) => {
+export default function FileUpload(props: FileUploadProps){
   const [isDragging, setIsDragging] = useState(false);
   const [uploadedFile, setUploadedFile] = useState<File | null>(null);
 
@@ -30,10 +32,10 @@ const FileUpload: React.FC<FileUploadProps> = ({ onFileUpload }) => {
       if (files && files[0]) {
         const file = files[0];
         setUploadedFile(file); // Set uploaded file
-        onFileUpload(files[0]);
+        props.onFileUpload(files[0]);
       }
     },
-    [onFileUpload]
+    [props.onFileUpload]
   );
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -41,7 +43,7 @@ const FileUpload: React.FC<FileUploadProps> = ({ onFileUpload }) => {
     if (files && files[0]) {
         const file = files[0];
         setUploadedFile(file); // Set uploaded file
-        onFileUpload(files[0]);
+        props.onFileUpload(files[0]);
     }
   };
 
@@ -75,12 +77,10 @@ const FileUpload: React.FC<FileUploadProps> = ({ onFileUpload }) => {
             <div className="text-blue-500">
                 <IoMdCloudUpload size={30} />
             </div>
-            <p className="mt-2 text-blue-500 font-semibold">Upload Dokumen</p>
-            <p className="text-gray-400">upload dokumen tanda terima</p>
+            <p className="mt-2 text-blue-500 font-semibold">{props.label}</p>
+            <p className="text-gray-400">{props.placeholder}</p>
         </label>
       )}
     </div>
   );
 };
-
-export default FileUpload;
