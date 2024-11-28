@@ -1,5 +1,5 @@
 import FileUpload from "@/components/inputs/input-file";
-import InputText from "@/components/inputs/input-text";
+import InputTextArea from "@/components/inputs/input-text-area";
 import toast, {Toaster} from "react-hot-toast";
 
 export default function TenderProgresTindakLanjut(){
@@ -11,7 +11,7 @@ export default function TenderProgresTindakLanjut(){
             <Toaster/>
             <p className="font-bold">Upload Foto Follow Up:</p>
             <FileUpload onFileUpload={()=>{uploadFile()}} label="Upload Foto" placeholder="upload foto telah follow up"/>
-            <InputText className="min-h-[70px]" placeholder="Tulis apa progess apa saja yang sudah di lakukan..."/>
+            <InputTextArea className="min-h-[70px]" placeholder="Tulis apa progess apa saja yang sudah di lakukan..."/>
         </div>
     )
 }

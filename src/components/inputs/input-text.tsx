@@ -6,6 +6,6 @@ interface InputTextProps{
 
 export default function InputText(props: InputTextProps){
     return(
-        <textarea className={"w-full border border-gray-300 rounded-lg p-2 "+ props.className} placeholder={props.placeholder}/>
+        <input type="text" className={"w-full border border-gray-300 rounded-lg p-2 "+ props.className} placeholder={props.placeholder}/>
     )
 }
