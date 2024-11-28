@@ -1,5 +1,6 @@
 import { TenderAOModel } from "@/models/tender-ao-model"
 import Pill from "@/components/items/pill"
+import Link from "next/link"
 
 interface TenderListItemProps{
     dataTender: TenderAOModel
@@ -49,7 +50,7 @@ export default function TenderListItem(props: TenderListItemProps){
         }
     }
     return(
-        <div className="flex w-full">
+        <Link className="flex w-full" href={"/ao-tender/"+props.dataTender.id}>
             <div className={"w-2 h-full rounded-l-xl " + getStatusColor(props.dataTender.status)}></div>
              <div className="flex flex-col text-sm bg-white px-2 py-2 gap-2 rounded-r-xl w-full">
                 <p className="font-bold text-md">{props.dataTender.nama}</p>
@@ -60,6 +61,6 @@ export default function TenderListItem(props: TenderListItemProps){
                 <p className="text-gray-500">{props.dataTender.alamat_pemenang}</p>
                 <Pill type={getStatusType(props.dataTender.status)} size={"small"}>{getStatusLabel(props.dataTender.status)}</Pill>
             </div>
-        </div>
+        </Link>
     )
 }
