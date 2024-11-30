@@ -8,7 +8,7 @@ export const SidebarNavigator = [
     },
     {
         iconPath: "/icons/list",
-        name: "Daftar Tender",
+        name: "Tender List",
         ref: "/tender"
     },
     {

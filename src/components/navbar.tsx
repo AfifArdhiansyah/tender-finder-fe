@@ -9,7 +9,7 @@ export default function Navbar(props: NavbarProps){
     function getTitle(){
         switch(props.role){
             case 'manager-pusat':
-                return 'Pusat Tata Surya'
+                return 'Kantor Pusat'
             case 'manager-kanwil':
                 return 'Kantor Wilayah'
             case 'manager-kc':
@@ -17,7 +17,7 @@ export default function Navbar(props: NavbarProps){
             case 'ao':
                 return 'Account Officer'
             default:
-                return 'Pusat Tata Surya'
+                return 'Kantor Pusat'
         }
     }
     return(
