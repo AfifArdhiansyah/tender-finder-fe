@@ -47,7 +47,6 @@ export default function PieChartSummary(props: PieChartSummaryProps) {
                             labelStyle: {
                                 tableLayout: 'fixed',
                             },
-                            direction: 'row',
                             position: {
                                 horizontal: 'middle',
                                 vertical: 'bottom',
