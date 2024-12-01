@@ -1,3 +1,5 @@
+'use client'
+
 import React from 'react';
 import Image from 'next/image'
 import Pill from '../items/pill'
@@ -5,18 +7,20 @@ import SidebarList from './sidebar-list';
 import SidebarListChild from './sidebar-list-child';
 import { SidebarNavigator, SidebarNavigatorAO } from '@/constants/navigator';
 import { IoClose } from "react-icons/io5";
+import { useUser } from '@/hooks/useUser';
 
 interface SidebarProps{
     indexNav: number,
     setIndexList: Function
     isSidebarOpen: boolean
     setSidebarOpen: Function
-    role?: 'manager-pusat' | 'manager-pusat' | 'manager-kanwil' | 'manager-kc' | 'ao'
 }
 
 export default function Sidebar(props: SidebarProps) {
+    const {name, role} = useUser()
+
     function getDataNavigator(){
-        switch(props.role){
+        switch(role){
             case 'manager-pusat':
                 return SidebarNavigator
             case 'manager-kanwil':
@@ -30,7 +34,7 @@ export default function Sidebar(props: SidebarProps) {
         }
     }
     function getRole(){
-        switch(props.role){
+        switch(role){
             case 'manager-pusat':
                 return 'Manager'
             case 'manager-kanwil':
@@ -56,11 +60,11 @@ export default function Sidebar(props: SidebarProps) {
                     </div>
                     <div className='flex gap-4 md:flex-col md:items-center lg:flex-row lg:items-start'>
                         {
-                            props.role == 'ao' ? (
+                            role == 'ao' ? (
                                 <>
                                     <Image src={"/manager2.png"} width={50} height={50} className='rounded-full' alt='foto-profile' />
                                     <div className='flex flex-col gap-2 md:items-center lg:items:start'>
-                                        <p className='font-bold'>Cecep Kurnia</p>
+                                        <p className='font-bold'>{name}</p>
                                         <Pill type='general' size='small'>{getRole()}</Pill>
                                     </div>
                                 </>
@@ -68,7 +72,7 @@ export default function Sidebar(props: SidebarProps) {
                                 <>
                                     <Image src={"/manager.png"} width={50} height={50} className='rounded-full' alt='foto-profile' />
                                     <div className='flex flex-col gap-2 md:items-center lg:items:start'>
-                                        <p className='font-bold'>Claudia</p>
+                                        <p className='font-bold'>{name}</p>
                                         <Pill type='general' size='small'>{getRole()}</Pill>
                                     </div>
                                 </>
