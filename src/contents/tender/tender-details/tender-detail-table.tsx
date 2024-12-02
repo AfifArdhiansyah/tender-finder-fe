@@ -33,7 +33,7 @@ export default function TenderDetailTable(props: TenderDetailTableProps){
                         <p className="text-gray-500 col-span-10 max-md:col-span-7 max-lg:col-span-8"><span className="font-bold mr-2">:</span> {tenderProject?.lokasi_pekerjaan}</p>
 
                         <p className="font-bold col-span-2 max-md:col-span-5 max-lg:col-span-4">Nama AO</p>
-                        <p className="text-gray-500 col-span-10 max-md:col-span-7 max-lg:col-span-8"><span className="font-bold mr-2">:</span> {tenderProject?.ao_id}</p>
+                        <p className="text-gray-500 col-span-10 max-md:col-span-7 max-lg:col-span-8"><span className="font-bold mr-2">:</span> {tenderProject?.account_officer.nama}</p>
 
                         <p className="font-bold col-span-2 max-md:col-span-5 max-lg:col-span-4">Dokumen Tanda Terima</p>
                         <p className="text-gray-500 col-span-10 max-md:col-span-7 max-lg:col-span-8"><span className="font-bold mr-2">:</span> ini dokumen tanda terima</p>
@@ -42,7 +42,7 @@ export default function TenderDetailTable(props: TenderDetailTableProps){
                         <p className="text-gray-500 col-span-10 max-md:col-span-7 max-lg:col-span-8"><span className="font-bold mr-2">:</span> ini data follow up</p>
 
                         <p className="font-bold col-span-2 max-md:col-span-5 max-lg:col-span-4">Status Penerimaan</p>
-                        <p className="text-gray-500 col-span-10 max-md:col-span-7 max-lg:col-span-8"><span className="font-bold mr-2">:</span> {tenderProject?.status}</p>
+                        <p className="text-gray-500 col-span-10 max-md:col-span-7 max-lg:col-span-8"><span className="font-bold mr-2">:</span> {tenderProject?.tender_statuses[tenderProject.tender_statuses?.length-1].status.nama}</p>
 
                         <p className="font-bold col-span-2 max-md:col-span-5 max-lg:col-span-4">Produk Yang Dipilih</p>
                         <p className="text-gray-500 col-span-10 max-md:col-span-7 max-lg:col-span-8"><span className="font-bold mr-2">:</span> {"KMKK"}</p>

@@ -26,7 +26,7 @@ export default function Sidebar(props: SidebarProps) {
                 return SidebarNavigator
             case 'manager-kanwil':
                 return SidebarNavigator
-            case 'manager-kc':
+            case 'manager-cabang':
                 return SidebarNavigator
             case 'ao':
                 return SidebarNavigatorAO
@@ -40,7 +40,7 @@ export default function Sidebar(props: SidebarProps) {
                 return 'Manager'
             case 'manager-kanwil':
                 return 'Manager Kanwil'
-            case 'manager-kc':
+            case 'manager-cabang':
                 return 'Manager KC'
             case 'ao':
                 return 'Account Officer'
@@ -66,7 +66,7 @@ export default function Sidebar(props: SidebarProps) {
                                     <Image src={"/manager2.png"} width={50} height={50} className='rounded-full' alt='foto-profile' />
                                     <div className='flex flex-col gap-2 md:items-center lg:items:start'>
                                         <Link href={"/user"} className='font-bold hover:text-blue-500'>{name}</Link>
-                                        <Pill type='general' size='small'>{getRole()}</Pill>
+                                        <Pill type='general' size='xs'>{getRole()}</Pill>
                                     </div>
                                 </>
                             ) : (
@@ -74,7 +74,7 @@ export default function Sidebar(props: SidebarProps) {
                                     <Image src={"/manager.png"} width={50} height={50} className='rounded-full' alt='foto-profile' />
                                     <div className='flex flex-col gap-2 md:items-center lg:items:start'>
                                         <Link href={"/user"} className='font-bold hover:text-blue-500'>{name}</Link>
-                                        <Pill type='general' size='small'>{getRole()}</Pill>
+                                        <Pill type='general' size='xs'>{getRole()}</Pill>
                                     </div>
                                 </>
                             )

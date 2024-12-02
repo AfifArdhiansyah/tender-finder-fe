@@ -12,7 +12,6 @@ export default function TenderProgresPenawaran(){
     }
     return(
         <div className="flex flex-col gap-4 text-xs">
-            <Toaster/>
             <p className="font-bold">Download Surat Penawaran:</p>
             <TransparentButton className="border px-3 py-2 rounded-lg text-blue-500 flex justify-between items-center" hoverBGColor={""} hoverTextColor={""} onClick={()=>{downloadFile()}}>
                 Download dokumen surat penawaran

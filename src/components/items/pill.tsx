@@ -2,7 +2,7 @@ import { ReactNode } from "react"
 
 interface PillProps {
     type : "general" | "alert" | "danger" | "success" | "primary",
-    size : "large" | "medium" | "small"
+    size : "large" | "medium" | "small" | "xs"
     className? : string,
     children? : ReactNode
 }
@@ -30,6 +30,8 @@ function switchPillSize(size: string):string{
             return "text-md"
         case "small":
             return "text-sm" 
+        case "xs":
+            return "text-xs" 
         case "large":
             return "text-lg" 
         default:

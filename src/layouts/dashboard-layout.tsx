@@ -12,7 +12,7 @@ interface LayoutProps {
     children?: ReactNode;
     bcItems: BreadcrumbItem[]
     onClickBC?: Function;
-    role?: 'manager-pusat' | 'manager-kanwil' | 'manager-kc' | 'ao'
+    role?: string
 }
 
 export default function DashboardLayout(layoutProps: LayoutProps){
@@ -28,7 +28,7 @@ export default function DashboardLayout(layoutProps: LayoutProps){
             </div>
             <div className="flex flex-col gap-6 w-full">
                 {/* Navbar */}
-                <Navbar toggleSidebar={()=>toggleSidebar} role={layoutProps.role}/>
+                <Navbar toggleSidebar={()=>toggleSidebar}/>
                 <div className="mx-6 flex gap-2 max-md:mx-4">
                     <div className="w-[4px] h-full blue-bg"></div>
                     <Breadcrumb items={layoutProps.bcItems} onClick={layoutProps.onClickBC} />

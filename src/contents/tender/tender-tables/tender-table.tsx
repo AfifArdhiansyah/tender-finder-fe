@@ -58,7 +58,7 @@ export default function TenderTable(props: TenderTableProps){
     const paginatedData = filteredData.slice(
         (currentPage - 1) * itemsPerPage,
         currentPage * itemsPerPage
-    );
+    ) as any[];
     const handleNext = () => {
         if (currentPage < totalPages) setCurrentPage((prev) => prev + 1);
     };
@@ -79,7 +79,19 @@ export default function TenderTable(props: TenderTableProps){
                             <td key={i.toString() + j.toString()} className={"px-2 py-2 text-sm border-b-[1px] " + (col == "nilai_tender"?"text-end":"")}>
                                 {col == "status" && (
                                     <div className="flex justify-center">
-                                        <StatusAction status={data[col]} tenderId={data["id"]} tenderName={data["nama"]} dataTender={data} isOpenModalAO={isOpenModalAO} isOpenModalTenderDetail={isOpenModalTenderDetail} showModalAO={showModalAO} closeModalAO={closeModalAO} setSelectedTender={onSetTenderSelect} showModalTenderDetail={showModalTenderDetail} closeModalTenderDetail={closeModalTenderDetail}/>
+                                        <StatusAction 
+                                            status={data.tender_statuses[data.tender_statuses.length-1].status.nama} 
+                                            tenderId={data.id} 
+                                            tenderName={data.nama} 
+                                            dataTender={data} 
+                                            isOpenModalAO={isOpenModalAO} 
+                                            isOpenModalTenderDetail={isOpenModalTenderDetail} 
+                                            showModalAO={showModalAO} 
+                                            closeModalAO={closeModalAO} 
+                                            setSelectedTender={onSetTenderSelect} 
+                                            showModalTenderDetail={showModalTenderDetail} 
+                                            closeModalTenderDetail={closeModalTenderDetail}
+                                        />
                                     </div>
                                 )}
                                 {

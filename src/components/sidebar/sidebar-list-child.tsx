@@ -17,7 +17,7 @@ export default function SidebarListChild(props: SidebarListChildProps){
         const activeClass = ""
         switch(isActive){
             case true:
-                return activeClass + "bg-blue-600 text-white"
+                return activeClass + "bg-blue-500 text-white"
             case false:
                 return activeClass + "text-gray-600"
         }

@@ -35,19 +35,20 @@ export default function LoginForm() {
     };
 
     return (
-        <div className="flex flex-col w-full h-full justify-between">
-            <div className="flex items-end gap-10">
+        <div className="flex flex-col w-full h-full justify-between items-center p-16 max-lg:p-1">
+            <div className="flex items-end gap-10 w-full">
                 <Image src={"/logo-bank-bjb.png"} width={100} height={100} alt="logo bank bjb" />
-                <h1 className="text-3xl font-bold">Tender Finder</h1>
+                <h1 className="text-3xl font-bold max-lg:text-xl">Tender Finder</h1>
             </div>
-            <div className="flex flex-col gap-10">
+            <div className="flex flex-col gap-10 w-full max-lg:w-full">
                 <div className="flex flex-col gap-1">
                     <h2 className="text-2xl font-bold">Login</h2>
                     <p>Masukkan NIP dan password</p>
                 </div>
-                <div className="flex flex-col gap-4 w-[70%]">
+                <div className="flex flex-col gap-4">
                     <label htmlFor="nip">NIP</label>
                     <InputText
+                        className=""
                         name="nip"
                         placeholder="Masukkan NIP"
                         ref={nipRef}
@@ -58,6 +59,7 @@ export default function LoginForm() {
                     <label htmlFor="password">Password</label>
                     <div className="relative">
                         <InputText
+                            className=""
                             name="password"
                             type={showPassword ? "text" : "password"}
                             placeholder="Masukkan Password"

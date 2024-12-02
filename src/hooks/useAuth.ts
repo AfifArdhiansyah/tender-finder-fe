@@ -5,12 +5,14 @@ import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 import api from "@/services/api";
 import { useCookies } from 'next-client-cookies';
+import { Office } from "./useUser";
 
 interface LoginResponse {
     data: {
         token: string,
         nama: string,
-        role: string
+        role: string,
+        office_name: string
     },
     message: string
 }
@@ -51,6 +53,7 @@ export function useAuth(): UseAuthReturn {
             cookies.set("authToken", data.data.token);
             cookies.set("name", data.data.nama);
             cookies.set("role", data.data.role);
+            cookies.set("office-name", data.data.office_name)
             toast.success("Login successful!", { id: toastId });
 
             if(data.data.role == "ao"){
@@ -91,6 +94,7 @@ export function useAuth(): UseAuthReturn {
             cookies.remove("authToken")
             cookies.remove("name");
             cookies.remove("role");
+            cookies.remove("office-name")
             toast.success("Logout successful!", { id: toastId });
 
             router.push("/auth");

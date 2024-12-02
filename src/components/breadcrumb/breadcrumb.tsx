@@ -15,7 +15,7 @@ interface BreadcrumbProps {
 
 export default function Breadcrumb(props: BreadcrumbProps){
     return (
-        <nav className="font-bold text-lg max-md:text-sm">
+        <nav className="font-bold w-fit text-lg max-md:text-sm">
             <ol className="list-none p-0 inline-flex">
                 {props.items?.map((item, index) => (
                     <li key={index} className={"flex items-center "}>
@@ -29,7 +29,7 @@ export default function Breadcrumb(props: BreadcrumbProps){
                         ) : (
                             <button
                                 onClick={() => props.onClick?.(item.state)}
-                                className={"md:hover:text-blue-500 focus:outline-none "+ ((index == 0) ? "text-black": "text-gray-500")}
+                                className={"md:hover:text-blue-500 "+ ((index == 0) ? "text-black": "text-gray-500")}
                             >
                                 {item.label}
                             </button>

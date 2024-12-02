@@ -5,6 +5,17 @@ import toast from "react-hot-toast";
 import api from "@/services/api";
 import { useCookies } from 'next-client-cookies';
 
+export interface Office{
+    id: number,
+    kota_kab: string,
+    nama: string,
+    alamat: string,
+    ltd_loc: string,
+    lng_loc: string,
+    type: string,
+    kanwil_id: 1,
+}
+
 interface User {
     id: number,
     nip: string,
@@ -12,6 +23,7 @@ interface User {
     is_active: boolean,
     role: string,
     office_id: number,
+    office: Office,
     created_at: string,
     updated_at: string
 }
@@ -19,7 +31,8 @@ interface User {
 interface UseUserReturn {
     user: User | null;
     name: string;
-    role: string
+    role: string;
+    officeName: string;
     loading: boolean;
     error: string | null;
 }
@@ -30,6 +43,8 @@ export function useUser(): UseUserReturn {
     const [error, setError] = useState<string | null>(null);
     const [name, setName] = useState("")
     const [role, setRole] = useState("")
+    const [officeName, setOfficeName] = useState("")
+
     const cookies = useCookies();
 
     useEffect(() => {
@@ -41,6 +56,10 @@ export function useUser(): UseUserReturn {
             const userRole = cookies.get("role")
             if (userRole) {
                 setRole(userRole);
+            }
+            const officeName = cookies.get("office-name")
+            if (officeName) {
+                setOfficeName(officeName);
             }
         }
         getUserData()
@@ -69,7 +88,7 @@ export function useUser(): UseUserReturn {
                     throw new Error(errorData.message || "Failed to fetch user data");
                 }
 
-                const data: User = response.data;
+                const data: User = response.data.data;
                 setUser(data);
             } catch (err: unknown) {
                 setError(err instanceof Error ? err.message : "An unexpected error occurred");
@@ -84,5 +103,5 @@ export function useUser(): UseUserReturn {
         fetchUser();
     }, []);
 
-    return { user, name, role, loading, error };
+    return { user, name, role, officeName, loading, error };
 }

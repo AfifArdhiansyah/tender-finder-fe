@@ -30,14 +30,20 @@ export default function StatusAction(props: StatusActionInterface){
         router.push("/tender/"+props.tenderId)
     }
     switch(props.status){
-        case "dalam proses":
-            return <TextButton size="medium" type="alert" onClick={goToDetail}>{props.status}</TextButton>
-        case "selesai":
-            return <TextButton size="medium" type="primary" onClick={goToDetail}>{props.status}</TextButton>
-        case "batal":
-            return <TextButton size="medium" type="danger" onClick={goToDetail}>{props.status}</TextButton>
-        case "baru":
+        case "pemenang baru":
             return <Button type="alert" size="medium" onClick={onShowClickedAO}>tawarkan</Button>
+        case "penawaran":
+            return <TextButton size="medium" type="alert" onClick={goToDetail}>{props.status}</TextButton>
+        case "tidak berminat":
+            return <TextButton size="medium" type="danger" onClick={goToDetail}>{props.status}</TextButton>
+        case "pengajuan":
+            return <TextButton size="medium" type="alert" onClick={goToDetail}>{props.status}</TextButton>
+        case "kredit disetujui":
+            return <TextButton size="medium" type="primary" onClick={goToDetail}>{props.status}</TextButton>
+        case "kredit ditolak":
+            return <TextButton size="medium" type="danger" onClick={goToDetail}>{props.status}</TextButton>
+        case "kredit gagal":
+            return <TextButton size="medium" type="danger" onClick={goToDetail}>{props.status}</TextButton>
         default:
             return <Button type="alert" size="medium" onClick={()=>{}}>{props.status}</Button>
     }

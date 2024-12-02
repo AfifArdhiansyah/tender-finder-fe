@@ -1,3 +1,5 @@
+import { AccountOfficerModel } from "./ao.mode";
+import { TenderStatusModel } from "./tender-status-model";
 
 export interface TenderProjectModel {
   id: string;
@@ -11,6 +13,7 @@ export interface TenderProjectModel {
   nilai_tender: string;
   branch_id: number;
   ao_id: number;
-  status: string;
+  tender_statuses: TenderStatusModel[];
+  account_officer: AccountOfficerModel;
 }
   
