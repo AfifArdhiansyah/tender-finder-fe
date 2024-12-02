@@ -17,13 +17,13 @@ export default function SummaryTable(props: SummaryContentProps) {
         let state = ""
         switch(props.bcIndex){
             case 0:
-                state = "kanwil"
+                state = "manager-kanwil"
                 break
             case 1:
-                state = "kc"
+                state = "manager-cabang"
                 break
             default:
-                state = "pusat"
+                state = "manager-pusat"
                 break
         }
         props.openDetail && props.openDetail(state, label)

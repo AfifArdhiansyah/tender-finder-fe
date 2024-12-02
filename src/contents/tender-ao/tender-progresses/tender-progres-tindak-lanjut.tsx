@@ -8,7 +8,6 @@ export default function TenderProgresTindakLanjut(){
     }
     return(
         <div className="flex flex-col gap-4 text-xs">
-            <Toaster/>
             <p className="font-bold">Upload Foto Follow Up:</p>
             <FileUpload onFileUpload={()=>{uploadFile()}} label="Upload Foto" placeholder="upload foto telah follow up"/>
             <InputTextArea className="min-h-[70px]" placeholder="Tulis apa progess apa saja yang sudah di lakukan..."/>
