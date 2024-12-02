@@ -8,6 +8,7 @@ import SidebarListChild from './sidebar-list-child';
 import { SidebarNavigator, SidebarNavigatorAO } from '@/constants/navigator';
 import { IoClose } from "react-icons/io5";
 import { useUser } from '@/hooks/useUser';
+import Link from 'next/link';
 
 interface SidebarProps{
     indexNav: number,
@@ -64,7 +65,7 @@ export default function Sidebar(props: SidebarProps) {
                                 <>
                                     <Image src={"/manager2.png"} width={50} height={50} className='rounded-full' alt='foto-profile' />
                                     <div className='flex flex-col gap-2 md:items-center lg:items:start'>
-                                        <p className='font-bold'>{name}</p>
+                                        <Link href={"/user"} className='font-bold hover:text-blue-500'>{name}</Link>
                                         <Pill type='general' size='small'>{getRole()}</Pill>
                                     </div>
                                 </>
@@ -72,7 +73,7 @@ export default function Sidebar(props: SidebarProps) {
                                 <>
                                     <Image src={"/manager.png"} width={50} height={50} className='rounded-full' alt='foto-profile' />
                                     <div className='flex flex-col gap-2 md:items-center lg:items:start'>
-                                        <p className='font-bold'>{name}</p>
+                                        <Link href={"/user"} className='font-bold hover:text-blue-500'>{name}</Link>
                                         <Pill type='general' size='small'>{getRole()}</Pill>
                                     </div>
                                 </>

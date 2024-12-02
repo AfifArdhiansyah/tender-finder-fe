@@ -31,8 +31,6 @@ export default function LoginForm() {
     };
 
     const handleLogin = async () => {
-        console.log("Logging in with:", formData);
-        // Implementasikan logika login di sini
         await login(formData.nip, formData.password)
     };
 

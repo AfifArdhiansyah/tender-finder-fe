@@ -60,8 +60,7 @@ export function useUser(): UseUserReturn {
             try {
                 const response = await api.get("/user", {
                     headers: {
-                        "Authorization": `Bearer ${token}`,
-                        "Content-Type": "application/json",
+                        "Authorization": `Bearer ${token}`
                     },
                 });
 
