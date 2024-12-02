@@ -49,6 +49,7 @@ export default function Dashboard(){
         }
     }
     const [currState, setCurrState] = useState("")
+    const [currRole, setCurRole] = useState(role)
 
     const index = 0;
     const [summaryDatas, setSummaryDatas] = useState<any[]>([])
@@ -64,6 +65,7 @@ export default function Dashboard(){
         setBCIndex(getBCIndex())
         setCurrLabel(getCurrLabel())
         setCurrState(role)
+        setCurRole(role)
         setBreadcrumbItems([
             { label: SidebarNavigator[index].name, state: role}
         ])
@@ -136,7 +138,7 @@ export default function Dashboard(){
         switchBCState(state, label)
     }
     return(
-        <DashboardLayout sideNavIndex={index} bcItems={breadcrumbItems} onClickBC={handleBreadcrumbClick}>
+        <DashboardLayout sideNavIndex={index} bcItems={breadcrumbItems} onClickBC={handleBreadcrumbClick} role={currRole}>
             <div className="flex flex-col gap-4 h-full">
                 <Paper className="">
                     <SummaryContent title={currLabel} stateIndex={bcIndex}/>

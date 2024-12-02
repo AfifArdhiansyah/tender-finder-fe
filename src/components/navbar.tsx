@@ -1,18 +1,24 @@
+import { useUser } from "@/hooks/useUser"
+import { useEffect, useState } from "react"
 import { HiMenu } from "react-icons/hi"
 
 interface NavbarProps{
     toggleSidebar: Function
-    role?: 'manager-pusat' | 'manager-kanwil' | 'manager-kc' | 'ao'
 }
 
 export default function Navbar(props: NavbarProps){
+    const {role} = useUser()
+    const [currRole, setCurrRole] = useState(role)
+    useEffect(() => {
+        setCurrRole(role)
+    }, [role])
     function getTitle(){
-        switch(props.role){
+        switch(currRole){
             case 'manager-pusat':
                 return 'Kantor Pusat'
             case 'manager-kanwil':
                 return 'Kantor Wilayah'
-            case 'manager-kc':
+            case 'manager-cabang':
                 return 'Kantor Cabang'
             case 'ao':
                 return 'Account Officer'

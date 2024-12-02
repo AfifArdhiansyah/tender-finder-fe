@@ -18,16 +18,24 @@ export default function User(){
     const {logout} = useAuth()
     function getRole(role:string){
         switch(role){
-            case 'manager-pusat':
-                return 'Manager'
-            case 'manager-kanwil':
-                return 'Manager Kanwil'
-            case 'manager-kc':
-                return 'Manager KC'
             case 'ao':
                 return 'Account Officer'
             default:
                 return 'Manager'
+        }
+    }
+    function getKantor(role:string){
+        switch(role){
+            case 'manager-pusat':
+                return 'Kantor Pusat'
+            case 'manager-kanwil':
+                return 'Kantor Wilayah'
+            case 'manager-cabang':
+                return 'Kantor Cabang'
+            case 'ao':
+                return 'Kantor Cabang'
+            default:
+                return 'Kantor Pusat'
         }
     }
     const handleLogout = async () => {
@@ -46,9 +54,9 @@ export default function User(){
                     ) : error ? (
                         <Response type="error" message={error}/>
                     ) : (
-                        <div className="grid grid-cols-12 gap-2">
+                        <div className="grid grid-cols-12 gap-2 max-md:text-sm">
                             <p className="col-span-4 md:col-span-2">Foto Profile</p>
-                            <Image src={user?.role=="ao"?"/manager2.png":"/manager.png"} width={80} height={80} className='rounded-full col-span-8 md:col-span-10' alt='foto-profile' />
+                            <Image src={user?.role=="ao"?"/manager2.png":"/manager.png"} width={120} height={120} className='rounded col-span-8 md:col-span-10' alt='foto-profile' />
                             <p className="col-span-4 md:col-span-2">Nama</p>
                             <p className="col-span-8 md:col-span-10">: <span className="text-gray-500">{user?.nama}</span></p>
                             <p className="col-span-4 md:col-span-2">NIP</p>
@@ -56,7 +64,7 @@ export default function User(){
                             <p className="col-span-4 md:col-span-2">Posisi</p>
                             <p className="col-span-8 md:col-span-10">: <span className="text-gray-500">{getRole(user?.role as string)}</span></p>
                             <p className="col-span-4 md:col-span-2">Lokasi</p>
-                            <p className="col-span-8 md:col-span-10">: <span className="text-gray-500">{"Kantor Pusat"}</span></p>
+                            <p className="col-span-8 md:col-span-10">: <span className="text-gray-500">{getKantor(user?.role as string)}</span></p>
                         </div>
                     )
                 }
