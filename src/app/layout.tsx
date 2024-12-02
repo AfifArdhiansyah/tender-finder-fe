@@ -4,6 +4,7 @@ import localFont from "next/font/local";
 import "./globals.css";
 import { Poppins } from 'next/font/google'
 import { Toaster } from "react-hot-toast";
+import { CookiesProvider } from 'next-client-cookies/server';
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -32,8 +33,10 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <Toaster />
-        {children}
+        <CookiesProvider>
+          <Toaster />
+          {children}
+        </CookiesProvider>
       </body>
     </html>
   );

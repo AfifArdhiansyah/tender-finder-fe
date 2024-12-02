@@ -1,6 +1,9 @@
+'use client'
+
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import api from "@/services/api";
+import { useCookies } from 'next-client-cookies';
 
 interface User {
     id: number,
@@ -22,19 +25,31 @@ interface UseUserReturn {
 }
 
 export function useUser(): UseUserReturn {
-    const [user, setUser] = useState<User | null>(null);
+    const [user, setUser] = useState<User | null>(null)
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
-
-    const name = localStorage.getItem("name") as string
-    const role = localStorage.getItem("role") as string
+    const [name, setName] = useState("")
+    const [role, setRole] = useState("")
+    const cookies = useCookies();
 
     useEffect(() => {
+        function getUserData(){
+            const userName = cookies.get("name")
+            if (userName) {
+                setName(userName);
+            }
+            const userRole = cookies.get("role")
+            if (userRole) {
+                setRole(userRole);
+            }
+        }
+        getUserData()
+
         const fetchUser = async () => {
             setLoading(true);
             setError(null);
 
-            const token = localStorage.getItem("authToken");
+            const token = cookies.get("authToken")
 
             if (!token) {
                 setError("Authentication token not found");
@@ -51,11 +66,11 @@ export function useUser(): UseUserReturn {
                 });
 
                 if (response.status != 200) {
-                    const errorData = await response.data;
+                    const errorData = response.data;
                     throw new Error(errorData.message || "Failed to fetch user data");
                 }
 
-                const data: User = await response.data;
+                const data: User = response.data;
                 setUser(data);
             } catch (err: unknown) {
                 setError(err instanceof Error ? err.message : "An unexpected error occurred");

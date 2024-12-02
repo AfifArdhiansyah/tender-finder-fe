@@ -1,7 +1,10 @@
+'use client'
+
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 import api from "@/services/api";
+import { useCookies } from 'next-client-cookies';
 
 interface LoginResponse {
     success: boolean,
@@ -23,6 +26,7 @@ export function useAuth(): UseAuthReturn {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
     const router = useRouter();
+    const cookies = useCookies();
 
     const login = async (nip: string, password: string) => {
         setLoading(true);
@@ -38,10 +42,10 @@ export function useAuth(): UseAuthReturn {
 
             const data: LoginResponse = await response.data;
 
-            // Simpan token di localStorage atau cookies
-            localStorage.setItem("authToken", data.data.token);
-            localStorage.setItem("name", data.data.nama)
-            localStorage.setItem("role", data.data.role)
+            // Simpan token di cookies
+            cookies.set("authToken", data.data.token);
+            cookies.set("name", data.data.nama);
+            cookies.set("role", data.data.role);
             toast.success("Login successful!", { id: toastId });
 
             // Redirect ke Dashboard
