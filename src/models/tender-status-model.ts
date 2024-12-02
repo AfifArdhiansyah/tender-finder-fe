@@ -12,5 +12,6 @@ export interface TenderStatusModel{
     status_id: number,
     created_at: string,
     updated_at: string,
+    produk_dipilih: string,
     status: StatusModel
 }
