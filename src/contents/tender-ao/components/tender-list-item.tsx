@@ -17,7 +17,7 @@ export default function TenderListItem(props: TenderListItemProps){
                 return 'danger'
             case 'pengajuan':
                 return 'primary'
-            case 'kredit ditolak':
+            case 'kredit gagal':
                 return 'danger'
             case 'kredit disetujui':
                 return 'primary'
@@ -35,7 +35,7 @@ export default function TenderListItem(props: TenderListItemProps){
                 return 'Penawaran Ditolak'
             case 'pengajuan':
                 return 'Mengajukan Kredit'
-            case 'kredit ditolak':
+            case 'kredit gagal':
                 return 'Pengajuan Ditolak'
             case 'kredit disetujui':
                 return 'Pengajuan Disetujui'
@@ -53,7 +53,7 @@ export default function TenderListItem(props: TenderListItemProps){
                 return 'bg-red-400'
             case 'pengajuan':
                 return 'bg-blue-400'
-            case 'kredit ditolak':
+            case 'kredit gagal':
                 return 'bg-red-400'
             case 'kredit disetujui':
                 return 'bg-blue-400'

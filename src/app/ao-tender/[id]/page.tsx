@@ -14,6 +14,9 @@ import TenderProgresPengajuan from "@/contents/tender-ao/tender-progresses/tende
 import TenderProgresTindakLanjut from "@/contents/tender-ao/tender-progresses/tender-progres-tindak-lanjut"
 import TenderProgresPenyetujuan from "@/contents/tender-ao/tender-progresses/tender-progres-penyetujuan"
 import ProgressButton from "@/contents/tender-ao/components/progress-button"
+import { useGetTenderById } from "@/hooks/useTenderProjects"
+import Loading from "@/components/items/progress/loading"
+import Response from "@/components/items/responses/response"
 
 export default function AOTenderDetail(){
     const index = 1
@@ -30,16 +33,17 @@ export default function AOTenderDetail(){
     function contentNext(){
         if(contentIndex!=3) setContentIndex(contentIndex+1)
     }
-    const [tenderData, setTenderData] = useState(TenderAODumpData.find((tender)=>tender.id==id))
+    const { tenderProject, loading, error } = useGetTenderById(id as string);
+    const currStatus = tenderProject?.tender_statuses[tenderProject.tender_statuses.length-1].status.nama
     const dataProgress = [
-        {label:"Penawaran", successed:false},
-        {label:"Tindak Lanjut", successed:false},
-        {label:"Mengajukan Kredit", successed:false},
-        {label:"Penyetujuan Kredit", successed:false},
+        {label:"Penawaran", successed:false, ignored: false},
+        {label:"Tindak Lanjut", successed:false, ignored: false},
+        {label:"Mengajukan Kredit", successed:false, ignored: false},
+        {label:"Penyetujuan Kredit", successed:false, ignored: false},
     ]
     function getDataProgress(){
         const newData = dataProgress
-        if(tenderData?.status == 'baru'){
+        if(currStatus == 'pemenang baru'){
             for(const data in dataProgress){
                 newData[data].successed = true
                 if(dataProgress[data].label == 'Penawaran'){
@@ -47,7 +51,7 @@ export default function AOTenderDetail(){
                 }
             }
         }
-        else if(tenderData?.status == 'dalam-penawaran'){
+        else if(currStatus == "penawaran"){
             for(const data in dataProgress){
                 newData[data].successed = true
                 if(dataProgress[data].label == 'Tindak Lanjut'){
@@ -55,18 +59,20 @@ export default function AOTenderDetail(){
                 }
             }
         }
-        else if(tenderData?.status == 'mengajukan-kredit'){
+        else if(currStatus == "pengajuan" || currStatus == "tidak berminat"){
             for(const data in dataProgress){
                 newData[data].successed = true
                 if(dataProgress[data].label == 'Mengajukan Kredit'){
+                    if(currStatus == "tidak berminat") newData[data].ignored = true
                     break
                 }
             }
         }
-        else if(tenderData?.status == 'penawaran-ditolak'){
+        else if(currStatus == "kredit disetujui" || currStatus == "kredit gagal"){
             for(const data in dataProgress){
                 newData[data].successed = true
                 if(dataProgress[data].label == 'Penyetujuan Kredit'){
+                    if(currStatus == "kredit gagal") newData[data].ignored = true
                     break
                 }
             }
@@ -90,24 +96,32 @@ export default function AOTenderDetail(){
 
     return(
         <DashboardLayout sideNavIndex={index} bcItems={bcItems} role={role}>
-            <div className="flex flex-col gap-4 h-full">
-                <Paper className="p-2 flex flex-col gap-4">
-                    <BorderedBox className="text-sm flex flex-col gap-2">
-                        <h2 className="font-bold">Biodata Tender</h2>
-                        <p>{tenderData?.nama}</p>
-                        <p className="text-xs text-blue-400">{tenderData?.nama_pemenang}</p>
-                        <p className="text-xs text-gray-500">Rp. {parseFloat(tenderData?.nilai_tender as string).toLocaleString('id-ID')}</p>
-                        <p className="text-xs">Alamat Tender:</p>
-                        <p className="text-xs text-gray-500">{tenderData?.alamat_pemenang}</p>
-                    </BorderedBox>
-                    <p className="text-sm font-bold">Progres</p>
-                    <Progress items={getDataProgress()} visitedIndex={contentIndex}/>
-                    {
-                        getProgressContent()
-                    }
-                    <ProgressButton className="w-full" progressIndex={contentIndex} setIndexPrev={contentPrev} setIndexNext={contentNext}/>
-                </Paper>
-            </div>
+            {
+                loading ? (
+                    <Loading/>
+                ) : error ? (
+                    <Response message={error} type={"error"} />
+                ) : (
+                    <div className="flex flex-col gap-4 h-full">
+                        <Paper className="p-2 flex flex-col gap-4">
+                            <BorderedBox className="text-sm flex flex-col gap-2">
+                                <h2 className="font-bold">Biodata Tender</h2>
+                                <p>{tenderProject?.nama}</p>
+                                <p className="text-xs text-blue-400">{tenderProject?.nama_pemenang}</p>
+                                <p className="text-xs text-gray-500">Rp. {parseFloat(tenderProject?.nilai_tender as string).toLocaleString('id-ID')}</p>
+                                <p className="text-xs">Alamat Tender:</p>
+                                <p className="text-xs text-gray-500">{tenderProject?.lokasi_pekerjaan}</p>
+                            </BorderedBox>
+                            <p className="text-sm font-bold">Progres</p>
+                            <Progress items={getDataProgress()} visitedIndex={contentIndex}/>
+                            {
+                                getProgressContent()
+                            }
+                            <ProgressButton className="w-full" progressIndex={contentIndex} setIndexPrev={contentPrev} setIndexNext={contentNext}/>
+                        </Paper>
+                    </div>
+                )
+            }
         </DashboardLayout>
     )
 }
