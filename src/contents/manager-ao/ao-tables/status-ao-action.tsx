@@ -10,7 +10,6 @@ interface StatusAOActionInterface{
 export default function StatusAOAction(props: StatusAOActionInterface){
     function onOfferClicked(){
         props.onClick(props.ao)
-        // alert("tawar tender ke "+ props.ao?.nama)
     }
     if(props.status) return <Button type="alert" size="medium" onClick={onOfferClicked}>Pilih</Button>
     else return <Button type="disable" size="medium" onClick={onOfferClicked} disabled={true}>Tidak Aktif</Button>

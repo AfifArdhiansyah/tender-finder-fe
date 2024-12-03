@@ -42,7 +42,7 @@ export default function FileUpload(props: FileUploadProps){
     const files = e.target.files;
     if (files && files[0]) {
         const file = files[0];
-        setUploadedFile(file); // Set uploaded file
+        setUploadedFile(file);
         props.onFileUpload(files[0]);
     }
   };

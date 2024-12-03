@@ -6,7 +6,6 @@ import { BreadcrumbItem } from "@/components/breadcrumb/breadcrumb"
 import { useParams } from "next/navigation"
 import Paper from "@/components/frames/papes"
 import BorderedBox from "@/components/boxes/bordered-box"
-import { TenderAODumpData } from "@/constants/tender-ao/teder-ao-data"
 import { useState } from "react"
 import Progress from "@/components/progresses/progress"
 import TenderProgresPenawaran from "@/contents/tender-ao/tender-progresses/tender-progres-penawaran"
@@ -17,6 +16,8 @@ import ProgressButton from "@/contents/tender-ao/components/progress-button"
 import { useGetTenderById } from "@/hooks/useTenderProjects"
 import Loading from "@/components/items/progress/loading"
 import Response from "@/components/items/responses/response"
+import { TenderProjectModel } from "@/models/tender-project-model"
+import { useUploadData } from "@/hooks/useTenderStatus"
 
 export default function AOTenderDetail(){
     const index = 1
@@ -82,7 +83,7 @@ export default function AOTenderDetail(){
     function getProgressContent(){
         switch(contentIndex){
             case 0:
-                return <TenderProgresPenawaran/>
+                return <TenderProgresPenawaran uploadFile={onUploadFilePenawaran} dataTender={tenderProject as TenderProjectModel} indexProgress={contentIndex}/>
             case 1:
                 return <TenderProgresTindakLanjut/>
             case 2:
@@ -90,9 +91,38 @@ export default function AOTenderDetail(){
             case 3:
                 return <TenderProgresPenyetujuan/>
             default:
-                return <TenderProgresPenawaran/>
+                return <TenderProgresPenawaran uploadFile={onUploadFilePenawaran} dataTender={tenderProject as TenderProjectModel} indexProgress={contentIndex}/>
         }
     }
+    function getAllowNext(){
+        if(currStatus == 'pemenang baru' && contentIndex==0 && !filePenawaran){
+            return true
+        } else if (currStatus == 'penawaran' && contentIndex==1){
+            return true
+        } else if ((currStatus == 'pengajuan' || currStatus == "tidak berminat") && contentIndex==2){
+            return true
+        } else if ((currStatus == 'kredit disetujui' || currStatus == "kredit gagal") && contentIndex==3){
+            return true
+        } else {
+            return false
+        }
+    }
+
+    //penawaran
+    const [filePenawaran, setFilePenawaran] = useState()
+    const {uploadDataPenawaranAO} = useUploadData()
+    function onUploadFilePenawaran(file:any){
+        setFilePenawaran(file)
+    }
+    function onSubmitFilePenawaran(){
+        const formData = new FormData;
+        formData.append(
+            "file_penawaran", filePenawaran as unknown as Blob
+        );
+        formData.append("id", tenderProject?.tender_statuses[contentIndex].id as unknown as string);
+        uploadDataPenawaranAO(formData);
+    }
+    
 
     return(
         <DashboardLayout sideNavIndex={index} bcItems={bcItems} role={role}>
@@ -117,7 +147,16 @@ export default function AOTenderDetail(){
                             {
                                 getProgressContent()
                             }
-                            <ProgressButton className="w-full" progressIndex={contentIndex} setIndexPrev={contentPrev} setIndexNext={contentNext}/>
+                            <ProgressButton 
+                                className="w-full" 
+                                progressIndex={contentIndex} 
+                                setIndexPrev={contentPrev} 
+                                setIndexNext={contentNext} 
+                                dataTender={tenderProject as TenderProjectModel}
+                                filePenawaran={filePenawaran} 
+                                disabled={getAllowNext()}
+                                uploadFile={onSubmitFilePenawaran}
+                            />
                         </Paper>
                     </div>
                 )
