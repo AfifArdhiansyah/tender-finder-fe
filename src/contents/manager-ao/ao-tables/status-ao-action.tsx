@@ -1,19 +1,15 @@
 import Button from "@/components/items/buttons/button"
+import { UserModel } from "@/hooks/useUser"
 
 interface StatusAOActionInterface{
     status: string,
+    ao?: UserModel
 }
 
 export default function StatusAOAction(props: StatusAOActionInterface){
     function onOfferClicked(){
-        alert("tawar tender")
+        alert("tawar tender ke "+ props.ao?.nama)
     }
-    switch(props.status){
-        case "aktif":
-            return <Button type="alert" size="medium" onClick={onOfferClicked}>Pilih</Button>
-        case "non-aktif":
-            return <Button type="disable" size="medium" onClick={onOfferClicked} disabled={true}>Tidak Aktif</Button>
-        default:
-            return <p className="text-red-600">Tidak Aktif</p>
-    }
+    if(props.status) return <Button type="alert" size="medium" onClick={onOfferClicked}>Pilih</Button>
+    else return <Button type="disable" size="medium" onClick={onOfferClicked} disabled={true}>Tidak Aktif</Button>
 }

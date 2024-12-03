@@ -16,7 +16,7 @@ export interface Office{
     kanwil_id: 1,
 }
 
-interface User {
+export interface UserModel {
     id: number,
     nip: string,
     nama: string,
@@ -29,7 +29,7 @@ interface User {
 }
 
 interface UseUserReturn {
-    user: User | null;
+    user: UserModel | null;
     name: string;
     role: string;
     officeName: string;
@@ -38,7 +38,7 @@ interface UseUserReturn {
 }
 
 export function useUser(): UseUserReturn {
-    const [user, setUser] = useState<User | null>(null)
+    const [user, setUser] = useState<UserModel | null>(null)
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
     const [name, setName] = useState("")
@@ -88,7 +88,7 @@ export function useUser(): UseUserReturn {
                     throw new Error(errorData.message || "Failed to fetch user data");
                 }
 
-                const data: User = response.data.data;
+                const data: UserModel = response.data.data;
                 setUser(data);
             } catch (err: unknown) {
                 setError(err instanceof Error ? err.message : "An unexpected error occurred");

@@ -1,6 +1,7 @@
 import TextButton from "@/components/items/buttons/text-button"
 import Button from "@/components/items/buttons/button"
 import { useRouter } from "next/navigation"
+import { useUser } from "@/hooks/useUser"
 
 interface StatusActionInterface{
     tenderId: string,
@@ -17,6 +18,7 @@ interface StatusActionInterface{
 }
 
 export default function StatusAction(props: StatusActionInterface){
+    const {role} = useUser()
     const router = useRouter()
     function onShowClickedAO(){
         props.setSelectedTender(props.tenderName, props.tenderId, props.dataTender)
@@ -31,7 +33,7 @@ export default function StatusAction(props: StatusActionInterface){
     }
     switch(props.status){
         case "pemenang baru":
-            return <Button type="alert" size="medium" onClick={onShowClickedAO}>tawarkan</Button>
+            return <Button type={role=="manager-cabang"?"alert":"disable"} size="medium" onClick={onShowClickedAO} disabled={role=="manager-cabang"?false:true}>{role=="manager-cabang"?"tawarkan":"tender baru"}</Button>
         case "penawaran":
             return <TextButton size="medium" type="alert" onClick={goToDetail}>{props.status}</TextButton>
         case "tidak berminat":
