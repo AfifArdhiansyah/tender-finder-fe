@@ -51,6 +51,41 @@ export const useGetTenderById = (id: string) => {
   return { tenderProject, loading, error };
 }
 
+export const useGetTendersByUser = () =>{
+  const [tenderProjects, setTenderProjects] = useState<TenderProjectModel[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string | null>(null);
+
+  const cookies = useCookies();
+  const token = cookies.get("authToken")
+    if (!token) {
+      setError("Authentication token not found");
+      setLoading(false);
+      return { tenderProjects, loading, error };
+  }
+
+  useEffect(() => {
+    const fetchTenderProjects = async () => {
+      try {
+        const response = await api.get<TenderProjectModel[]>("/tender-projects/user", {
+          headers: {
+              "Authorization": `Bearer ${token}`
+          },
+        });
+        setTenderProjects(response.data);
+      } catch (err: any) {
+        setError(err.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchTenderProjects();
+  }, []);
+
+  return { tenderProjects, loading, error };
+}
+
 export const useAssignAO = () =>{
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
