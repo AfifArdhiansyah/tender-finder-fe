@@ -9,13 +9,13 @@ interface AOListTableProps{
 
 export default function AOListTable(props: AOListTableProps){
     return(
-        <Table headers={props.headers} columns={props.columns} datas={props.datas}>
+        <Table headers={props.headers} datas={props.datas} usePagination={false}>
             {props.datas.map((data,i)=>(
                 <tr key={"row-"+i}>
                     {props.columns.map((col,j)=>(
                         <td key={i.toString() + j.toString()} className={"px-2 py-2 text-sm"}>
-                            {col == "status" && (
-                                data[col] == "aktif" ? (
+                            {col == "is_active" && (
+                                data[col]? (
                                     <p className="text-green-600 text-center">Aktif</p>
                                 ) : (
                                     <p className="text-red-600 text-center">Tidak Aktif</p>
@@ -23,11 +23,11 @@ export default function AOListTable(props: AOListTableProps){
                             )}
                             {col == "action" && (
                                 <div className="flex justify-center">
-                                    <StatusAOAction status={data["status"]}/>
+                                    <StatusAOAction status={data["is_active"]} ao={data}/>
                                 </div>
                             )}
                             {
-                                !(col == "status" || col == "action") && (
+                                !(col == "is_active" || col == "action") && (
                                     data[col]
                                 )
                             }

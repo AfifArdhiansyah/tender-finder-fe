@@ -24,7 +24,7 @@ export default function Button(props: ButtonProps){
             case "primary":
                 return "bg-blue-500 text-white" 
             case "disable":
-                return "bg-gray-100 text-gray-300" 
+                return "bg-gray-100 text-gray-400" 
             default:
                 return "bg-gray-100 text-gray-700"
         }
