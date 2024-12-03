@@ -4,7 +4,9 @@ import { TenderStatusModel } from "@/models/tender-status-model";
 
 interface ProgressTrackProps{
     datas: TenderStatusModel[]
-    nilaiTender: string
+    nilaiTender: string,
+    tender_ltd: string,
+    tender_lng: string,
 }
 
 export default function ProgressTrack(props: ProgressTrackProps){
@@ -51,7 +53,7 @@ export default function ProgressTrack(props: ProgressTrackProps){
                                         )}
                                         {
                                             (index==0 || index==1) && (
-                                                <MapMini latitude={parseFloat(data.ltd_loc as string)} longitude={parseFloat(data.lng_loc as string)} />
+                                                <MapMini latitude={parseFloat(data.ltd_loc?data.ltd_loc:props.tender_ltd)} longitude={parseFloat(data.lng_loc?data.lng_loc:props.tender_lng)} />
                                             )
                                         }
                                     </>

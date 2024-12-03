@@ -4,11 +4,13 @@ import AOListData from "@/constants/ao-list-dump-data"
 import { useAOs } from "@/hooks/useAO"
 import Loading from "@/components/items/progress/loading"
 import Response from "@/components/items/responses/response"
+import { TenderProjectModel } from "@/models/tender-project-model"
 
 interface ChooseAOModalProps{
     tenderName: string,
     open: boolean,
     onCancel: Function,
+    dataTender: TenderProjectModel
 }
 
 export default function ChooseAOModal(props: ChooseAOModalProps){
@@ -30,7 +32,7 @@ export default function ChooseAOModal(props: ChooseAOModalProps){
                     <Response message={error as string} type={"error"}/>
                 ) : (
                     <div className="w-full">
-                        <AOListTable headers={tableHeads} columns={tableColumns} datas={aos as any[]}/>
+                        <AOListTable headers={tableHeads} columns={tableColumns} datas={aos as any[]} dataTender={props.dataTender}/>
                     </div>
                 )
             }

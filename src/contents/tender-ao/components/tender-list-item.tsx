@@ -1,65 +1,77 @@
-import { TenderAOModel } from "@/models/tender-ao-model"
 import Pill from "@/components/items/pill"
 import Link from "next/link"
+import { TenderProjectModel } from "@/models/tender-project-model"
 
 interface TenderListItemProps{
-    dataTender: TenderAOModel
+    dataTender: TenderProjectModel
 }
 
 export default function TenderListItem(props: TenderListItemProps){
     function getStatusType(status:string){
         switch(status){
-            case 'baru':
+            case 'pemenang baru':
                 return 'alert'
-            case 'dalam-penawaran':
-                return 'success'
-            case 'mengajukan-kredit':
-                return 'primary'
-            case 'penawaran-ditolak':
+            case 'penawaran':
+                return 'alert'
+            case 'tidak berminat':
                 return 'danger'
+            case 'pengajuan':
+                return 'primary'
+            case 'kredit gagal':
+                return 'danger'
+            case 'kredit disetujui':
+                return 'primary'
             default:
                 return 'alert'
         }
     }
     function getStatusLabel(status:string){
         switch(status){
-            case 'baru':
+            case 'pemenang baru':
                 return 'Belum Ditawarkan'
-            case 'dalam-penawaran':
+            case 'penawaran':
                 return 'Penawaran Kredit'
-            case 'mengajukan-kredit':
-                return 'Mengajukan Kredit'
-            case 'penawaran-ditolak':
+            case 'tidak berminat':
                 return 'Penawaran Ditolak'
+            case 'pengajuan':
+                return 'Mengajukan Kredit'
+            case 'kredit gagal':
+                return 'Pengajuan Ditolak'
+            case 'kredit disetujui':
+                return 'Pengajuan Disetujui'
             default:
                 return 'Belum Ditawarkan'
         }
     }
     function getStatusColor(status: string){
         switch(status){
-            case 'baru':
+            case 'pemenang baru':
                 return 'bg-yellow-200'
-            case 'dalam-penawaran':
-                return 'bg-green-400'
-            case 'mengajukan-kredit':
-                return 'bg-blue-400'
-            case 'penawaran-ditolak':
+            case 'penawaran':
+                return 'bg-yellow-200'
+            case 'tidak berminat':
                 return 'bg-red-400'
+            case 'pengajuan':
+                return 'bg-blue-400'
+            case 'kredit gagal':
+                return 'bg-red-400'
+            case 'kredit disetujui':
+                return 'bg-blue-400'
             default:
                 return 'bg-yellow-400'
         }
     }
     return(
         <Link className="flex w-full" href={"/ao-tender/"+props.dataTender.id}>
-            <div className={"w-2 h-full rounded-l-xl " + getStatusColor(props.dataTender.status)}></div>
+            <div className={"w-2 h-full rounded-l-xl " + getStatusColor(props.dataTender.tender_statuses[props.dataTender.tender_statuses.length-1].status.nama)}></div>
              <div className="flex flex-col text-sm bg-white px-2 py-2 gap-2 rounded-r-xl w-full">
                 <p className="font-bold text-md">{props.dataTender.nama}</p>
                 <p className="text-blue-500">{props.dataTender.nama_pemenang}</p>
                 <p className="text-gray-500">Rp. {parseFloat(props.dataTender.nilai_tender).toLocaleString('id-ID')}</p>
                 <hr />
                 <p>Alamat Tender:</p>
-                <p className="text-gray-500">{props.dataTender.alamat_pemenang}</p>
-                <Pill type={getStatusType(props.dataTender.status)} size={"small"}>{getStatusLabel(props.dataTender.status)}</Pill>
+                <p className="text-gray-500">{props.dataTender.lokasi_pekerjaan}</p>
+                <Pill type={getStatusType(props.dataTender.tender_statuses[props.dataTender.tender_statuses.length-1].status.nama)} size={"small"}>{getStatusLabel(props.dataTender.tender_statuses[props.dataTender.tender_statuses.length-1].status.nama)}</Pill>
             </div>
         </Link>
     )
