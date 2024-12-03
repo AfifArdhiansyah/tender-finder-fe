@@ -36,7 +36,7 @@ export const useGetTenderById = (id: string) => {
   useEffect(() => {
     const fetchTenderProject = async () => {
       try {
-        const response = await api.get<TenderProjectModel>("/tender-projects/"+id);
+        const response = await api.get<TenderProjectModel>("/tender-projects/id/"+id);
         setTenderProject(response.data);
       } catch (err: any) {
         setError(err.message);
