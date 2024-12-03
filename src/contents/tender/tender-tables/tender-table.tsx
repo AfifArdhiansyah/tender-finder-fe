@@ -6,6 +6,7 @@ import ChooseAOModal from "@/contents/manager-ao/ao-modals/choose-ao-modal"
 import TenderInfoModal from "../tender-modals/tender-info-modal"
 import SearchBar from "@/components/items/search-bars/search-bar"
 import { useState } from "react"
+import { TenderProjectModel } from "@/models/tender-project-model"
 
 interface TenderTableProps{
     headers: string[],
@@ -30,7 +31,8 @@ export default function TenderTable(props: TenderTableProps){
         }
     };
 
-    const [selectedTender, setSelectedTender] = useState({})
+    //modal purppose
+    const [selectedTender, setSelectedTender] = useState<any>({})
     const [selectedTenderName, setSelectedTenderName] = useState("")
     const [isOpenModalAO, setIsOpenModalAO] = useState(false)
     const showModalAO = () => {
@@ -111,7 +113,7 @@ export default function TenderTable(props: TenderTableProps){
             </Table>
             {/* Modal */}
             {
-                isOpenModalAO ? <ChooseAOModal open={isOpenModalAO} onCancel={closeModalAO} tenderName={selectedTenderName}/> : null
+                isOpenModalAO ? <ChooseAOModal open={isOpenModalAO} onCancel={closeModalAO} tenderName={selectedTenderName} dataTender={selectedTender as TenderProjectModel}/> : null
             }
             {
                 isOpenModalTenderDetail ? <TenderInfoModal open={isOpenModalTenderDetail} onCancel={closeModalTenderDetail} dataTender={selectedTender}/> : null

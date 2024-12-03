@@ -1,24 +1,31 @@
 import { ReactNode } from "react";
 import { IoClose } from "react-icons/io5";
+import Button from "../buttons/button";
 
 interface ModalProps{
     open: boolean,
     onCancel: Function,
     title: ReactNode,
     subTitle?: string,
-    children: ReactNode
+    children: ReactNode,
+    useFooterAction?: boolean
+    confirmAction?: Function
+    className?: string
 }
 
 export default function Modal(props: ModalProps){
   function onModalClose(){
     props.onCancel()
   }
+  function onConfirm(){
+    props.confirmAction && props.confirmAction()
+  }
   return (
       <>
         <div
-          className={"justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none"}
+          className={"justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none "}
         >
-          <div className={"relative my-6 mx-auto min-w-[50vw] max-w-[80vw]"}>
+          <div className={"relative my-6 mx-auto min-w-[50vw] max-w-[80vw] " + props.className}>
             {/*content*/}
             <div className={"border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none"}>
               {/*header*/}
@@ -41,10 +48,14 @@ export default function Modal(props: ModalProps){
                 {props.children}
               </div>
               {/*footer*/}
-              {/* <div className="flex items-center justify-end p-6 gap-2 border-t border-solid border-blueGray-200 rounded-b">
-                <Button onClick={onModalClose} type="danger" size="medium">Close</Button>
-                <Button onClick={()=>{}} type="primary" size="medium">Save Changes</Button>
-              </div> */}
+              {
+                props.useFooterAction && (
+                  <div className="flex items-center justify-end p-6 gap-2 border-t border-solid border-blueGray-200 rounded-b">
+                    <Button onClick={onModalClose} type="danger" size="medium">Close</Button>
+                    <Button onClick={onConfirm} type="primary" size="medium">Save Changes</Button>
+                  </div>
+                )
+              }
             </div>
           </div>
         </div>
