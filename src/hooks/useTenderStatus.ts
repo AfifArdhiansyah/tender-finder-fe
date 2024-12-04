@@ -5,7 +5,7 @@ import api from "@/services/api";
 
 export const useUploadData = () =>{
     const [loading, setLoading] = useState(false);
-    const [error, setError] = useState<string | null>(null);
+    const [errorUpload, setError] = useState<string | null>(null);
     const [success, setSuccess] = useState()
     const cookies = useCookies();
   
@@ -64,5 +64,5 @@ export const useUploadData = () =>{
             setLoading(false);
         }
     }
-    return { uploadDataPenawaranAO, uploadDataFollowUpAO, loading, error }
+    return { uploadDataPenawaranAO, uploadDataFollowUpAO, loading, errorUpload }
 }
