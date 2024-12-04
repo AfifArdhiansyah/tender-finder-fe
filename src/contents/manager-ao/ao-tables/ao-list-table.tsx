@@ -12,7 +12,8 @@ interface AOListTableProps{
     headers: string[],
     columns: string[]
     datas: any[],
-    dataTender: TenderProjectModel
+    dataTender: TenderProjectModel,
+    refreshTable: ()=>void
 }
 
 export default function AOListTable(props: AOListTableProps){
@@ -28,6 +29,10 @@ export default function AOListTable(props: AOListTableProps){
         showModalConfirmation()
     }
     const [selectedAO, setSelectedAO] = useState<UserModel>()
+    function refreshTable(){
+        props.refreshTable()
+        closeModalConfirmation()
+    }
     return(
         <>
             <Table headers={props.headers} datas={props.datas} usePagination={false}>
@@ -58,7 +63,16 @@ export default function AOListTable(props: AOListTableProps){
                 ))}
             </Table>
             {
-                isOpenModalConfirmation ? <AssignAOConfirmation open={isOpenModalConfirmation} onCancel={closeModalConfirmation} tenderName={props.dataTender.nama} tenderId={props.dataTender.id} aoName={selectedAO?.nama as string} aoID={selectedAO?.id as number}/> : null
+                isOpenModalConfirmation ? 
+                    <AssignAOConfirmation 
+                        open={isOpenModalConfirmation} 
+                        onCancel={closeModalConfirmation} 
+                        tenderName={props.dataTender.nama} 
+                        tenderId={props.dataTender.id} 
+                        aoName={selectedAO?.nama as string} 
+                        aoID={selectedAO?.id as number} 
+                        refreshTable={refreshTable}
+                    /> : null
             }
         </>
     )

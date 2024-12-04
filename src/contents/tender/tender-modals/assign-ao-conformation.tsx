@@ -8,6 +8,7 @@ interface AssignAOConfirmationProps{
     aoID: number,
     open: boolean,
     onCancel: Function,
+    refreshTable: ()=>void
 }
 
 export default function AssignAOConfirmation(props: AssignAOConfirmationProps) {
@@ -19,7 +20,7 @@ export default function AssignAOConfirmation(props: AssignAOConfirmationProps) {
         await assignAOToTender(props.tenderId, props.aoID)
         if(!error){
             props.onCancel()
-            window.location.reload()
+            props.refreshTable()
         }else{
             alert(error as string)
         }

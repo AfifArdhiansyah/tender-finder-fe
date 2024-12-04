@@ -9,11 +9,8 @@ import Response from "@/components/items/responses/response"
 import Loading from "@/components/items/progress/loading"
 
 export default function Tender(){
-    // const tableHeads = ["Nama Tender", "Pemenang Tender", "Alamat Pemenang", "Harga Tender (Rp.)", "Status"]
-    // const tableColumns = ["nama", "nama_pemenang", "alamat_pemenang", "nilai_tender", "status"]
-    // const tableDatas = TenderData
 
-    const { tenderProjects, loading, error } = useTenderProjects();
+    const { tenderProjects, loading, refresh, error } = useTenderProjects();
 
     const tableHeads = ["Nama Tender", "Pemenang Tender", "Alamat Pemenang", "Harga Tender (Rp.)", "Status"]
     const tableColumns = ["nama", "nama_pemenang", "lokasi_pekerjaan", "nilai_tender", "status"]
@@ -31,7 +28,7 @@ export default function Tender(){
                     ) : error ? (
                        <Response type="error" message={error}/>
                     ) : (
-                        <TenderTable headers={tableHeads} columns={tableColumns} datas={tableDatas}/>
+                        <TenderTable headers={tableHeads} refreshTable={refresh} columns={tableColumns} datas={tableDatas}/>
                     )
                 }
             </Paper>

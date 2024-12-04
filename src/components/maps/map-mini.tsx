@@ -26,10 +26,10 @@ export default function MapMini({ latitude, longitude, onMapClick }: MapMiniProp
             <MapContainer
                 center={position}
                 zoom={13}
-                style={{ height: '200px', width: '100%' }}
-                dragging={false}
-                zoomControl={false}
-                scrollWheelZoom={false}
+                style={{ height: '600px', width: '100%' }}
+                dragging={true}
+                zoomControl={true}
+                scrollWheelZoom={true}
             >
             <TileLayer
                 url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
