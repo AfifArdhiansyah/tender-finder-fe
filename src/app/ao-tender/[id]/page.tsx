@@ -35,7 +35,7 @@ export default function AOTenderDetail(){
     function contentNext(){
         if(contentIndex!=3) setContentIndex(contentIndex+1)
     }
-    const { tenderProject, loading, error } = useGetTenderById(id as string);
+    const { tenderProject, refresh, loading, error } = useGetTenderById(id as string);
     const currStatus = tenderProject?.tender_statuses[tenderProject.tender_statuses.length-1].status.nama
     const dataProgress = [
         {label:"Penawaran", successed:false, ignored: false},
@@ -112,7 +112,7 @@ export default function AOTenderDetail(){
 
     const {uploadDataPenawaranAO, uploadDataFollowUpAO, errorUpload} = useUploadData()
     //penawaran
-    const [filePenawaran, setFilePenawaran] = useState()
+    const [filePenawaran, setFilePenawaran] = useState<any|null>()
     const {ltd, lng} = useGeoLocation()
     function onUploadFilePenawaran(file:any){
         setFilePenawaran(file)
@@ -126,14 +126,15 @@ export default function AOTenderDetail(){
         formData.append("file_penawaran", filePenawaran as unknown as Blob);
         await uploadDataPenawaranAO(formData);
         if(!errorUpload){
-            window.location.reload()
+            refresh()
+            setFilePenawaran(null)
         } else{
             alert(errorUpload)
         }
     }
 
     //follow up
-    const [fileFollowUp, setFileFollowUp] = useState();
+    const [fileFollowUp, setFileFollowUp] = useState<any|null>();
     const [textFollowUp, setTextFollowUp] = useState("");
     function onUploadFileFollowUp(file:any){
         setFileFollowUp(file)
@@ -148,7 +149,8 @@ export default function AOTenderDetail(){
         formData.append("text_follow_up", textFollowUp);
         await uploadDataFollowUpAO(formData);
         if(!errorUpload){
-            window.location.reload()
+            refresh()
+            setFileFollowUp(null)
         } else{
             alert(errorUpload)
         }

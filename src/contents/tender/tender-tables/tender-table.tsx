@@ -12,6 +12,7 @@ interface TenderTableProps{
     headers: string[],
     columns: string[]
     datas: any[],
+    refreshTable: ()=>void
 }
 
 export default function TenderTable(props: TenderTableProps){
@@ -71,6 +72,12 @@ export default function TenderTable(props: TenderTableProps){
         setItemsPerPage(Number(val));
         setCurrentPage(1);
     };
+
+    const refreshTable = () =>{
+        props.refreshTable()
+        setCurrentPage(1)
+        closeModalAO()
+    }
     return(
         <>
             <SearchBar onSearch={handleSearch} className="w-[400px] max-md:w-[300px]"/>
@@ -113,7 +120,7 @@ export default function TenderTable(props: TenderTableProps){
             </Table>
             {/* Modal */}
             {
-                isOpenModalAO ? <ChooseAOModal open={isOpenModalAO} onCancel={closeModalAO} tenderName={selectedTenderName} dataTender={selectedTender as TenderProjectModel}/> : null
+                isOpenModalAO ? <ChooseAOModal open={isOpenModalAO} onCancel={closeModalAO} tenderName={selectedTenderName} refreshTable={refreshTable} dataTender={selectedTender as TenderProjectModel}/> : null
             }
             {
                 isOpenModalTenderDetail ? <TenderInfoModal open={isOpenModalTenderDetail} onCancel={closeModalTenderDetail} dataTender={selectedTender}/> : null

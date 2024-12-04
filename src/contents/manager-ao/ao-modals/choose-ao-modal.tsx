@@ -11,6 +11,7 @@ interface ChooseAOModalProps{
     open: boolean,
     onCancel: Function,
     dataTender: TenderProjectModel
+    refreshTable: ()=>void
 }
 
 export default function ChooseAOModal(props: ChooseAOModalProps){
@@ -32,7 +33,7 @@ export default function ChooseAOModal(props: ChooseAOModalProps){
                     <Response message={error as string} type={"error"}/>
                 ) : (
                     <div className="w-full">
-                        <AOListTable headers={tableHeads} columns={tableColumns} datas={aos as any[]} dataTender={props.dataTender}/>
+                        <AOListTable headers={tableHeads} columns={tableColumns} datas={aos as any[]} dataTender={props.dataTender} refreshTable={props.refreshTable}/>
                     </div>
                 )
             }

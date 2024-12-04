@@ -1,4 +1,4 @@
-// src/hooks/useTenderProjects.ts
+
 import { useEffect, useState } from "react";
 import api from "@/services/api";
 import { TenderProjectModel } from "@/models/tender-project-model";
@@ -9,9 +9,11 @@ export const useTenderProjects = () => {
   const [tenderProjects, setTenderProjects] = useState<TenderProjectModel[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
+  const [refreshTP, setRefreshTP] = useState(false);
 
   useEffect(() => {
     const fetchTenderProjects = async () => {
+      setLoading(true)
       try {
         const response = await api.get<TenderProjectModel[]>("/tender-projects");
         setTenderProjects(response.data);
@@ -23,15 +25,20 @@ export const useTenderProjects = () => {
     };
 
     fetchTenderProjects();
-  }, []);
+  }, [refreshTP]);
 
-  return { tenderProjects, loading, error };
+  const refresh = ()=>{
+    setRefreshTP(!refreshTP)
+  }
+
+  return { tenderProjects, refresh, loading, error };
 };
 
 export const useGetTenderById = (id: string) => {
   const [tenderProject, setTenderProject] = useState<TenderProjectModel>();
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
+  const [refreshTP, setRefreshTP] = useState(false);
 
   useEffect(() => {
     const fetchTenderProject = async () => {
@@ -46,9 +53,13 @@ export const useGetTenderById = (id: string) => {
     };
 
     fetchTenderProject();
-  }, []);
+  }, [refreshTP]);
 
-  return { tenderProject, loading, error };
+  const refresh = ()=>{
+    setRefreshTP(!refreshTP)
+  }
+
+  return { tenderProject, refresh, loading, error };
 }
 
 export const useGetTendersByUser = () =>{
