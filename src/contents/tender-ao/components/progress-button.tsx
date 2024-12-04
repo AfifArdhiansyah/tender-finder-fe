@@ -12,6 +12,10 @@ interface ProgressButtonProps{
     filePenawaran?: any
     fileFollowUp?: any
     textFollowUp?: string
+    produkDipilih: string
+    nilaiTender: string
+    feedBack: string
+    sendPenawaran: Function
     disabled?: boolean
     className?: string
 }
@@ -27,14 +31,21 @@ export default function ProgressButton(props: ProgressButtonProps){
         else if(props.progressIndex==1 && ((props.fileFollowUp && props.textFollowUp) || props.currStatus=="penawaran" )){
             return true
         }
+        else if(props.progressIndex==2 && ((props.produkDipilih.length>0 && props.nilaiTender.length>0) || props.feedBack.length>0 || (props.currStatus=="pengajuan" || props.currStatus=="tidak berminat"))){
+            return true
+        }
         return false
     }
+    const currStatusData = props.dataTender.tender_statuses[props.progressIndex]
     function handleNext(){
-        if(props.filePenawaran && !props.dataTender.tender_statuses[props.progressIndex]?.penawaran_file){
+        if(props.filePenawaran && !currStatusData?.penawaran_file){
             props.uploadFile()
         }
-        else if(props.fileFollowUp && props.textFollowUp && !props.dataTender.tender_statuses[props.progressIndex]?.bukti_file){
+        else if(props.fileFollowUp && props.textFollowUp && !currStatusData?.bukti_file){
             props.updateFollowUp()
+        }
+        else if(((props.produkDipilih && props.nilaiTender) || props.feedBack) && (!currStatusData?.bukti_file && !currStatusData?.feedback)){
+            props.sendPenawaran()
         }
         else{
             props.setIndexNext()

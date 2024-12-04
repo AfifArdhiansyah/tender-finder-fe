@@ -31,7 +31,8 @@ export default function TenderProgresTindakLanjut(props: TenderProgresTindakLanj
                 onChange={handleTextChange} 
                 className="min-h-[70px]" 
                 placeholder="Tulis apa progess apa saja yang sudah di lakukan..." 
-                value={props.dataTender.tender_statuses[props.indexProgress]?.keterangan}
+                value={props.dataTender.tender_statuses[props.indexProgress]?.keterangan as string}
+                disabled={props.dataTender.tender_statuses[props.indexProgress]?.bukti_file ? true : false}
             />
         </div>
     )
