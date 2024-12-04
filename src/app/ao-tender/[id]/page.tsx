@@ -19,6 +19,7 @@ import Response from "@/components/items/responses/response"
 import { TenderProjectModel } from "@/models/tender-project-model"
 import { useUploadData } from "@/hooks/useTenderStatus"
 import { useGeoLocation } from "@/hooks/useLocation"
+import { TenderStatusModel } from "@/models/tender-status-model"
 
 export default function AOTenderDetail(){
     const index = 1
@@ -88,20 +89,29 @@ export default function AOTenderDetail(){
             case 1:
                 return <TenderProgresTindakLanjut uploadFile={onUploadFileFollowUp} updateText={setTextFollowUp} dataTender={tenderProject as TenderProjectModel} indexProgress={contentIndex}/>
             case 2:
-                return <TenderProgresPengajuan/>
+                return <TenderProgresPengajuan 
+                            onChangeChooseInterest= {onChangeChooseInterest}
+                            selectedInterestOption= {isDebiturTertarik}
+                            onChangeDiterimaSelect={onChangeChooseProduct} 
+                            selectedDiterimaOption={produkDipilih} 
+                            onChangeDiterimaText={onChangeNilaiKredit} 
+                            tenderValue={nilaiKredit} 
+                            onChangeDitolakText={onChangeFeedback} 
+                            feedback={feedback}
+                            tenderStatusData={tenderProject?.tender_statuses[contentIndex] as TenderStatusModel}
+                        />
             case 3:
                 return <TenderProgresPenyetujuan/>
             default:
                 return <TenderProgresPenawaran uploadFile={onUploadFilePenawaran} dataTender={tenderProject as TenderProjectModel} indexProgress={contentIndex}/>
         }
     }
-    function getAllowNext(){
-        // if(currStatus == 'pemenang baru' && contentIndex>=0 && (!filePenawaran && !tenderProject?.tender_statuses[contentIndex]?.penawaran_file)){
+    function getDisableNext(){
         if(currStatus == 'pemenang baru' && contentIndex>=0 && !filePenawaran){
             return true
         } else if (currStatus == 'penawaran' && contentIndex>=1 && (!fileFollowUp || textFollowUp.length==0)){
             return true
-        } else if ((currStatus == 'pengajuan' || currStatus == "tidak berminat") && contentIndex>=2){
+        } else if ((currStatus == 'pengajuan' || currStatus == "tidak berminat") && contentIndex>=2 && !(((produkDipilih.length>0 && nilaiKredit.length>0) || feedback.length>0) && !(tenderProject?.tender_statuses[contentIndex].produk_dipilih || tenderProject?.tender_statuses[contentIndex].feedback))){
             return true
         } else if ((currStatus == 'kredit disetujui' || currStatus == "kredit gagal") && contentIndex>=3){
             return true
@@ -110,7 +120,7 @@ export default function AOTenderDetail(){
         }
     }
 
-    const {uploadDataPenawaranAO, uploadDataFollowUpAO, errorUpload} = useUploadData()
+    const {uploadDataPenawaranAO, uploadDataFollowUpAO, updateDataDiterima, errorUpload} = useUploadData()
     //penawaran
     const [filePenawaran, setFilePenawaran] = useState<any|null>()
     const {ltd, lng} = useGeoLocation()
@@ -155,7 +165,41 @@ export default function AOTenderDetail(){
             alert(errorUpload)
         }
     }
-    
+
+    //pengajuan kredit
+    const [isDebiturTertarik, setIsDebiturTertarik] = useState<string>("")
+    const [produkDipilih, setProdukDipilih] = useState<string>("")
+    const [nilaiKredit, setNilaiKredit] = useState<string>("")
+    const [feedback, setFeedback] = useState<string>("")
+    function onChangeChooseInterest(choose: string){
+        setIsDebiturTertarik(choose)
+    }
+    function onChangeChooseProduct(product: string){
+        setProdukDipilih(product)
+    }
+    function onChangeNilaiKredit(nilai: string){
+        setNilaiKredit(nilai)
+    }
+    function onChangeFeedback(feedback: string){
+        setFeedback(feedback)
+    }
+    async function onSubmitPengajuanKredit(){
+        const tertarik = isDebiturTertarik=="Diterima"?true:false
+        const submitData = {
+            id: tenderProject?.tender_statuses[contentIndex].id as unknown as string,
+            tender_id: tenderProject?.id as string,
+            is_debitur_tertarik: tertarik,
+            produk_dipilih: tertarik? produkDipilih : null,
+            nilai_kredit: tertarik? nilaiKredit : null,
+            feedback: !tertarik? feedback : null
+        }
+        await updateDataDiterima(submitData);
+        if(!errorUpload){
+            refresh()
+            setProdukDipilih("")
+            setFeedback("")
+        }
+    }
 
     return(
         <DashboardLayout sideNavIndex={index} bcItems={bcItems} role={role}>
@@ -181,18 +225,22 @@ export default function AOTenderDetail(){
                                 getProgressContent()
                             }
                             <ProgressButton 
-                                className="w-full" 
-                                progressIndex={contentIndex} 
+                                className="w-full"
+                                progressIndex={contentIndex}
                                 currStatus={currStatus as string}
-                                setIndexPrev={contentPrev} 
-                                setIndexNext={contentNext} 
+                                setIndexPrev={contentPrev}
+                                setIndexNext={contentNext}
                                 dataTender={tenderProject as TenderProjectModel}
-                                filePenawaran={filePenawaran} 
+                                filePenawaran={filePenawaran}
                                 uploadFile={onSubmitFilePenawaran}
                                 fileFollowUp={fileFollowUp}
                                 textFollowUp={textFollowUp}
                                 updateFollowUp={onSubmitFileFollowUp}
-                                disabled={getAllowNext()}
+                                produkDipilih= {produkDipilih}
+                                nilaiTender= {nilaiKredit}
+                                feedBack= {feedback}
+                                sendPenawaran={onSubmitPengajuanKredit}                            
+                                disabled={getDisableNext()} 
                             />
                         </Paper>
                     </div>

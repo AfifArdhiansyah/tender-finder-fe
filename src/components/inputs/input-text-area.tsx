@@ -3,7 +3,8 @@ interface InputTextAreaProps{
     placeholder?:string
     className?: string
     onChange?: Function
-    value?: string | null
+    value?: string
+    disabled?: boolean
 }
 
 export default function InputTextArea(props: InputTextAreaProps){
@@ -13,13 +14,13 @@ export default function InputTextArea(props: InputTextAreaProps){
 
     return(
         <>
-            {
-                props.value? (
-                    <textarea className={"w-full border border-gray-300 rounded-lg p-2 "+ props.className} placeholder={props.placeholder} onChange={handleChange} value={props.value} disabled/>
-                ) : (
-                    <textarea className={"w-full border border-gray-300 rounded-lg p-2 "+ props.className} placeholder={props.placeholder} onChange={handleChange}/>
-                )
-            }
+        {
+            props.value? (
+                <textarea className={"w-full border border-gray-300 rounded-lg p-2 "+ props.className} placeholder={props.placeholder} onChange={handleChange} value={props.value}/>
+            ) : (
+                <textarea className={"w-full border border-gray-300 rounded-lg p-2 "+ props.className} placeholder={props.placeholder} onChange={handleChange}/>
+            )
+        }
         </>
     )
 }

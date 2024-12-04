@@ -108,29 +108,33 @@ export default function ProgressTrack(props: ProgressTrackProps){
                                     )
                                 }
                             </div>
-                            <div className="flex flex-col gap-2 pb-4 w-1/2">
+                            <div className="flex flex-col gap-2 pb-4 w-[70%]">
                                 <h2 className={"font-bold " + (data.dibuat_tanggal?"text-black":"text-gray-300")}>{getLabel(data.status.nama)}</h2>
                                 {
                                     data.dibuat_tanggal && (
                                         <>
-                                            <p className="text-gray-500">{data.keterangan}</p>
-                                            {index==2 && (
+                                            {index==2 && data.produk_dipilih && (
                                                 <>
                                                     <p className="text-gray-500">Produk yang dipilih: {data.produk_dipilih}</p>
                                                     <p className="text-gray-500">Pengajuan kredit: Rp. {parseFloat(props.nilaiTender as string).toLocaleString('id-ID')}</p>
+                                                </>
+                                            )}
+                                            {index==2 && data.feedback && (
+                                                <>
+                                                    <p className="text-gray-500">Feedback: {data.feedback}</p>
                                                 </>
                                             )}
                                             {
                                                 (index==0) && (
                                                     data.ltd_loc?(
                                                         <div className="flex flex-col gap-2">
-                                                            <div className="relative h-[150px] w-[250px]">
+                                                            <div className="relative h-[150px] w-[250px] rounded">
                                                                 <Image className="absolute h-full w-full" src={data.penawaran_file as string} width={150} height={300} alt={"file penawaran"} />
                                                                 <div className="absolute bg-black opacity-0 w-full h-full flex items-center justify-center text-white hover:opacity-45">
                                                                     <button className="h-full w-full text-sm" onClick={()=>openFotoPenawaranModal(data)}>lihat foto</button>
                                                                 </div>
                                                             </div>
-                                                            <Button className="w-fit" type={"success"} size={"small"} onClick={()=>openMapPenawaranModal(data)}>buka peta</Button>
+                                                            <Button className="w-fit rounded" type={"success"} size={"small"} onClick={()=>openMapPenawaranModal(data)}>buka peta</Button>
                                                         </div>
                                                     ) : (
                                                         <p className="text-gray-500">AO belum mengunjungi pemenang tender</p>
@@ -141,6 +145,7 @@ export default function ProgressTrack(props: ProgressTrackProps){
                                                 (index==1) && (
                                                     data.ltd_loc?(
                                                         <div className="flex flex-col gap-2">
+                                                            <p className="text-gray-500">Keterangan AO: {data.keterangan}</p>
                                                             <div className="relative h-[150px] w-[250px]">
                                                                 <Image className="absolute h-full w-full" src={data.bukti_file as string} width={300} height={300} alt={"file penawaran"} />
                                                                 <div className="absolute bg-black opacity-0 w-full h-full flex items-center justify-center text-white hover:opacity-45">
