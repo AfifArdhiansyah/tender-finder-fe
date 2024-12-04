@@ -18,6 +18,7 @@ import Loading from "@/components/items/progress/loading"
 import Response from "@/components/items/responses/response"
 import { TenderProjectModel } from "@/models/tender-project-model"
 import { useUploadData } from "@/hooks/useTenderStatus"
+import { useGeoLocation } from "@/hooks/useLocation"
 
 export default function AOTenderDetail(){
     const index = 1
@@ -85,7 +86,7 @@ export default function AOTenderDetail(){
             case 0:
                 return <TenderProgresPenawaran uploadFile={onUploadFilePenawaran} dataTender={tenderProject as TenderProjectModel} indexProgress={contentIndex}/>
             case 1:
-                return <TenderProgresTindakLanjut/>
+                return <TenderProgresTindakLanjut uploadFile={onUploadFileFollowUp} updateText={setTextFollowUp} dataTender={tenderProject as TenderProjectModel} indexProgress={contentIndex}/>
             case 2:
                 return <TenderProgresPengajuan/>
             case 3:
@@ -95,32 +96,52 @@ export default function AOTenderDetail(){
         }
     }
     function getAllowNext(){
-        if(currStatus == 'pemenang baru' && contentIndex==0 && !filePenawaran){
+        // if(currStatus == 'pemenang baru' && contentIndex>=0 && (!filePenawaran && !tenderProject?.tender_statuses[contentIndex]?.penawaran_file)){
+        if(currStatus == 'pemenang baru' && contentIndex>=0 && !filePenawaran){
             return true
-        } else if (currStatus == 'penawaran' && contentIndex==1){
+        } else if (currStatus == 'penawaran' && contentIndex>=1 && (!fileFollowUp || textFollowUp.length==0)){
             return true
-        } else if ((currStatus == 'pengajuan' || currStatus == "tidak berminat") && contentIndex==2){
+        } else if ((currStatus == 'pengajuan' || currStatus == "tidak berminat") && contentIndex>=2){
             return true
-        } else if ((currStatus == 'kredit disetujui' || currStatus == "kredit gagal") && contentIndex==3){
+        } else if ((currStatus == 'kredit disetujui' || currStatus == "kredit gagal") && contentIndex>=3){
             return true
         } else {
             return false
         }
     }
 
+    const {uploadDataPenawaranAO, uploadDataFollowUpAO} = useUploadData()
     //penawaran
     const [filePenawaran, setFilePenawaran] = useState()
-    const {uploadDataPenawaranAO} = useUploadData()
+    const {ltd, lng} = useGeoLocation()
     function onUploadFilePenawaran(file:any){
         setFilePenawaran(file)
     }
     function onSubmitFilePenawaran(){
         const formData = new FormData;
-        formData.append(
-            "file_penawaran", filePenawaran as unknown as Blob
-        );
         formData.append("id", tenderProject?.tender_statuses[contentIndex].id as unknown as string);
+        formData.append("tender_id", tenderProject?.id as unknown as string);
+        formData.append("ltd_loc", ltd);
+        formData.append("lng_loc", lng);
+        formData.append("file_penawaran", filePenawaran as unknown as Blob);
         uploadDataPenawaranAO(formData);
+    }
+
+    //follow up
+    const [fileFollowUp, setFileFollowUp] = useState();
+    const [textFollowUp, setTextFollowUp] = useState("");
+    function onUploadFileFollowUp(file:any){
+        setFileFollowUp(file)
+    }
+    function onSubmitFileFollowUp(){
+        const formData = new FormData;
+        formData.append("id", tenderProject?.tender_statuses[contentIndex].id as unknown as string);
+        formData.append("tender_id", tenderProject?.id as unknown as string);
+        formData.append("ltd_loc", ltd);
+        formData.append("lng_loc", lng);
+        formData.append("file_follow_up", fileFollowUp as unknown as Blob);
+        formData.append("text_follow_up", textFollowUp);
+        uploadDataFollowUpAO(formData);
     }
     
 
@@ -154,8 +175,11 @@ export default function AOTenderDetail(){
                                 setIndexNext={contentNext} 
                                 dataTender={tenderProject as TenderProjectModel}
                                 filePenawaran={filePenawaran} 
-                                disabled={getAllowNext()}
                                 uploadFile={onSubmitFilePenawaran}
+                                fileFollowUp={fileFollowUp}
+                                textFollowUp={textFollowUp}
+                                updateFollowUp={onSubmitFileFollowUp}
+                                disabled={getAllowNext()}
                             />
                         </Paper>
                     </div>
