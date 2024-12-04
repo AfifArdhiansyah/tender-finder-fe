@@ -7,7 +7,10 @@ interface ProgressButtonProps{
     setIndexNext: Function
     dataTender: TenderProjectModel
     uploadFile: Function
+    updateFollowUp: Function
     filePenawaran?: any
+    fileFollowUp?: any
+    textFollowUp?: string
     disabled?: boolean
     className?: string
 }
@@ -19,6 +22,9 @@ export default function ProgressButton(props: ProgressButtonProps){
     function handleNext(){
         if(props.filePenawaran && !props.dataTender.tender_statuses[props.progressIndex]?.penawaran_file){
             props.uploadFile()
+        }
+        else if(props.fileFollowUp && props.textFollowUp && !props.dataTender.tender_statuses[props.progressIndex]?.bukti_file){
+            props.updateFollowUp()
         }
         props.setIndexNext()
     }

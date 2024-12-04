@@ -30,17 +30,46 @@ export default function ProgressTrack(props: ProgressTrackProps){
         if(index!=1 && index!=3) return "bg-[#21BC16]"
         return "bg-gray-300"
     }
+    function getLabel(status:string){
+        switch(status){
+            case "pemenang baru":
+                return "Pemenang Baru"
+            case "penawaran":
+                return "Penawaran"
+            case "pengajuan":
+                return "Pengajuan Kredit"
+            case "tidak berminat":
+                return "Tidak Berminat"
+            case "kredit disetujui":
+                return "Kredit Disetujui"
+            case "kredit gagal":
+                return "Kredit Gagal"
+            default:
+                return "Pemenang Baru"
+        }
+    }
     return(
         <div className="h-full flex flex-col gap">
             {
                 props.datas.map((data, index) => 
                     <div className="flex gap-2 h-full text-sm" key={index}>
                         <div className="flex flex-col items-center h-auto">
-                            {data.dibuat_tanggal? <Image src={getIconSource(index, data)} alt="check" height={22} width={22}/> : <Image src={"/icons/min-progress.svg"} alt="min" height={22} width={22}/>}
-                            {index!=props.datas.length-1&& <div className={"h-full w-1 " + (data.dibuat_tanggal? getLineSideColor(index, data) : "bg-gray-300")}></div>}
+                            {
+                                index==0? (
+                                    <>
+                                        {data.ltd_loc?(<Image src={getIconSource(index, data)} alt="check" height={22} width={22}/>):(<Image src={"/icons/min-progress.svg"} alt="min" height={22} width={22}/>)}
+                                        {index!=props.datas.length-1&& <div className={"h-full w-1 " + (data.dibuat_tanggal? getLineSideColor(index, data) : "bg-gray-300")}></div>}
+                                    </>
+                                ) : (
+                                    <>
+                                        {data.dibuat_tanggal? <Image src={getIconSource(index, data)} alt="check" height={22} width={22}/> : <Image src={"/icons/min-progress.svg"} alt="min" height={22} width={22}/>}
+                                        {index!=props.datas.length-1&& <div className={"h-full w-1 " + (data.dibuat_tanggal? getLineSideColor(index, data) : "bg-gray-300")}></div>}
+                                    </>
+                                )
+                            }
                         </div>
                         <div className="flex flex-col gap-2 pb-4">
-                            <h2 className={"font-bold " + (data.dibuat_tanggal?"text-black":"text-gray-300")}>{data.status.nama}</h2>
+                            <h2 className={"font-bold " + (data.dibuat_tanggal?"text-black":"text-gray-300")}>{getLabel(data.status.nama)}</h2>
                             {
                                 data.dibuat_tanggal && (
                                     <>
@@ -52,8 +81,21 @@ export default function ProgressTrack(props: ProgressTrackProps){
                                             </>
                                         )}
                                         {
-                                            (index==0 || index==1) && (
-                                                <MapMini latitude={parseFloat(data.ltd_loc?data.ltd_loc:props.tender_ltd)} longitude={parseFloat(data.lng_loc?data.lng_loc:props.tender_lng)} />
+                                            (index==0) && (
+                                                data.ltd_loc?(
+                                                    <MapMini latitude={parseFloat(data.ltd_loc?data.ltd_loc:props.tender_ltd)} longitude={parseFloat(data.lng_loc?data.lng_loc:props.tender_lng)} />
+                                                ) : (
+                                                    <p className="text-gray-500">AO belum mengunjungi pemenang tender</p>
+                                                )
+                                            )
+                                        }
+                                        {
+                                            (index==1) && (
+                                                data.ltd_loc?(
+                                                    <MapMini latitude={parseFloat(data.ltd_loc?data.ltd_loc:props.tender_ltd)} longitude={parseFloat(data.lng_loc?data.lng_loc:props.tender_lng)} />
+                                                ) : (
+                                                    <p className="text-gray-500">AO belum melakukan penawaran lebih lanjut pemenang tender</p>
+                                                )
                                             )
                                         }
                                     </>
