@@ -110,21 +110,26 @@ export default function AOTenderDetail(){
         }
     }
 
-    const {uploadDataPenawaranAO, uploadDataFollowUpAO} = useUploadData()
+    const {uploadDataPenawaranAO, uploadDataFollowUpAO, errorUpload} = useUploadData()
     //penawaran
     const [filePenawaran, setFilePenawaran] = useState()
     const {ltd, lng} = useGeoLocation()
     function onUploadFilePenawaran(file:any){
         setFilePenawaran(file)
     }
-    function onSubmitFilePenawaran(){
+    async function onSubmitFilePenawaran(){
         const formData = new FormData;
         formData.append("id", tenderProject?.tender_statuses[contentIndex].id as unknown as string);
         formData.append("tender_id", tenderProject?.id as unknown as string);
         formData.append("ltd_loc", ltd);
         formData.append("lng_loc", lng);
         formData.append("file_penawaran", filePenawaran as unknown as Blob);
-        uploadDataPenawaranAO(formData);
+        await uploadDataPenawaranAO(formData);
+        if(!errorUpload){
+            window.location.reload()
+        } else{
+            alert(errorUpload)
+        }
     }
 
     //follow up
@@ -133,7 +138,7 @@ export default function AOTenderDetail(){
     function onUploadFileFollowUp(file:any){
         setFileFollowUp(file)
     }
-    function onSubmitFileFollowUp(){
+    async function onSubmitFileFollowUp(){
         const formData = new FormData;
         formData.append("id", tenderProject?.tender_statuses[contentIndex].id as unknown as string);
         formData.append("tender_id", tenderProject?.id as unknown as string);
@@ -141,7 +146,12 @@ export default function AOTenderDetail(){
         formData.append("lng_loc", lng);
         formData.append("file_follow_up", fileFollowUp as unknown as Blob);
         formData.append("text_follow_up", textFollowUp);
-        uploadDataFollowUpAO(formData);
+        await uploadDataFollowUpAO(formData);
+        if(!errorUpload){
+            window.location.reload()
+        } else{
+            alert(errorUpload)
+        }
     }
     
 
@@ -171,6 +181,7 @@ export default function AOTenderDetail(){
                             <ProgressButton 
                                 className="w-full" 
                                 progressIndex={contentIndex} 
+                                currStatus={currStatus as string}
                                 setIndexPrev={contentPrev} 
                                 setIndexNext={contentNext} 
                                 dataTender={tenderProject as TenderProjectModel}
