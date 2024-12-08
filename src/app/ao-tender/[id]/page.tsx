@@ -38,11 +38,13 @@ export default function AOTenderDetail(){
     }
     const { tenderProject, refresh, loading, error } = useGetTenderById(id as string);
     const currStatus = tenderProject?.tender_statuses[tenderProject.tender_statuses.length-1].status.nama
+    const currStatusData = tenderProject?.tender_statuses[tenderProject.tender_statuses.length-1]
+    const indexStatusData = tenderProject?.tender_statuses[contentIndex]
     const dataProgress = [
-        {label:"Penawaran", successed:false, ignored: false},
-        {label:"Tindak Lanjut", successed:false, ignored: false},
-        {label:"Mengajukan Kredit", successed:false, ignored: false},
-        {label:"Penyetujuan Kredit", successed:false, ignored: false},
+        {label:"Penawaran", successed:false, ignored: false, inProgress: false},
+        {label:"Tindak Lanjut", successed:false, ignored: false, inProgress: false},
+        {label:"Mengajukan Kredit", successed:false, ignored: false, inProgress: false},
+        {label:"Penyetujuan Kredit", successed:false, ignored: false, inProgress: false},
     ]
     function getDataProgress(){
         const newData = dataProgress
@@ -50,6 +52,10 @@ export default function AOTenderDetail(){
             for(const data in dataProgress){
                 newData[data].successed = true
                 if(dataProgress[data].label == 'Penawaran'){
+                    if(!tenderProject?.tender_statuses[0]?.penawaran_file){
+                        newData[data].successed = false
+                        newData[data].inProgress = true
+                    }
                     break
                 }
             }
@@ -58,6 +64,10 @@ export default function AOTenderDetail(){
             for(const data in dataProgress){
                 newData[data].successed = true
                 if(dataProgress[data].label == 'Tindak Lanjut'){
+                    if(!tenderProject?.tender_statuses[1]?.dibuat_tanggal){
+                        newData[data].successed = false
+                        newData[data].inProgress = true
+                    }
                     break
                 }
             }
@@ -67,6 +77,10 @@ export default function AOTenderDetail(){
                 newData[data].successed = true
                 if(dataProgress[data].label == 'Mengajukan Kredit'){
                     if(currStatus == "tidak berminat") newData[data].ignored = true
+                    if(!tenderProject?.tender_statuses[2]?.dibuat_tanggal){
+                        newData[data].successed = false
+                        newData[data].inProgress = true
+                    }
                     break
                 }
             }
@@ -76,6 +90,10 @@ export default function AOTenderDetail(){
                 newData[data].successed = true
                 if(dataProgress[data].label == 'Penyetujuan Kredit'){
                     if(currStatus == "kredit gagal") newData[data].ignored = true
+                    if(!tenderProject?.tender_statuses[3]?.dibuat_tanggal){
+                        newData[data].successed = false
+                        newData[data].inProgress = true
+                    }
                     break
                 }
             }
@@ -98,10 +116,10 @@ export default function AOTenderDetail(){
                             tenderValue={nilaiKredit} 
                             onChangeDitolakText={onChangeFeedback} 
                             feedback={feedback}
-                            tenderStatusData={tenderProject?.tender_statuses[contentIndex] as TenderStatusModel}
+                            tenderStatusData={indexStatusData as TenderStatusModel}
                         />
             case 3:
-                return <TenderProgresPenyetujuan/>
+                return <TenderProgresPenyetujuan statusData={currStatusData as TenderStatusModel}/>
             default:
                 return <TenderProgresPenawaran uploadFile={onUploadFilePenawaran} dataTender={tenderProject as TenderProjectModel} indexProgress={contentIndex}/>
         }
@@ -111,7 +129,7 @@ export default function AOTenderDetail(){
             return true
         } else if (currStatus == 'penawaran' && contentIndex>=1 && (!fileFollowUp || textFollowUp.length==0)){
             return true
-        } else if ((currStatus == 'pengajuan' || currStatus == "tidak berminat") && contentIndex>=2 && !(((produkDipilih.length>0 && nilaiKredit.length>0) || feedback.length>0) && !(tenderProject?.tender_statuses[contentIndex].produk_dipilih || tenderProject?.tender_statuses[contentIndex].feedback))){
+        } else if ((currStatus == 'pengajuan' || currStatus == "tidak berminat") && contentIndex>=2 && !(((produkDipilih.length>0 && nilaiKredit.length>0) || feedback.length>0) && !(indexStatusData?.produk_dipilih || indexStatusData?.feedback))){
             return true
         } else if ((currStatus == 'kredit disetujui' || currStatus == "kredit gagal") && contentIndex>=3){
             return true
@@ -129,7 +147,7 @@ export default function AOTenderDetail(){
     }
     async function onSubmitFilePenawaran(){
         const formData = new FormData;
-        formData.append("id", tenderProject?.tender_statuses[contentIndex].id as unknown as string);
+        formData.append("id", indexStatusData?.id as unknown as string);
         formData.append("tender_id", tenderProject?.id as unknown as string);
         formData.append("ltd_loc", ltd);
         formData.append("lng_loc", lng);
@@ -151,7 +169,7 @@ export default function AOTenderDetail(){
     }
     async function onSubmitFileFollowUp(){
         const formData = new FormData;
-        formData.append("id", tenderProject?.tender_statuses[contentIndex].id as unknown as string);
+        formData.append("id", indexStatusData?.id as unknown as string);
         formData.append("tender_id", tenderProject?.id as unknown as string);
         formData.append("ltd_loc", ltd);
         formData.append("lng_loc", lng);
@@ -186,7 +204,7 @@ export default function AOTenderDetail(){
     async function onSubmitPengajuanKredit(){
         const tertarik = isDebiturTertarik=="Diterima"?true:false
         const submitData = {
-            id: tenderProject?.tender_statuses[contentIndex].id as unknown as string,
+            id: indexStatusData?.id as unknown as string,
             tender_id: tenderProject?.id as string,
             is_debitur_tertarik: tertarik,
             produk_dipilih: tertarik? produkDipilih : null,

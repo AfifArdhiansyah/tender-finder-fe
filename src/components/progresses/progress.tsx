@@ -1,15 +1,25 @@
-
+interface ItemProgress{
+    label: string
+    successed: boolean
+    ignored?: boolean
+    inProgress?: boolean
+}
 
 interface ProgressProps{
-    items: {
-        label: string
-        successed: boolean
-        ignored?: boolean
-    }[]
+    items: ItemProgress[]
     visitedIndex: number
 }
 
 export default function Progress(props: ProgressProps){
+    function getBGColor(item: ItemProgress){
+        if(item.successed){
+            return item.ignored?"bg-red-500 text-white":"bg-green-500 text-white"
+        } else if(item.inProgress){
+            return "bg-blue-500 text-white"
+        } else {
+            return "bg-gray-300"
+        }
+    }
     return(
         <div className="flex flex-col items-center gap-2">
             <div className="flex justify-between w-full">
@@ -25,12 +35,12 @@ export default function Progress(props: ProgressProps){
                 {
                     props.items.map((item, i)=>(
                         <div key={i} className={"flex items-center "+(i<props.items.length-1?"w-[21vw]":"w-fit")}>
-                            <div className={"w-[20px] h-[20px] flex items-center justify-center rounded-full "+(item.successed?(item.ignored?"bg-red-500 text-white":"bg-blue-500 text-white"):"bg-gray-300")}>
+                            <div className={"w-[20px] h-[20px] flex items-center justify-center rounded-full " + getBGColor(item)}>
                                 {item.ignored?<span className="font-bold">X</span>:i+1}
                             </div>
                             {
                                 i!=props.items.length-1 && (
-                                    <div className={"h-0.5 w-[78%] " + (props.items[i+1]?.successed?"bg-blue-500":"bg-gray-300")}></div>
+                                    <div className={"h-0.5 w-[78%] " + getBGColor(props.items[i+1])}></div>
                                 )
                             }
                         </div>
