@@ -35,13 +35,13 @@ export default function TenderProgresPenyetujuan(props: TenderProgresPenyetujuan
                             props.tenderStatusData.status.nama == 'tidak berminat' ? <>
                                 <div className="flex gap-2 items-center">
                                     <Image src={"/icons/ignore.svg"} alt={"ignored"} width={20} height={20} />
-                                    <p>Penawaran Ditolak</p>
+                                    <p>Penawaran Ditolak Calon Debitur</p>
                                 </div>
                                 <p className="text-gray-500">{props.tenderStatusData.feedback}</p>
                             </> : <>
                                 <div className="flex gap-2 items-center">
                                     <Image src={"/icons/check.svg"} alt={"accepted"} width={20} height={20} />
-                                    <p>Penawaran Disetujui</p>
+                                    <p>Penawaran Disetujui Calon Debitur</p>
                                 </div>
                                 <p className="text-gray-500">{props.tenderStatusData.produk_dipilih}</p>
                             </>
