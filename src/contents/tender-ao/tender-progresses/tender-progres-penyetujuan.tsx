@@ -19,7 +19,7 @@ export default function TenderProgresPenyetujuan(props: TenderProgresPenyetujuan
                     <>
                         <BorderedBox className="flex gap-2 items-center">
                         {
-                            penyetujuan.disetujui ? <>
+                            props.statusData.status_id == 5? <>
                                 <Image src={"/icons/check.svg"} alt={"accepted"} width={20} height={20} />
                                 <p>Kredit Disetujui</p>
                             </> : <>
@@ -28,8 +28,8 @@ export default function TenderProgresPenyetujuan(props: TenderProgresPenyetujuan
                             </>
                         }
                         </BorderedBox>  
-                        <p className="font-bold">Feedback dari manajemen:</p>
-                        <BorderedBox className="text-gray-500">{penyetujuan.catatan}</BorderedBox>
+                        {/* <p className="font-bold">Feedback dari manajemen:</p>
+                        <BorderedBox className="text-gray-500">{penyetujuan.catatan}</BorderedBox> */}
                     </>
                 ) : (
                     <p className="text-gray-500">menunggu keputusan dari manajemen, hubungi manager anda untuk melakukan follow up keputusan kredit ini</p>
