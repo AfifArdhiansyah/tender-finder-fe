@@ -5,6 +5,8 @@ interface DropdownProps {
   label: string; 
   options: string[]; 
   onSelect: (selected: string) => void; 
+  className?: string;
+  parentClassName?: string
 }
 
 export default function Dropdown(props: DropdownProps){
@@ -18,11 +20,11 @@ export default function Dropdown(props: DropdownProps){
   };
 
   return (
-    <div className="relative inline-block text-left">
+    <div className= {props.parentClassName+" relative inline-block text-left"}>
       <button
         type="button"
         onClick={() => setIsOpen(!isOpen)}
-        className="w-full flex justify-between items-center px-4 py-2 text-gray-700 bg-white border border-gray-300 rounded-md md:hover:bg-gray-50 focus:outline-none"
+        className={props.className+ " w-full flex justify-between items-center px-4 py-2 text-gray-700 bg-white border border-gray-300 rounded-md md:hover:bg-gray-50 focus:outline-none"}
       >
         {selectedOption}
         {isOpen ? (

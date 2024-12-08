@@ -91,6 +91,36 @@ export const useUploadData = () =>{
         }
     }
 
-    return { uploadDataPenawaranAO, uploadDataFollowUpAO, updateDataDiterima, loading, errorUpload }
+    const updateManajemenACC = async (id: number, is_acc: boolean) => {
+        setLoading(true);
+        setError(null);
+        const dataUpdate = {
+            id: id,
+            is_manajemen_acc: is_acc
+        }
+        const toastId = toast.loading("Update status keputusan manajemen...");
+        try {
+            const response = await api.post("/tender-statuses/update-keputusan-manajemen", dataUpdate)
+
+        if (response.status != 200) {
+            const errorData = await response.data;
+            throw new Error(errorData.message || "Gagal update status");
+        }
+
+        const data = await response.data;
+        setSuccess(data);
+        toast.success("Success update status!", { id: toastId });
+        } catch (err: unknown) {
+            toast.error(
+                err instanceof Error ? err.message : "An unexpected error occurred",
+                { id: toastId }
+            );
+            setError(err instanceof Error ? err.message : "An unexpected error occurred");
+        } finally {
+            setLoading(false);
+        }
+    }
+
+    return { uploadDataPenawaranAO, uploadDataFollowUpAO, updateDataDiterima, updateManajemenACC, loading, errorUpload }
 }
 
