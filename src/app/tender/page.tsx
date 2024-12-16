@@ -12,8 +12,8 @@ export default function Tender(){
 
     const { tenderProjects, loading, refresh, error } = useTenderProjects();
 
-    const tableHeads = ["Nama Tender", "Pemenang Tender", "Alamat Pemenang", "Harga Tender (Rp.)", "Status"]
-    const tableColumns = ["nama", "nama_pemenang", "lokasi_pekerjaan", "nilai_tender", "status"]
+    const tableHeads = ["Nama Tender", "Pemenang Tender", "Alamat Pemenang", "Harga Tender (Rp.)", "KC Inisiator", "Status"]
+    const tableColumns = ["nama", "nama_pemenang", "lokasi_pekerjaan", "nilai_tender", "kc", "status"]
     const tableDatas = tenderProjects
     
     const index = 1

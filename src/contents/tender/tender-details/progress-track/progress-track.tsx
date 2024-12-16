@@ -10,6 +10,7 @@ import { useUploadData } from "@/hooks/useTenderStatus";
 
 interface ProgressTrackProps{
     datas: TenderStatusModel[]
+    branchId: number,
     nilaiTender: string,
     tender_ltd: string,
     tender_lng: string,
@@ -83,7 +84,7 @@ export default function ProgressTrack(props: ProgressTrackProps){
     async function onSubmitKeputusanManajemen(idStatus:number){
         const id = idStatus
         const status = selectedACCStatus=="Ya, pengajuan kredit disetujui"?true:false
-        await updateManajemenACC(id, status)
+        await updateManajemenACC(id, status, props.branchId)
         if(!errorUpload){
             props.refresh()
         }

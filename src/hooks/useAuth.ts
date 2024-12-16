@@ -12,7 +12,8 @@ interface LoginResponse {
         token: string,
         nama: string,
         role: string,
-        office_name: string
+        office_name: string,
+        office_id: string
     },
     message: string
 }
@@ -54,6 +55,7 @@ export function useAuth(): UseAuthReturn {
             cookies.set("name", data.data.nama);
             cookies.set("role", data.data.role);
             cookies.set("office-name", data.data.office_name)
+            cookies.set("office-id", data.data.office_id)
             toast.success("Login successful!", { id: toastId });
 
             if(data.data.role == "ao"){
@@ -95,6 +97,7 @@ export function useAuth(): UseAuthReturn {
             cookies.remove("name");
             cookies.remove("role");
             cookies.remove("office-name")
+            cookies.remove("office-id")
             toast.success("Logout successful!", { id: toastId });
 
             router.push("/auth");

@@ -5,13 +5,23 @@ import { SummaryDataPusat, SummaryDataKanwil, SummaryDataKC, SummaryDataAO } fro
 import { MonitoringChartDataPusat, MonitoringChartDataKanwil, MonitoringChartDataKC } from "@/constants/monitoring/monitoring-chart-data";
 import Image from "next/image";
 import PieChartSummary from "./components/pie-chart-summary";
+import { useSummary } from "@/hooks/useSummary";
+import Loading from "@/components/items/progress/loading";
+import Response from "@/components/items/responses/response";
+import { useEffect } from "react";
 
 interface SummaryContentProps{
     title: string
     stateIndex: number
+    officeId: number
 }
 
 export default function SummaryContent(props: SummaryContentProps){
+    const {summary, loading, error, setOfficeId} = useSummary()
+    useEffect(()=>{
+        setOfficeId(props.officeId?.toString())
+    }, [props.officeId])
+
     function switchDataChart(){
         switch(props.stateIndex){
             case 0:
@@ -59,37 +69,115 @@ export default function SummaryContent(props: SummaryContentProps){
     return(
         <div className="flex flex-col gap-4">
             <h1 className="font-bold text-sm">{props.title}</h1>
-            <div className="grid grid-cols-3 max-lg:grid-cols-2 max-md:grid-cols-1 gap-4">
-                {
-                    switchDataSum().map((data, i)=>(
-                        <SummaryBox key={i} count={data.count} color={switchColor(data.id)[0]}>
-                            <div className={"p-1 rounded-full " + switchColor(data.id)[1]}>
-                                {data.id==1 && <Image src={"/icons/briefcase.svg"} height={18} width={18} alt="sum-icon"/>}
-                                {data.id==2 && <Image src={"/icons/map-pin.svg"} height={18} width={18} alt="sum-icon"/>}
-                                {data.id==3 && <Image src={"/icons/thumbs-up.svg"} height={18} width={18} alt="sum-icon"/>}
-                                {data.id==4 && <Image src={"/icons/thumbs-down.svg"} height={18} width={18} alt="sum-icon"/>}
-                                {data.id==5 && <Image src={"/icons/check-circle.svg"} height={18} width={18} alt="sum-icon"/>}
-                                {data.id==6 && <Image src={"/icons/x-circle.svg"} height={18} width={18} alt="sum-icon"/>}
-                            </div>
-                            <p>{data.title}</p>
-                        </SummaryBox>
-                    ))
-                }
-            </div>
             {
-                props.title != "AO" &&(
-                    <div className="grid grid-cols-3 max-lg:grid-cols-2 max-md:grid-cols-1">
-                        {
-                            switchDataChart().map((pie, i)=>(
-                                <PieChartSummary key={i} title={pie.title} data={pie.data.map((d)=>({
-                                    value: d.value,
-                                    label: d.name,
-                                    color: d.color
-                                }))}/>
-                            ))
-                        }
-                    </div>
-                )
+                loading ? (<Loading/>) :
+                error ? (<Response message={error} type={"error"}/>) :
+                (<>
+                <div className="grid grid-cols-3 max-lg:grid-cols-2 max-md:grid-cols-1 gap-4">
+                    {/* {
+                        switchDataSum().map((data, i)=>(
+                            <SummaryBox key={i} count={data.count} color={switchColor(i+1)[0]}>
+                                <div className={"p-1 rounded-full " + switchColor(i+1)[1]}>
+                                    {i+1==1 && <Image src={"/icons/briefcase.svg"} height={18} width={18} alt="sum-icon"/>}
+                                    {i+1==2 && <Image src={"/icons/map-pin.svg"} height={18} width={18} alt="sum-icon"/>}
+                                    {i+1==3 && <Image src={"/icons/thumbs-up.svg"} height={18} width={18} alt="sum-icon"/>}
+                                    {i+1==4 && <Image src={"/icons/thumbs-down.svg"} height={18} width={18} alt="sum-icon"/>}
+                                    {i+1==5 && <Image src={"/icons/check-circle.svg"} height={18} width={18} alt="sum-icon"/>}
+                                    {i+1==6 && <Image src={"/icons/x-circle.svg"} height={18} width={18} alt="sum-icon"/>}
+                                </div>
+                                <p>{data.title}</p>
+                            </SummaryBox>
+                        ))
+                    } */}
+                    <SummaryBox count={summary?.total_pemenang_baru as number} color={"text-black"}>
+                        <div className={"p-1 rounded-full bg-black"}>
+                            <Image src={"/icons/briefcase.svg"} height={18} width={18} alt="sum-icon"/>
+                        </div>
+                        <p>Pemenang Tender Baru</p>
+                    </SummaryBox>
+                    <SummaryBox count={summary?.total_penawaran as number} color={"text-green-700"}>
+                        <div className={"p-1 rounded-full bg-green-700"}>
+                            <Image src={"/icons/map-pin.svg"} height={18} width={18} alt="sum-icon"/>
+                        </div>
+                        <p>Penawaran Kredit</p>
+                    </SummaryBox>
+                    <SummaryBox count={summary?.total_mengajukan_kredit as number} color={"text-blue-500"}>
+                        <div className={"p-1 rounded-full bg-blue-500"}>
+                            <Image src={"/icons/thumbs-up.svg"} height={18} width={18} alt="sum-icon"/>
+                        </div>
+                        <p>Mengajukan Kredit</p>
+                    </SummaryBox>
+                    <SummaryBox count={summary?.total_tidak_mengajukan_kredit as number} color={"text-yellow-500"}>
+                        <div className={"p-1 rounded-full bg-yellow-500"}>
+                            <Image src={"/icons/thumbs-down.svg"} height={18} width={18} alt="sum-icon"/>
+                        </div>
+                        <p>Tidak Mengajukan Kredit</p>
+                    </SummaryBox>
+                    <SummaryBox count={summary?.total_kredit_disetujui as number} color={"text-green-500"}>
+                        <div className={"p-1 rounded-full bg-green-500"}>
+                            <Image src={"/icons/check-circle.svg"} height={18} width={18} alt="sum-icon"/>
+                        </div>
+                        <p>Kredit Disetujui</p>
+                    </SummaryBox>
+                    <SummaryBox count={summary?.total_kredit_tidak_disetujui as number} color={"text-red-500"}>
+                        <div className={"p-1 rounded-full bg-red-500"}>
+                            <Image src={"/icons/x-circle.svg"} height={18} width={18} alt="sum-icon"/>
+                        </div>
+                        <p>Kredit Ditolak</p>
+                    </SummaryBox>
+                </div>
+                {
+                    props.title != "AO" &&(
+                        <div className="grid grid-cols-3 max-lg:grid-cols-2 max-md:grid-cols-1">
+                            {/* {
+                                switchDataChart().map((pie, i)=>(
+                                    <PieChartSummary key={i} title={pie.title} data={pie.data.map((d)=>({
+                                        value: d.value,
+                                        label: d.name,
+                                        color: d.color
+                                    }))}/>
+                                ))
+                            } */}
+                            <PieChartSummary title={"Success Rate (%)"} data={[
+                                {
+                                    value: Math.floor(((summary?.total_mengajukan_kredit || 0) / ((summary?.total_mengajukan_kredit || 0) + (summary?.total_tidak_mengajukan_kredit || 0)))*100),
+                                    label: "Mengajukan Kredit",
+                                    color: "rgb(34 197 94)"
+                                },
+                                {
+                                    value: Math.floor(((summary?.total_tidak_mengajukan_kredit || 0) / ((summary?.total_mengajukan_kredit || 0) + (summary?.total_tidak_mengajukan_kredit || 0)))*100),
+                                    label: "Tidak Mengajukan Kredit",
+                                    color: "rgb(250 204 21)"
+                                }
+                            ]} />
+                            <PieChartSummary title={"Daya Serap (%)"} data={[
+                                {
+                                    value: Math.floor(summary?.percent_diserap || 0),
+                                    label: "Diserap",
+                                    color: "rgb(34 197 94)"
+                                },
+                                {
+                                    value: Math.floor(summary?.percent_tidak_diserap || 0),
+                                    label: "Tidak Diserap",
+                                    color: "#4A5260"
+                                }
+                            ]} />
+                            <PieChartSummary title={"Pengajuan Kredit"} data={[
+                                {
+                                    value: Math.floor(((summary?.total_mengajukan_kredit || 0) / ((summary?.total_mengajukan_kredit || 0) + (summary?.total_tidak_mengajukan_kredit || 0)))*100),
+                                    label: "Kredit Disetujui",
+                                    color: "rgb(34 197 94)"
+                                },
+                                {
+                                    value: Math.floor(((summary?.total_tidak_mengajukan_kredit || 0) / ((summary?.total_tidak_mengajukan_kredit || 0) + (summary?.total_tidak_mengajukan_kredit || 0)))*100),
+                                    label: "Kredit Ditolak",
+                                    color: "#E5131D"
+                                }
+                            ]} />
+                        </div>
+                    )
+                }
+                </>)
             }
         </div>
     )

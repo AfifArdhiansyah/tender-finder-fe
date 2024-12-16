@@ -8,6 +8,7 @@ import SummaryTable from "@/contents/summary/summary-table"
 import { SidebarNavigator } from "@/constants/navigator"
 import { MonitoringPusatTableData, MonitoringKanwilTableData, MonitoringKCTableData } from "@/constants/monitoring/monitoring-table-data"
 import { useUser } from "@/hooks/useUser";
+import { useCookies } from "next-client-cookies";
 
 export default function Dashboard(){
     const {role} = useUser()
@@ -50,6 +51,8 @@ export default function Dashboard(){
     }
     const [currState, setCurrState] = useState("")
     const [currRole, setCurRole] = useState(role)
+    const [currOfficeId, setCurrOfficeId] = useState(0)
+    const [kanwilId, setKanwilId] = useState("")
 
     const index = 0;
     const [summaryDatas, setSummaryDatas] = useState<any[]>([])
@@ -60,6 +63,7 @@ export default function Dashboard(){
             { label: SidebarNavigator[index].name, state: currState}
         ]
     );
+    const cookies = useCookies();
     useEffect(() => {
         setSummaryDatas(getDataSummary())
         setBCIndex(getBCIndex())
@@ -69,6 +73,9 @@ export default function Dashboard(){
         setBreadcrumbItems([
             { label: SidebarNavigator[index].name, state: role}
         ])
+        if(role=="manager-kanwil"){
+            setKanwilId(cookies.get("office-id") || "")
+        }
     }, [role])
     function switchBCState(state:string, label?:string){
         let currItems = breadcrumbItems
@@ -133,15 +140,21 @@ export default function Dashboard(){
     }
     function handleBreadcrumbClick(state:string){
         switchBCState(state)
+        if(state=="manager-kanwil"){
+            setCurrOfficeId(parseInt(kanwilId))
+        } else {
+            setCurrOfficeId(0)
+        }
     };
-    function openDetail(state:string, label:string){
+    function openDetail(state:string, label:string, officeId: number){
         switchBCState(state, label)
+        setCurrOfficeId(officeId)
     }
     return(
         <DashboardLayout sideNavIndex={index} bcItems={breadcrumbItems} onClickBC={handleBreadcrumbClick} role={currRole}>
             <div className="flex flex-col gap-4 h-full">
                 <Paper className="">
-                    <SummaryContent title={currLabel} stateIndex={bcIndex}/>
+                    <SummaryContent title={currLabel} stateIndex={bcIndex} officeId={currOfficeId}/>
                 </Paper>
                 <Paper className="max-md:overflow-x-auto">
                     <SummaryTable datas={summaryDatas} bcIndex={bcIndex} openDetail={openDetail}/>

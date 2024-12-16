@@ -13,7 +13,7 @@ export default function SummaryTable(props: SummaryContentProps) {
     const headers = ["Lokasi", "Pemenang Baru", "Success Rate", "Daya Serap (Rp)", "Penyaluran Kredit", ""]
     const headerKC = ["NIP AO", "Nama AO", "Total Tender", "Success Rate", "Daya Serap (Rp)", "Penyaluran Kredit"]
 
-    function toDetail(label:string){
+    function toDetail(label:string, officeId: number){
         let state = ""
         switch(props.bcIndex){
             case 0:
@@ -26,7 +26,7 @@ export default function SummaryTable(props: SummaryContentProps) {
                 state = "manager-pusat"
                 break
         }
-        props.openDetail && props.openDetail(state, label)
+        props.openDetail && props.openDetail(state, label, officeId)
     }
 
     return(
@@ -50,7 +50,7 @@ export default function SummaryTable(props: SummaryContentProps) {
                         <td className="px-2 py-2 text-sm">{data.penyaluran_kredit}</td>
                         <td className="px-2 py-2 text-sm">
                             <div className="flex justify-center">
-                                <Button type="primary" size="medium" onClick={()=>toDetail(data.lokasi)}>Detail</Button>
+                                <Button type="primary" size="medium" onClick={()=>toDetail(data.lokasi, data.id)}>Detail</Button>
                             </div>
                         </td>
                     </tr>

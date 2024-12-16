@@ -104,12 +104,17 @@ export default function TenderTable(props: TenderTableProps){
                                     </div>
                                 )}
                                 {
+                                    col == "kc" && (
+                                        data["branch"]["nama"]
+                                    )
+                                }
+                                {
                                     col == "nilai_tender" && (
                                         parseFloat(data[col]).toLocaleString('id-ID')
                                     )
                                 }
                                 {
-                                    !((col == "status") || (col == "nilai_tender")) && (
+                                    !((col == "status") || (col == "nilai_tender") || (col == "kc")) && (
                                         data[col]
                                     )
                                 }
