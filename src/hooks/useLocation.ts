@@ -2,8 +2,8 @@ import { useState, useEffect } from "react"
 
 
 export const useGeoLocation = () =>{
-    const [ltd, setLTD] = useState("")
-    const [lng, setLNG] = useState("")
+    const [ltd, setLTD] = useState("0.00000")
+    const [lng, setLNG] = useState("0.00000")
 
     useEffect(()=> {
         navigator.geolocation.getCurrentPosition(function(position) {

@@ -4,6 +4,7 @@ import api from "@/services/api";
 import { TenderProjectModel } from "@/models/tender-project-model";
 import toast from "react-hot-toast";
 import { useCookies } from 'next-client-cookies';
+import { TenderStatusModel } from "@/models/tender-status-model";
 
 export const useTenderProjects = () => {
   const [tenderProjects, setTenderProjects] = useState<TenderProjectModel[]>([]);
@@ -36,6 +37,7 @@ export const useTenderProjects = () => {
 
 export const useGetTenderById = (id: string) => {
   const [tenderProject, setTenderProject] = useState<TenderProjectModel>();
+  const [tenderProjectStatuses, setTenderProjectStatuses] = useState<TenderStatusModel[]>();
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
   const [refreshTP, setRefreshTP] = useState(false);
@@ -45,6 +47,7 @@ export const useGetTenderById = (id: string) => {
       try {
         const response = await api.get<TenderProjectModel>("/tender-projects/id/"+id);
         setTenderProject(response.data);
+        setTenderProjectStatuses(response.data.tender_statuses);
       } catch (err: any) {
         setError(err.message);
       } finally {
@@ -59,7 +62,7 @@ export const useGetTenderById = (id: string) => {
     setRefreshTP(!refreshTP)
   }
 
-  return { tenderProject, refresh, loading, error };
+  return { tenderProject,tenderProjectStatuses, refresh, loading, error };
 }
 
 export const useGetTendersByUser = () =>{

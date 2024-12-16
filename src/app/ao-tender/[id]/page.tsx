@@ -139,6 +139,7 @@ export default function AOTenderDetail(){
     }
 
     const {uploadDataPenawaranAO, uploadDataFollowUpAO, updateDataDiterima, errorUpload} = useUploadData()
+    const branchId = tenderProject?.branch_id
     //penawaran
     const [filePenawaran, setFilePenawaran] = useState<any|null>()
     const {ltd, lng} = useGeoLocation()
@@ -152,6 +153,7 @@ export default function AOTenderDetail(){
         formData.append("ltd_loc", ltd);
         formData.append("lng_loc", lng);
         formData.append("file_penawaran", filePenawaran as unknown as Blob);
+        formData.append("branch_id", branchId as unknown as string);
         await uploadDataPenawaranAO(formData);
         if(!errorUpload){
             refresh()
@@ -175,6 +177,7 @@ export default function AOTenderDetail(){
         formData.append("lng_loc", lng);
         formData.append("file_follow_up", fileFollowUp as unknown as Blob);
         formData.append("text_follow_up", textFollowUp);
+        formData.append("branch_id", branchId as unknown as string);
         await uploadDataFollowUpAO(formData);
         if(!errorUpload){
             refresh()
@@ -209,7 +212,8 @@ export default function AOTenderDetail(){
             is_debitur_tertarik: tertarik,
             produk_dipilih: tertarik? produkDipilih : null,
             nilai_kredit: tertarik? nilaiKredit : null,
-            feedback: !tertarik? feedback : null
+            feedback: !tertarik? feedback : null,
+            branch_id: branchId as unknown as string
         }
         await updateDataDiterima(submitData);
         if(!errorUpload){

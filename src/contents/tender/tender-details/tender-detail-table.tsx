@@ -24,6 +24,9 @@ export default function TenderDetailTable(props: TenderDetailTableProps){
             <p className="font-bold col-span-2 max-md:col-span-5 max-lg:col-span-4">Alamat Tender</p>
             <p className="text-gray-500 col-span-10 max-md:col-span-7 max-lg:col-span-8"><span className="font-bold mr-2">:</span> {props.tenderProject?.lokasi_pekerjaan}</p>
 
+            <p className="font-bold col-span-2 max-md:col-span-5 max-lg:col-span-4">Cabang Inisiatior</p>
+            <p className="text-gray-500 col-span-10 max-md:col-span-7 max-lg:col-span-8"><span className="font-bold mr-2">:</span> {props.tenderProject?.branch.nama}</p>
+
             <p className="font-bold col-span-2 max-md:col-span-5 max-lg:col-span-4">Nama AO</p>
             <p className="text-gray-500 col-span-10 max-md:col-span-7 max-lg:col-span-8"><span className="font-bold mr-2">:</span> {props.tenderProject?.account_officer.nama}</p>
 

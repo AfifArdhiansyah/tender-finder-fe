@@ -91,12 +91,13 @@ export const useUploadData = () =>{
         }
     }
 
-    const updateManajemenACC = async (id: number, is_acc: boolean) => {
+    const updateManajemenACC = async (id: number|null, is_acc: boolean, branch_id: number) => {
         setLoading(true);
         setError(null);
         const dataUpdate = {
             id: id,
-            is_manajemen_acc: is_acc
+            is_manajemen_acc: is_acc,
+            branch_id: branch_id
         }
         const toastId = toast.loading("Update status keputusan manajemen...");
         try {

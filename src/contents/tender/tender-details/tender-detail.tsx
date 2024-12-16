@@ -24,7 +24,7 @@ export default function TenderDetailContent(props: TenderDetailContentProps){
                         <TenderDetailTable tenderProject={tenderProject} idTender={props.idTender}/>
                         <hr />
                         <h2 className="font-bold text-xl">Tracking</h2>
-                        <ProgressTrack datas={tenderProject?.tender_statuses as TenderStatusModel[]} nilaiTender={tenderProject?.nilai_tender as string} tender_ltd={tenderProject?.ltd_loc as string} tender_lng={tenderProject?.lng_loc as string} refresh={refresh}/>
+                        <ProgressTrack datas={tenderProject?.tender_statuses as TenderStatusModel[]} branchId={tenderProject?.branch_id as number} nilaiTender={tenderProject?.nilai_tender as string} tender_ltd={tenderProject?.ltd_loc as string} tender_lng={tenderProject?.lng_loc as string} refresh={refresh}/>
                     </div>
                 )
             }
