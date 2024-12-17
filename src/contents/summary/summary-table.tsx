@@ -31,7 +31,7 @@ export default function SummaryTable(props: SummaryContentProps) {
 
     return(
         <Table className="h-full" headers={props.bcIndex == 2 ? headerKC : headers} datas={props.datas} usePagination={false}>
-            {props.datas.map((data,i)=>(
+            {props.datas?.map((data,i)=>(
                 props.bcIndex == 2 ? (
                     <tr className="border-b-[1px]" key={"row-"+i}>
                         <td className="px-2 py-2 text-sm">{data.nip}</td>
@@ -43,14 +43,14 @@ export default function SummaryTable(props: SummaryContentProps) {
                     </tr>
                 ) : (
                     <tr className="border-b-[1px]" key={"row-"+i}>
-                        <td className="px-2 py-2 text-sm">{data.lokasi}</td>
-                        <td className="px-2 py-2 text-sm">{data.pemenang_baru}</td>
-                        <td className="px-2 py-2 text-sm">{data.success_rate}</td>
-                        <td className="px-2 py-2 text-sm">{data.daya_serap}</td>
-                        <td className="px-2 py-2 text-sm">{data.penyaluran_kredit}</td>
+                        <td className="px-2 py-2 text-sm">{data.nama}</td>
+                        <td className="px-2 py-2 text-sm">{"40 Tender"}</td>
+                        <td className="px-2 py-2 text-sm">{"100%"}</td>
+                        <td className="px-2 py-2 text-sm">{"Rp. 400.000.000"}</td>
+                        <td className="px-2 py-2 text-sm">{"40%"}</td>
                         <td className="px-2 py-2 text-sm">
                             <div className="flex justify-center">
-                                <Button type="primary" size="medium" onClick={()=>toDetail(data.lokasi, data.id)}>Detail</Button>
+                                <Button type="primary" size="medium" onClick={()=>toDetail(data.nama, data.id)}>Detail</Button>
                             </div>
                         </td>
                     </tr>

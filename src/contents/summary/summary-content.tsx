@@ -140,12 +140,12 @@ export default function SummaryContent(props: SummaryContentProps){
                             } */}
                             <PieChartSummary title={"Success Rate (%)"} data={[
                                 {
-                                    value: Math.floor(((summary?.total_mengajukan_kredit || 0) / ((summary?.total_mengajukan_kredit || 0) + (summary?.total_tidak_mengajukan_kredit || 0)))*100),
+                                    value: Math.floor(((summary?.total_mengajukan_kredit || 0) / ((summary?.total_mengajukan_kredit || 0) + (summary?.total_tidak_mengajukan_kredit || 0)) || 0)*100),
                                     label: "Mengajukan Kredit",
                                     color: "rgb(34 197 94)"
                                 },
                                 {
-                                    value: Math.floor(((summary?.total_tidak_mengajukan_kredit || 0) / ((summary?.total_mengajukan_kredit || 0) + (summary?.total_tidak_mengajukan_kredit || 0)))*100),
+                                    value: Math.floor(((summary?.total_tidak_mengajukan_kredit || 0) / ((summary?.total_mengajukan_kredit || 0) + (summary?.total_tidak_mengajukan_kredit || 0)) || 0)*100),
                                     label: "Tidak Mengajukan Kredit",
                                     color: "rgb(250 204 21)"
                                 }
@@ -164,12 +164,12 @@ export default function SummaryContent(props: SummaryContentProps){
                             ]} />
                             <PieChartSummary title={"Pengajuan Kredit"} data={[
                                 {
-                                    value: Math.floor(((summary?.total_mengajukan_kredit || 0) / ((summary?.total_mengajukan_kredit || 0) + (summary?.total_tidak_mengajukan_kredit || 0)))*100),
+                                    value: Math.floor(((summary?.total_mengajukan_kredit || 0) / ((summary?.total_mengajukan_kredit || 0) + (summary?.total_tidak_mengajukan_kredit || 0)) || 0)*100),
                                     label: "Kredit Disetujui",
                                     color: "rgb(34 197 94)"
                                 },
                                 {
-                                    value: Math.floor(((summary?.total_tidak_mengajukan_kredit || 0) / ((summary?.total_tidak_mengajukan_kredit || 0) + (summary?.total_tidak_mengajukan_kredit || 0)))*100),
+                                    value: Math.floor(((summary?.total_tidak_mengajukan_kredit || 0) / ((summary?.total_tidak_mengajukan_kredit || 0) + (summary?.total_tidak_mengajukan_kredit || 0)) || 0)*100),
                                     label: "Kredit Ditolak",
                                     color: "#E5131D"
                                 }
