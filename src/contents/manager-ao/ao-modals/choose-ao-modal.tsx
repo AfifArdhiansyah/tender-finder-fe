@@ -32,7 +32,7 @@ export default function ChooseAOModal(props: ChooseAOModalProps){
                 ) : error? (
                     <Response message={error as string} type={"error"}/>
                 ) : (
-                    <div className="w-full">
+                    <div className="w-full overflow-y-auto max-h-[70vh]">
                         <AOListTable headers={tableHeads} columns={tableColumns} datas={aos as any[]} dataTender={props.dataTender} refreshTable={props.refreshTable}/>
                     </div>
                 )
