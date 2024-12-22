@@ -7,12 +7,16 @@ import TenderInfoModal from "../tender-modals/tender-info-modal"
 import SearchBar from "@/components/items/search-bars/search-bar"
 import { useState } from "react"
 import { TenderProjectModel } from "@/models/tender-project-model"
+import Dropdown from "@/components/items/dropdowns/dropdown"
 
 interface TenderTableProps{
     headers: string[],
     columns: string[]
     datas: any[],
-    refreshTable: ()=>void
+    refreshTable: ()=>void,
+    filterOption: string[],
+    selectedFilter: string | null,
+    findFilteredTable: (filter:string | null)=>void
 }
 
 export default function TenderTable(props: TenderTableProps){
@@ -80,7 +84,10 @@ export default function TenderTable(props: TenderTableProps){
     }
     return(
         <>
-            <SearchBar onSearch={handleSearch} className="w-[400px] max-md:w-[300px]"/>
+            <div className="flex">
+                <SearchBar onSearch={handleSearch} className="w-[400px] max-md:w-[300px] h-full -mr-[12px]"/>
+                <Dropdown parentClassName={"h-fit w-[220px]"} className={"text-gray-200"} label={props.selectedFilter || "pilih status"} options={props.filterOption} onSelect={props.findFilteredTable}/>
+            </div>
             <Table className="h-full" headers={props.headers} datas={props.datas} usePagination itemsPerPage={itemsPerPage} currentPage={currentPage} totalPages={totalPages} handleItemsPerPageChange={handleItemsPerPageChange} handlePrevious={handlePrevious} handleNext={handleNext}>
                 {paginatedData.map((data,i)=>(
                     <tr key={"row-"+i}>

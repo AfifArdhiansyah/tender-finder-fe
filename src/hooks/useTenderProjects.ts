@@ -11,12 +11,17 @@ export const useTenderProjects = () => {
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
   const [refreshTP, setRefreshTP] = useState(false);
+  const [selectedFilter, setSelectedFilter] = useState<string|null>()
 
   useEffect(() => {
     const fetchTenderProjects = async () => {
       setLoading(true)
       try {
-        const response = await api.get<TenderProjectModel[]>("/tender-projects");
+        let url = "/tender-projects"
+        if(selectedFilter){
+          url += "?status=" +selectedFilter
+        }
+        const response = await api.get<TenderProjectModel[]>(url);
         setTenderProjects(response.data);
       } catch (err: any) {
         setError(err.message);
@@ -26,13 +31,13 @@ export const useTenderProjects = () => {
     };
 
     fetchTenderProjects();
-  }, [refreshTP]);
+  }, [refreshTP, selectedFilter]);
 
   const refresh = ()=>{
     setRefreshTP(!refreshTP)
   }
 
-  return { tenderProjects, refresh, loading, error };
+  return { tenderProjects, selectedFilter, setSelectedFilter, refresh, loading, error };
 };
 
 export const useGetTenderById = (id: string) => {

@@ -24,7 +24,7 @@ export default function Dropdown(props: DropdownProps){
       <button
         type="button"
         onClick={() => setIsOpen(!isOpen)}
-        className={props.className+ " w-full flex justify-between items-center px-4 py-2 text-gray-700 bg-white border border-gray-300 rounded-md md:hover:bg-gray-50 focus:outline-none"}
+        className={"w-full flex justify-between items-center px-4 py-2 text-gray-700 bg-white border rounded-md md:hover:bg-gray-50 focus:outline-none " + props.className}
       >
         {selectedOption}
         {isOpen ? (
@@ -34,7 +34,7 @@ export default function Dropdown(props: DropdownProps){
         )}
       </button>
       {isOpen && (
-        <div className="absolute z-10 w-full mt-2 origin-top-right bg-white border border-gray-300 rounded-md shadow-lg">
+        <div className="absolute z-10 w-full mt-2 origin-top-right bg-white border rounded-md shadow-lg">
           <ul className="py-1 text-gray-700">
             {props.options.map((option, index) => (
               <li

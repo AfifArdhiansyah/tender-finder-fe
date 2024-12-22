@@ -23,7 +23,7 @@ export default function PieChartSummary(props: PieChartSummaryProps) {
         <div className="flex flex-col items-center">
             <p className="gray-400">{props.title}</p>
             <div className="relative">
-                <p className={"absolute bottom-[138px] left-[112px] text-3xl font-bold text-green-500 " + ` transition-opacity duration-600 ease-in-out transform ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-5'}`}>{props.data[0].value}</p>
+                <div className={"absolute w-[60px] bottom-[138px] left-[98px] text-center text-3xl font-bold text-green-500 " + ` transition-opacity duration-600 ease-in-out transform ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-5'}`}>{props.data[0].value}</div>
                 <PieChart
                     series={[
                         {

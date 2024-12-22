@@ -22,7 +22,7 @@ export default function SearchBar({ onSearch, className }: SearchBarProps) {
         <CiSearch className="z-10 ml-4" />
         <input
             type="text"
-            className="pl-10 pr-3 py-2 border rounded-md text-sm w-full relative left-[-30px]"
+            className="pl-10 pr-3 py-2 border rounded-md text-sm w-full relative left-[-30px] h-full"
             placeholder="Search..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
