@@ -1,3 +1,5 @@
+'use client'
+
 import { ReactNode } from "react";
 import { IoClose } from "react-icons/io5";
 import Button from "../buttons/button";
@@ -51,8 +53,8 @@ export default function Modal(props: ModalProps){
               {
                 props.useFooterAction && (
                   <div className="flex items-center justify-end p-6 gap-2 border-t border-solid border-blueGray-200 rounded-b">
-                    <Button onClick={onModalClose} type="danger" size="medium">Close</Button>
-                    <Button onClick={onConfirm} type="primary" size="medium">Save Changes</Button>
+                    <Button onClick={onModalClose} type="danger" size="medium">cancel</Button>
+                    <Button onClick={onConfirm} type="primary" size="medium">submit</Button>
                   </div>
                 )
               }

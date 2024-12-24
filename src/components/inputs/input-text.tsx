@@ -9,6 +9,7 @@ interface InputTextProps{
     value?: string;
     onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
     onKeyDown?: (e: React.KeyboardEvent<HTMLInputElement>) => void;
+    disabled?: boolean;
 }
 
 const InputText = forwardRef<HTMLInputElement, InputTextProps>((props, ref) =>{
@@ -22,6 +23,7 @@ const InputText = forwardRef<HTMLInputElement, InputTextProps>((props, ref) =>{
             value={props.value}
             onChange={props.onChange}
             onKeyDown={props.onKeyDown}
+            disabled={props.disabled}
         />
     )
 })

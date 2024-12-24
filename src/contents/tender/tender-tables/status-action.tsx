@@ -1,3 +1,5 @@
+'use client'
+
 import TextButton from "@/components/items/buttons/text-button"
 import Button from "@/components/items/buttons/button"
 import { useRouter } from "next/navigation"

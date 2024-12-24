@@ -13,6 +13,7 @@ import { MdOutlineRefresh } from "react-icons/md";
 import { Tooltip } from "@mui/material"
 import Button from "@/components/items/buttons/button"
 import { useCookies } from "next-client-cookies"
+import Link from "next/link"
 
 interface TenderTableProps{
     headers: string[],
@@ -110,7 +111,9 @@ export default function TenderTable(props: TenderTableProps){
                         </button>
                     </Tooltip>
                 </div>
-                <Button onClick={()=>{}}type={"primary"} className={"h-full px-4"} size={"medium"}>new tender</Button>
+                <Link href="/tender/add">
+                    <Button onClick={()=>{}} type={"primary"} className={"h-full px-4"} size={"medium"}>new tender</Button>
+                </Link>
             </div>
             {
                 props.datas.length == 0 ? (
