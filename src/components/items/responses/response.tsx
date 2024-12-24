@@ -1,8 +1,9 @@
-import { IoCheckmarkCircle, IoCloseCircle } from "react-icons/io5";
+import Image from "next/image";
 
 interface ResponseProps{
     message: string,
-    type: 'error'|'success'
+    subMessage?: string,
+    type: 'error'|'success'|'empty'
 }
 
 export default function Response(props: ResponseProps){
@@ -10,16 +11,33 @@ export default function Response(props: ResponseProps){
         if(props.type == 'error'){
             return (
                 <>
-                    <IoCloseCircle size={80} className="text-red-500"/>
-                    {props.message}
+                    <Image src="/icons/error.svg" width={70} height={70} alt="error"/>
+                    <div className="flex flex-col items-center">
+                        {props.message}
+                        {props.subMessage && <p className="text-sm text-gray-400">{props.subMessage}</p>}
+                    </div>
                 </>
             )
         }
         else if(props.type == 'success'){
             return (
                 <>
-                    <IoCheckmarkCircle size={80} className="text-green-500"/>
-                    {props.message}
+                    <Image src="/icons/success.svg" width={70} height={70} alt="success"/>
+                    <div className="flex flex-col items-center">
+                        {props.message}
+                        {props.subMessage && <p className="text-sm text-gray-400">{props.subMessage}</p>}
+                    </div>
+                </>
+            )
+        }
+        else if(props.type == 'empty') {
+            return (
+                <>
+                    <Image src="/icons/empty-box.png" width={120} height={120} alt="empty"/>
+                    <div className="flex flex-col items-center">
+                        {props.message}
+                        {props.subMessage && <p className="text-sm text-gray-400">{props.subMessage}</p>}
+                    </div>
                 </>
             )
         }

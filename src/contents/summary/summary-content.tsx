@@ -89,37 +89,37 @@ export default function SummaryContent(props: SummaryContentProps){
                             </SummaryBox>
                         ))
                     } */}
-                    <SummaryBox count={summary?.total_pemenang_baru as number} color={"text-black"}>
+                    <SummaryBox branchId={props.officeId?.toString()} stateIndex={props.stateIndex} status={"belum ditawarkan"} className={"hover:bg-black hover:border-black hover:text-white"} count={summary?.total_pemenang_baru as number} color={"group-hover:text-white text-black"}>
                         <div className={"p-1 rounded-full bg-black"}>
                             <Image src={"/icons/briefcase.svg"} height={18} width={18} alt="sum-icon"/>
                         </div>
                         <p>Pemenang Tender Baru</p>
                     </SummaryBox>
-                    <SummaryBox count={summary?.total_penawaran as number} color={"text-green-700"}>
+                    <SummaryBox branchId={props.officeId?.toString()} stateIndex={props.stateIndex} status={"telah ditawarkan"} className={"hover:bg-green-700 hover:border-green-700 hover:text-white"} count={summary?.total_penawaran as number} color={"group-hover:text-white text-green-700"}>
                         <div className={"p-1 rounded-full bg-green-700"}>
                             <Image src={"/icons/map-pin.svg"} height={18} width={18} alt="sum-icon"/>
                         </div>
                         <p>Penawaran Kredit</p>
                     </SummaryBox>
-                    <SummaryBox count={summary?.total_mengajukan_kredit as number} color={"text-blue-500"}>
+                    <SummaryBox branchId={props.officeId?.toString()} stateIndex={props.stateIndex} status={"debitur tertarik"} className={"hover:bg-blue-500 hover:border-blue-500 hover:text-white"} count={summary?.total_mengajukan_kredit as number} color={"group-hover:text-white text-blue-500"}>
                         <div className={"p-1 rounded-full bg-blue-500"}>
                             <Image src={"/icons/thumbs-up.svg"} height={18} width={18} alt="sum-icon"/>
                         </div>
                         <p>Mengajukan Kredit</p>
                     </SummaryBox>
-                    <SummaryBox count={summary?.total_tidak_mengajukan_kredit as number} color={"text-yellow-500"}>
+                    <SummaryBox branchId={props.officeId?.toString()} stateIndex={props.stateIndex} status={"debitur tidak tertarik"} className={"hover:bg-yellow-500 hover:border-yellow-500 hover:text-white"} count={summary?.total_tidak_mengajukan_kredit as number} color={"group-hover:text-white text-yellow-500"}>
                         <div className={"p-1 rounded-full bg-yellow-500"}>
                             <Image src={"/icons/thumbs-down.svg"} height={18} width={18} alt="sum-icon"/>
                         </div>
                         <p>Tidak Mengajukan Kredit</p>
                     </SummaryBox>
-                    <SummaryBox count={summary?.total_kredit_disetujui as number} color={"text-green-500"}>
+                    <SummaryBox branchId={props.officeId?.toString()} stateIndex={props.stateIndex} status={"pencairan diterima"} className={"hover:bg-green-500 hover:border-green-500 hover:text-white"} count={summary?.total_kredit_disetujui as number} color={"group-hover:text-white text-green-500"}>
                         <div className={"p-1 rounded-full bg-green-500"}>
                             <Image src={"/icons/check-circle.svg"} height={18} width={18} alt="sum-icon"/>
                         </div>
                         <p>Kredit Disetujui</p>
                     </SummaryBox>
-                    <SummaryBox count={summary?.total_kredit_tidak_disetujui as number} color={"text-red-500"}>
+                    <SummaryBox branchId={props.officeId?.toString()} stateIndex={props.stateIndex} status={"pencairan ditolak"} className={"hover:bg-red-500 hover:border-red-500 hover:text-white"} count={summary?.total_kredit_tidak_disetujui as number} color={"group-hover:text-white text-red-500"}>
                         <div className={"p-1 rounded-full bg-red-500"}>
                             <Image src={"/icons/x-circle.svg"} height={18} width={18} alt="sum-icon"/>
                         </div>
