@@ -7,7 +7,7 @@ interface BorderedBoxProps{
 
 export default function BorderedBox(props: BorderedBoxProps){
     return(
-        <div className={props.className + " border md:border-2 border-gray-200 rounded-lg px-4 py-2"}>
+        <div className={"border md:border-2 border-gray-200 rounded-lg px-4 py-2 " + props.className}>
             {props.children}
         </div>
     )

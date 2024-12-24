@@ -7,37 +7,53 @@ import { useCookies } from 'next-client-cookies';
 import { TenderStatusModel } from "@/models/tender-status-model";
 
 export const useTenderProjects = () => {
+  const cookies = useCookies();
+  const token = cookies.get("authToken")
+  const selectedStatus = cookies.get("selected-status") || null;
+  const cookiesBranch = cookies.get("selected-branch") || null;
   const [tenderProjects, setTenderProjects] = useState<TenderProjectModel[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
   const [refreshTP, setRefreshTP] = useState(false);
-  const [selectedFilter, setSelectedFilter] = useState<string|null>()
+  const [selectedFilter, setSelectedFilter] = useState<string|null>(selectedStatus);
+  const [selectedBranch, setSelectedBranch] = useState<string|null>(cookiesBranch);
 
   useEffect(() => {
     const fetchTenderProjects = async () => {
       setLoading(true)
       try {
         let url = "/tender-projects"
+        const params = new URLSearchParams();
         if(selectedFilter){
-          url += "?status=" +selectedFilter
+          params.append("status", selectedFilter)
         }
-        const response = await api.get<TenderProjectModel[]>(url);
+        if(selectedBranch){
+          params.append("branch_id", selectedBranch)
+        }
+        const response = await api.get<TenderProjectModel[]>(url, {
+            params,
+            headers: {
+                "Authorization": `Bearer ${token}`
+            },
+        });
         setTenderProjects(response.data);
       } catch (err: any) {
         setError(err.message);
       } finally {
+        cookies.remove("selected-status")
+        cookies.remove("selected-branch")
         setLoading(false);
       }
     };
 
     fetchTenderProjects();
-  }, [refreshTP, selectedFilter]);
+  }, [refreshTP, selectedFilter, selectedBranch]);
 
   const refresh = ()=>{
     setRefreshTP(!refreshTP)
   }
 
-  return { tenderProjects, selectedFilter, setSelectedFilter, refresh, loading, error };
+  return { tenderProjects, selectedFilter, setSelectedFilter, selectedBranch, setSelectedBranch, refresh, loading, error };
 };
 
 export const useGetTenderById = (id: string) => {

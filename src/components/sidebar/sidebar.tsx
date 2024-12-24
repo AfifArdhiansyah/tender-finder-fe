@@ -64,16 +64,16 @@ export default function Sidebar(props: SidebarProps) {
                             role == 'ao' ? (
                                 <>
                                     <Image src={"/manager2.png"} width={50} height={50} className='rounded-full' alt='foto-profile' />
-                                    <div className='flex flex-col gap-2 md:items-center lg:items:start'>
-                                        <Link href={"/user"} className='font-bold hover:text-blue-500'>{name}</Link>
+                                    <div className='flex flex-col gap-2 md:items-center lg:items:start '>
+                                        <Link href={"/user"} className='font-bold hover:text-blue-500 w-full text-center'>{name}</Link>
                                         <Pill type='general' size='xs'>{getRole()}</Pill>
                                     </div>
                                 </>
                             ) : (
                                 <>
                                     <Image src={"/manager.png"} width={50} height={50} className='rounded-full' alt='foto-profile' />
-                                    <div className='flex flex-col gap-2 md:items-center lg:items:start'>
-                                        <Link href={"/user"} className='font-bold hover:text-blue-500'>{name}</Link>
+                                    <div className='flex flex-col gap-2 md:items-center lg:items:start '>
+                                        <Link href={"/user"} className='font-bold hover:text-blue-500 w-full text-center'>{name}</Link>
                                         <Pill type='general' size='xs'>{getRole()}</Pill>
                                     </div>
                                 </>

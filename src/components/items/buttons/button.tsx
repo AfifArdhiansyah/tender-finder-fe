@@ -22,7 +22,7 @@ export default function Button(props: ButtonProps){
             case "success":
                 return "bg-green-100 text-green-700" 
             case "primary":
-                return "bg-blue-500 text-white" 
+                return "bg-blue-500 text-white hover:bg-blue-600" 
             case "disable":
                 return "bg-gray-100 text-gray-400" 
             default:
