@@ -5,6 +5,7 @@ import { TenderProjectModel } from "@/models/tender-project-model";
 import toast from "react-hot-toast";
 import { useCookies } from 'next-client-cookies';
 import { TenderStatusModel } from "@/models/tender-status-model";
+import { NewTenderProjectModel } from "@/models/new-tender-project-model";
 
 export const useTenderProjects = () => {
   const cookies = useCookies();
@@ -164,4 +165,49 @@ export const useAssignAO = () =>{
   }
 
   return { assignAOToTender, loading, error };
+}
+
+export function useNewTenderProject(){
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [dataTender, setDataTender] = useState<TenderProjectModel>()
+  const cookies = useCookies();
+
+  const createTenderProject = async (newData: NewTenderProjectModel) => {
+    setLoading(true);
+    setError(null);
+    const toastId = toast.loading("Creating new tender project...");
+    try {
+      const token = cookies.get("authToken")
+        if (!token) {
+          setError("Authentication token not found");
+          setLoading(false);
+          return;
+      }
+      const response = await api.post("/tender-projects", newData, {
+          headers: {
+              "Authorization": `Bearer ${token}`
+          },
+      })
+
+      if (response.status != 201) {
+          const errorData = await response.data;
+          throw new Error(errorData.message || "Create new tender project failed");
+      }
+
+      const responseData: TenderProjectModel = await response.data.data;
+      setDataTender(responseData);
+      toast.success("Create new tender project successful!", { id: toastId });
+    } catch (err: unknown) {
+        toast.error(
+            err instanceof Error ? err.message : "An unexpected error occurred",
+            { id: toastId }
+        );
+        setError(err instanceof Error ? err.message : "An unexpected error occurred");
+    } finally {
+        setLoading(false);
+    }
+  }
+
+  return { createTenderProject, loading, error };
 }

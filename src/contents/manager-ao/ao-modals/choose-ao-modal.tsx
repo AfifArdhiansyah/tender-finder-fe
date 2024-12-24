@@ -1,6 +1,7 @@
+'use client'
+
 import Modal from "@/components/items/modals/modal"
 import AOListTable from "../ao-tables/ao-list-table"
-import AOListData from "@/constants/ao-list-dump-data"
 import { useAOs } from "@/hooks/useAO"
 import Loading from "@/components/items/progress/loading"
 import Response from "@/components/items/responses/response"

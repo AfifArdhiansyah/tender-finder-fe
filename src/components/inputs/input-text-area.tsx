@@ -16,9 +16,9 @@ export default function InputTextArea(props: InputTextAreaProps){
         <>
         {
             props.value? (
-                <textarea className={"w-full border border-gray-300 rounded-lg p-2 "+ props.className} placeholder={props.placeholder} onChange={handleChange} value={props.value}/>
+                <textarea className={"w-full border border-gray-300 rounded-lg p-2 "+ props.className} placeholder={props.placeholder} onChange={handleChange} value={props.value} disabled={props.disabled}/>
             ) : (
-                <textarea className={"w-full border border-gray-300 rounded-lg p-2 "+ props.className} placeholder={props.placeholder} onChange={handleChange}/>
+                <textarea className={"w-full border border-gray-300 rounded-lg p-2 "+ props.className} placeholder={props.placeholder} onChange={handleChange} disabled={props.disabled}/>
             )
         }
         </>
