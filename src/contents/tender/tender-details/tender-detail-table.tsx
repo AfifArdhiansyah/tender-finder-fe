@@ -30,11 +30,11 @@ export default function TenderDetailTable(props: TenderDetailTableProps){
             <p className="font-bold col-span-2 max-md:col-span-5 max-lg:col-span-4">Nama AO</p>
             <p className="text-gray-500 col-span-10 max-md:col-span-7 max-lg:col-span-8"><span className="font-bold mr-2">:</span> {props.tenderProject?.account_officer.nama}</p>
 
-            <p className="font-bold col-span-2 max-md:col-span-5 max-lg:col-span-4">Dokumen Tanda Terima</p>
+            {/* <p className="font-bold col-span-2 max-md:col-span-5 max-lg:col-span-4">Dokumen Tanda Terima</p>
             <p className="text-gray-500 col-span-10 max-md:col-span-7 max-lg:col-span-8"><span className="font-bold mr-2">:</span> ini dokumen tanda terima</p>
 
             <p className="font-bold col-span-2 max-md:col-span-5 max-lg:col-span-4">Foto Follow Up</p>
-            <p className="text-gray-500 col-span-10 max-md:col-span-7 max-lg:col-span-8"><span className="font-bold mr-2">:</span> ini data follow up</p>
+            <p className="text-gray-500 col-span-10 max-md:col-span-7 max-lg:col-span-8"><span className="font-bold mr-2">:</span> ini data follow up</p> */}
 
             <p className="font-bold col-span-2 max-md:col-span-5 max-lg:col-span-4">Status Penerimaan</p>
             <p className="text-gray-500 col-span-10 max-md:col-span-7 max-lg:col-span-8"><span className="font-bold mr-2">:</span> {props.tenderProject?.tender_statuses[props.tenderProject.tender_statuses?.length-1].status.nama}</p>

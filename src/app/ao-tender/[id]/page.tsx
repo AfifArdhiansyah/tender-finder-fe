@@ -231,7 +231,7 @@ export default function AOTenderDetail(){
                 ) : error ? (
                     <Response message={error} type={"error"} />
                 ) : (
-                    <div className="flex flex-col gap-4 h-full">
+                    <div className="flex flex-col gap-4 h-full pb-6">
                         <Paper className="p-2 flex flex-col gap-4">
                             <BorderedBox className="text-sm flex flex-col gap-2">
                                 <h2 className="font-bold">Biodata Tender</h2>

@@ -1,5 +1,4 @@
 import Image from "next/image";
-import MapMini from "@/components/maps/map-mini";
 import { TenderStatusModel } from "@/models/tender-status-model";
 import { MapModal } from "@/components/maps/map-modal";
 import { useState } from "react";
@@ -7,6 +6,7 @@ import Button from "@/components/items/buttons/button";
 import FotoModalProgress from "../components/progress-foto-modal";
 import Dropdown from "@/components/items/dropdowns/dropdown";
 import { useUploadData } from "@/hooks/useTenderStatus";
+import { PdfModal } from "@/components/files/pdf-modal";
 
 interface ProgressTrackProps{
     datas: TenderStatusModel[]
@@ -124,6 +124,26 @@ export default function ProgressTrack(props: ProgressTrackProps){
     const closeFotoFollowUpModal = () =>{
         setShowFotoFollowUpModal(false)
     }
+    //pdf modal purpose
+    const [showPdfModal, setShowPdfModal] = useState(false)
+    const openPdfModal = (data: TenderStatusModel) =>{
+        setSelectedProgress(data)
+        setShowPdfModal(true)
+    }
+    const closePdfModal = () =>{
+        setShowPdfModal(false)
+    }
+    function getRangeTwoDateInSecond(date1: string, date2: string){
+        return Math.floor((new Date(date1).getTime() - new Date(date2).getTime()) / 1000)
+    }
+    function getRangeTwoDate(date1: string, date2: string){
+        const seconds = getRangeTwoDateInSecond(date1, date2)
+        const minutes = Math.floor(seconds/60)
+        const hours = Math.floor(minutes/60)
+        const days = Math.floor(hours/24)
+        const returnStr = days + " hari " + hours%24 + " jam " + minutes%60 + " menit " + seconds%60 + " detik"
+        return returnStr
+    }
     return(
         <div className="min-h-full flex flex-col gap">
             <>
@@ -152,12 +172,16 @@ export default function ProgressTrack(props: ProgressTrackProps){
                                         <>
                                             {index==2 && data.produk_dipilih && (
                                                 <>
+                                                    <p className="text-gray-500">Waktu Pelaksanaan: {new Date(data.updated_at).toLocaleString('id-ID')}</p>
+                                                    <p className="text-gray-500">SLA: {getRangeTwoDate(data.updated_at, props.datas[1]?.updated_at)}</p>
                                                     <p className="text-gray-500">Produk yang dipilih: {data.produk_dipilih}</p>
-                                                    <p className="text-gray-500">Pengajuan kredit: Rp. {parseFloat(props.nilaiTender as string).toLocaleString('id-ID')}</p>
+                                                    <p className="text-gray-500">Pengajuan kredit: Rp. {parseFloat(data.nilai_kredit as string).toLocaleString('id-ID')}</p>
                                                 </>
                                             )}
                                             {index==2 && data.feedback && (
                                                 <>
+                                                    <p className="text-gray-500">Waktu Pelaksanaan: {new Date(data.updated_at).toLocaleString('id-ID')}</p>
+                                                    <p className="text-gray-500">SLA: {getRangeTwoDate(data.updated_at, props.datas[1]?.updated_at)}</p>
                                                     <p className="text-gray-500">Feedback: {data.feedback}</p>
                                                 </>
                                             )}
@@ -165,12 +189,15 @@ export default function ProgressTrack(props: ProgressTrackProps){
                                                 (index==0) && (
                                                     data.ltd_loc?(
                                                         <div className="flex flex-col gap-2">
-                                                            <div className="relative h-[150px] w-[250px] rounded">
+                                                            {/* <div className="relative h-[150px] w-[250px] rounded">
                                                                 <Image className="absolute h-full w-full" src={data.penawaran_file as string} width={150} height={300} alt={"file penawaran"} />
                                                                 <div className="absolute bg-black opacity-0 w-full h-full flex items-center justify-center text-white hover:opacity-45">
                                                                     <button className="h-full w-full text-sm" onClick={()=>openFotoPenawaranModal(data)}>lihat foto</button>
                                                                 </div>
-                                                            </div>
+                                                            </div> */}
+                                                            <p className="text-gray-500">Waktu Pelaksanaan: {new Date(data.updated_at).toLocaleString('id-ID')}</p>
+                                                            <p className="text-gray-500">SLA: {getRangeTwoDate(data.updated_at, data.created_at)}</p>
+                                                            <Button className="w-fit rounded" type={"success"} size={"small"} onClick={()=>openPdfModal(data)}>buka file tanda terima</Button>
                                                             <Button className="w-fit rounded" type={"success"} size={"small"} onClick={()=>openMapPenawaranModal(data)}>buka peta</Button>
                                                         </div>
                                                     ) : (
@@ -182,7 +209,8 @@ export default function ProgressTrack(props: ProgressTrackProps){
                                                 (index==1) && (
                                                     data.ltd_loc?(
                                                         <div className="flex flex-col gap-2">
-                                                            <p className="text-gray-500">Keterangan AO: {data.keterangan}</p>
+                                                            <p className="text-gray-500">Waktu Pelaksanaan: {new Date(data.updated_at).toLocaleString('id-ID')}</p>
+                                                            <p className="text-gray-500">SLA: {getRangeTwoDate(data.updated_at, props.datas[0]?.updated_at)}</p>
                                                             <div className="relative h-[150px] w-[250px]">
                                                                 <Image className="absolute h-full w-full" src={data.bukti_file as string} width={300} height={300} alt={"file penawaran"} />
                                                                 <div className="absolute bg-black opacity-0 w-full h-full flex items-center justify-center text-white hover:opacity-45">
@@ -196,11 +224,19 @@ export default function ProgressTrack(props: ProgressTrackProps){
                                                     )
                                                 )
                                             }
+                                            {
+                                                index==3 && (
+                                                    <div className="flex flex-col gap-2">
+                                                        <p className="text-gray-500">Waktu Pelaksanaan: {new Date(data.updated_at).toLocaleString('id-ID')}</p>
+                                                        <p className="text-gray-500">SLA: {getRangeTwoDate(data.updated_at, props.datas[2]?.updated_at)}</p>
+                                                    </div>
+                                                )
+                                            }
                                         </>
                                     ) : (
                                         index == 3 && (
                                             <div className=" flex flex-col gap-2 pb-16">
-                                                <p className="text-gray-500">Pengajuan kredit: Rp. {parseFloat(props.nilaiTender as string).toLocaleString('id-ID')}</p>
+                                                <p className="text-gray-500">Pengajuan kredit: Rp. {parseFloat(props.datas[2]?.nilai_kredit as string).toLocaleString('id-ID')}</p>
                                                 <p className="text-gray-500">Apakah anda menyetujui pengajuan kredit tersebut?</p>
                                                 <div className="flex gap-2 w-full">
                                                     <Dropdown parentClassName="w-[500px]" label={"pilih keputusan"} options={options} onSelect={onChangeSelect}/>
@@ -253,6 +289,16 @@ export default function ProgressTrack(props: ProgressTrackProps){
                             onClose={closeFotoFollowUpModal}
                             title="Foto Follow Up"
                             subTitle="Foto follow up penawaran kredit"
+                        />
+                }
+                {
+                    showPdfModal &&
+                        <PdfModal
+                            isOpenModal={showPdfModal}
+                            onCancel={closePdfModal}
+                            title="File Tanda Terima"
+                            subTitle="File tanda terima penawaran kredit ke calon debitur"
+                            url={selectedProgress.penawaran_file as string}
                         />
                 }
                 
