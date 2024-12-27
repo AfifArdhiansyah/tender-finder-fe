@@ -24,7 +24,7 @@ export default function TenderProgresTindakLanjut(props: TenderProgresTindakLanj
                 props.dataTender.tender_statuses[props.indexProgress]?.bukti_file ? (
                     <Image src={props.dataTender.tender_statuses[props.indexProgress]?.bukti_file as string} width={200} height={200} alt="image follow up"/>
                 ) : (
-                    <FileUpload onFileUpload={uploadFile} label="Upload Foto" placeholder="upload foto telah follow upa"/>
+                    <FileUpload onFileUpload={uploadFile} label="Upload Foto" placeholder="upload foto telah follow up" onlyImage/>
                 )
             }
             <InputTextArea 

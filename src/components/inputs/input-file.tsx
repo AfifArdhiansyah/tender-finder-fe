@@ -5,6 +5,8 @@ interface FileUploadProps {
   onFileUpload: (file: File) => void;
   label?: string;
   placeholder?: string;
+  onlyPdf?: boolean;
+  onlyImage?: boolean;
 }
 
 export default function FileUpload(props: FileUploadProps){
@@ -61,6 +63,7 @@ export default function FileUpload(props: FileUploadProps){
         id="fileInput"
         type="file"
         className="hidden"
+        accept={props.onlyPdf ? ".pdf" : props.onlyImage ? "image/*" : "*"}
         onChange={handleFileChange}
       />
       {uploadedFile ? (

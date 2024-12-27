@@ -44,6 +44,7 @@ export default function TenderProgresPenyetujuan(props: TenderProgresPenyetujuan
                                     <p>Penawaran Disetujui Calon Debitur</p>
                                 </div>
                                 <p className="text-gray-500">{props.tenderStatusData.produk_dipilih}</p>
+                                <p className="text-gray-500">Rp. {parseFloat(props.tenderStatusData.nilai_kredit as string).toLocaleString('id-ID')}</p>
                             </>
                         }
                     </BorderedBox>

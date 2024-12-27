@@ -14,5 +14,6 @@ export interface TenderStatusModel{
     updated_at: string,
     produk_dipilih: string,
     feedback: string,
+    nilai_kredit: string,
     status: StatusModel
 }

@@ -4,6 +4,7 @@ import FileUpload from "@/components/inputs/input-file";
 import toast, {Toaster} from "react-hot-toast";
 import { TenderProjectModel } from "@/models/tender-project-model";
 import Image from "next/image";
+import PdfViewer from "@/components/files/pdf-viewer";
 
 interface TenderProgresPenawaranProps{
     uploadFile: Function
@@ -19,7 +20,7 @@ export default function TenderProgresPenawaran(props: TenderProgresPenawaranProp
         props.uploadFile(file, props.dataTender.tender_statuses[props.indexProgress].id)
     }
     return(
-        <div className="flex flex-col gap-4 text-xs">
+        <div className="flex flex-col gap-4 text-xs pb-2">
             <p className="font-bold">Download Surat Penawaran:</p>
             <TransparentButton className="border px-3 py-2 rounded-lg text-blue-500 flex justify-between items-center" hoverBGColor={""} hoverTextColor={""} onClick={()=>{downloadFile()}}>
                 Download dokumen surat penawaran
@@ -28,9 +29,9 @@ export default function TenderProgresPenawaran(props: TenderProgresPenawaranProp
             <p className="font-bold">Upload Dokumen Tanda Terima:</p>
             {
                 props.dataTender.tender_statuses[props.indexProgress]?.penawaran_file ? (
-                    <Image src={props.dataTender.tender_statuses[props.indexProgress]?.penawaran_file as string} width={200} height={200} alt="image penawaran"/>
+                    <PdfViewer url={props.dataTender.tender_statuses[props.indexProgress]?.penawaran_file as string} height="350px"/>
                 ) : (
-                    <FileUpload onFileUpload={uploadFile} label="Upload Dokumen" placeholder="upload dokumen tanda terima"/>
+                    <FileUpload onFileUpload={uploadFile} label="Upload Dokumen" placeholder="upload dokumen tanda terima" onlyPdf/>
                 )
             }
         </div>
