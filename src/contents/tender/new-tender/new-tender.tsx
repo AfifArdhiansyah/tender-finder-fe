@@ -42,7 +42,8 @@ export default function AddNewTenderContent() {
     }
     const [npwpPemenang, setNpwpPemenang] = useState<string>("")
     function handleChangeNpwpPemenang(e: React.ChangeEvent<HTMLInputElement>){
-        setNpwpPemenang(e.target.value)
+        const formatted = formatNPWP(e.target.value)
+        setNpwpPemenang(formatted)
     }
     const [alamatPemenang, setAlamatPemenang] = useState<string>("")
     function handleChangeAlamatPemenang(val: string){
@@ -90,7 +91,7 @@ export default function AddNewTenderContent() {
             nama: namaTender,
             lokasi_pekerjaan: alamatTender,
             nama_pemenang: namaPemenang,
-            npwp: npwpPemenang,
+            npwp: cleanNPWP(npwpPemenang),
             lokasi_instansi: alamatPemenang,
             ltd_loc: '0.00000000',
             lng_loc: '0.00000000',
@@ -109,6 +110,29 @@ export default function AddNewTenderContent() {
             }
             goToTenderPage()
         }
+    }
+    //format input NPWP
+    function formatNPWP(val: string){
+        var cleaned = ("" + val).replace(/\D/g, "");
+        var match = cleaned.match(/(\d{0,2})?(\d{0,3})?(\d{0,3})?(\d{0,1})?(\d{0,3})?(\d{0,3})$/);
+        if (!match) return val;
+        return [
+                match[1],
+                match[2] ? "." : "",
+                match[2],
+                match[3] ? "." : "",
+                match[3],
+                match[4] ? "." : "",
+                match[4],
+                match[5] ? "-" : "",
+                match[5],
+                match[6] ? "." : "",
+                match[6]
+        ].join("")
+    }
+    //clean value NPWP
+    function cleanNPWP(val: string){
+        return val.replace(/[^0-9]/, "")
     }
     return (
         <div className="flex flex-col gap-8 pb-6">
@@ -142,7 +166,7 @@ export default function AddNewTenderContent() {
                 </div>
                 <div className="flex flex-col gap-1.5">
                     <label className="text-sm">NPWP Instansi Pemenang Tender</label>
-                    <InputText placeholder="xx.xxx.xxx.x-xxx.xxx" className="text-sm rounded-md" value={npwpPemenang} onChange={handleChangeNpwpPemenang}/>
+                    <InputText placeholder="xx.xxx.xxx.x-xxx.xxx" className="text-sm rounded-md" value={npwpPemenang} maxLength={16} onChange={handleChangeNpwpPemenang}/>
                 </div>
                 <div className="flex flex-col gap-1.5">
                     <label className="text-sm">Alamat Pemenang Tender</label>
