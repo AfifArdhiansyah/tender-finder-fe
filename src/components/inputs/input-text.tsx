@@ -10,6 +10,7 @@ interface InputTextProps{
     onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
     onKeyDown?: (e: React.KeyboardEvent<HTMLInputElement>) => void;
     disabled?: boolean;
+    maxLength?: number;
 }
 
 const InputText = forwardRef<HTMLInputElement, InputTextProps>((props, ref) =>{
@@ -24,6 +25,7 @@ const InputText = forwardRef<HTMLInputElement, InputTextProps>((props, ref) =>{
             onChange={props.onChange}
             onKeyDown={props.onKeyDown}
             disabled={props.disabled}
+            maxLength={props.maxLength}
         />
     )
 })

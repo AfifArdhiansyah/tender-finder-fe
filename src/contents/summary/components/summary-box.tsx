@@ -4,6 +4,7 @@ import BorderedBox from "@/components/boxes/bordered-box";
 import { useCookies } from "next-client-cookies";
 import Link from "next/link";
 import { ReactNode } from "react";
+import { Tooltip } from "@mui/material";
 
 interface SummaryBoxProps{
     count: number
@@ -48,13 +49,15 @@ export default function SummaryBox(props: SummaryBoxProps){
         }
     }
     return(
-        <Link href="/tender" onClick={goToTender}>
-            <BorderedBox className={"group items-center flex justify-between " + props.className}>
-                <div className="flex gap-2 items-center max-md:text-sm">
-                    {props.children}
-                </div>
-                <p className={"text-2xl font-bold max-md:text-lg "+props.color}>{props.count}</p>
-            </BorderedBox>
-        </Link>
+        <Tooltip title={"lihat detail data"} placement="top" arrow>
+            <Link href="/tender" onClick={goToTender}>
+                <BorderedBox className={"group items-center flex justify-between " + props.className}>
+                    <div className="flex gap-2 items-center max-md:text-sm">
+                        {props.children}
+                    </div>
+                    <p className={"text-2xl font-bold max-md:text-lg "+props.color}>{props.count}</p>
+                </BorderedBox>
+            </Link>
+        </Tooltip>
     )
 }
