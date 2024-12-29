@@ -35,8 +35,12 @@ export default function StatusAction(props: StatusActionInterface){
     }
     switch(props.status){
         case "pemenang baru":
-            if(props.dataTender?.account_officer?.id) return <TextButton size="medium" type="success" onClick={goToDetail}>{props.status}</TextButton>
-            return <Button type={role=="manager-cabang"?"alert":"disable"} size="medium" onClick={onShowClickedAO} disabled={role=="manager-cabang"?false:true}>{role=="manager-cabang"?"tawarkan":"tender baru"}</Button>
+            return <div className="flex gap-2">
+                <TextButton size="medium" type="success" onClick={goToDetail}>{props.status}</TextButton>
+                {
+                    !(props.dataTender?.account_officer?.id) && <Button type={role=="manager-cabang"?"alert":"disable"} size="medium" onClick={onShowClickedAO} disabled={role=="manager-cabang"?false:true}>{role=="manager-cabang"?"tawarkan":"tender baru"}</Button>
+                }
+            </div>
         case "penawaran":
             return <TextButton size="medium" type="alert" onClick={goToDetail}>{props.status}</TextButton>
         case "tidak berminat":
