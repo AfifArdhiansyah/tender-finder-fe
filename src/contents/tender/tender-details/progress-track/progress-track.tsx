@@ -7,17 +7,24 @@ import FotoModalProgress from "../components/progress-foto-modal";
 import Dropdown from "@/components/items/dropdowns/dropdown";
 import { useUploadData } from "@/hooks/useTenderStatus";
 import { PdfModal } from "@/components/files/pdf-modal";
+import ChooseAOModal from "@/contents/manager-ao/ao-modals/choose-ao-modal";
+import { TenderProjectModel } from "@/models/tender-project-model";
+import { useCookies } from "next-client-cookies";
 
 interface ProgressTrackProps{
     datas: TenderStatusModel[]
+    namaAO: string|null,
     branchId: number,
     nilaiTender: string,
     tender_ltd: string,
     tender_lng: string,
     refresh: Function
+    dataTender: TenderProjectModel | null
 }
 
 export default function ProgressTrack(props: ProgressTrackProps){
+    const cookies = useCookies()
+
     function getIconSource(index: number, data: TenderStatusModel){
         if(index==1 && data.status.id==2) return "/icons/check-progress.svg"
         if(index==1 && data.status.id!=2) return "/icons/cross-progress.svg"
@@ -144,6 +151,23 @@ export default function ProgressTrack(props: ProgressTrackProps){
         const returnStr = days + " hari " + hours%24 + " jam " + minutes%60 + " menit " + seconds%60 + " detik"
         return returnStr
     }
+    //modal purpose
+    const [isOpenModalAO, setIsOpenModalAO] = useState(false)
+    const [selectedTenderName, setSelectedTenderName] = useState("")
+    const showModalAO = () => {
+        setIsOpenModalAO(true);
+    };
+    const closeModalAO = () => {
+        setIsOpenModalAO(false);
+    };
+    const onShowClickedAO = () =>{
+        showModalAO()
+    }
+    const refreshTable = () =>{
+        props.refresh()
+        closeModalAO()
+    }
+    const [role, setRole] = useState(cookies.get("role"))
     return(
         <div className="min-h-full flex flex-col gap">
             <>
@@ -201,7 +225,22 @@ export default function ProgressTrack(props: ProgressTrackProps){
                                                             <Button className="w-fit rounded" type={"success"} size={"small"} onClick={()=>openMapPenawaranModal(data)}>buka peta</Button>
                                                         </div>
                                                     ) : (
-                                                        <p className="text-gray-500">AO belum mengunjungi pemenang tender</p>
+                                                        props.namaAO?(
+                                                            <p className="text-gray-500">AO belum mengunjungi pemenang tender</p>
+                                                        ):(
+                                                            <div className="flex flex-col gap-2">
+                                                                <p className="text-gray-500">AO belum ditentukan</p>
+                                                                <Button 
+                                                                    type={
+                                                                        role=="manager-cabang"?"alert":"disable"
+                                                                    } 
+                                                                    size="medium" 
+                                                                    onClick={onShowClickedAO}
+                                                                    disabled={role=="manager-cabang"?false:true}
+                                                                    className="w-fit px-6"
+                                                                >pilih AO</Button>
+                                                            </div>
+                                                        )
                                                     )
                                                 )
                                             }
@@ -300,6 +339,9 @@ export default function ProgressTrack(props: ProgressTrackProps){
                             subTitle="File tanda terima penawaran kredit ke calon debitur"
                             url={selectedProgress.penawaran_file as string}
                         />
+                }
+                {
+                    isOpenModalAO ? <ChooseAOModal open={isOpenModalAO} onCancel={closeModalAO} tenderName={selectedTenderName} refreshTable={refreshTable} dataTender={props.dataTender as TenderProjectModel}/> : null
                 }
                 
             </>

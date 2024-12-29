@@ -9,23 +9,27 @@ interface MessageTableProps{
     headers: string[],
     columns: string[]
     datas: any[],
-    setMessageDatas: Function
+    setMessageDatas?: Function
 }
 
 export default function MessageTable(props: MessageTableProps){
     const [isOpenModalMessage, setIsOpenModalMessage] = useState(false)
-    const [selectedMessage, setSelectedMessage] = useState({})
+    const [selectedMessage, setSelectedMessage] = useState("")
+    const [selectedTenderId, setSelectedTenderId] = useState<null|string>(null)
+    const [messageDate, setMessageDate] = useState("")
     const showModalMessage = () => {
         setIsOpenModalMessage(true);
     };
     const closeModalMessage = () => {
         setIsOpenModalMessage(false);
     };
-    const onMessageSelected = (index:number, messageData: any) =>{
-        setSelectedMessage(messageData)
-        const newMessageData = props.datas
-        newMessageData[index]["isRead"] = true
-        props.setMessageDatas(newMessageData)
+    const onMessageSelected = (index:number, message: string, tenderId: string|null, date: string) =>{
+        setSelectedMessage(message)
+        setMessageDate(date)
+        setSelectedTenderId(tenderId)
+        // const newMessageData = props.datas
+        // newMessageData[index]["isRead"] = true
+        // props.setMessageDatas(newMessageData)
         showModalMessage()
     }
     return(
@@ -37,7 +41,16 @@ export default function MessageTable(props: MessageTableProps){
                             <td key={i.toString() + j.toString()} className={"px-2 py-2 text-sm"}>
                                 {
                                     col == "message" && (
-                                        <MessageListItem className="flex justify-between items-center" dataMessage={data} dataIndex={i} hoverBGColor="blue-300" hoverTextColor="white" onClick={onMessageSelected}/>
+                                        <MessageListItem 
+                                            className="flex justify-between items-center" 
+                                            message={data?.message?.message as string} 
+                                            isRead={data?.is_read} dataIndex={i} 
+                                            tenderId={data?.message?.tender_id}
+                                            date={data?.created_at}
+                                            hoverBGColor="blue-300" 
+                                            hoverTextColor="white" 
+                                            onClick={onMessageSelected}
+                                        />
                                     )
                                 }
                             </td>
@@ -46,7 +59,7 @@ export default function MessageTable(props: MessageTableProps){
                 ))}
             </Table>
             {
-                isOpenModalMessage ? <MessageDetailModal open={isOpenModalMessage} onCancel={closeModalMessage} dataMessage={selectedMessage}/> : null
+                isOpenModalMessage ? <MessageDetailModal open={isOpenModalMessage} onCancel={closeModalMessage} message={selectedMessage} datetime={messageDate} tenderId={selectedTenderId || null}/> : null
             }
         </>
     )

@@ -1,9 +1,12 @@
 import Modal from "@/components/items/modals/modal"
+import TextLink from "@/components/items/links/text-link"
 
 interface MessageDetailModalProps{
-    dataMessage: any,
+    message: string,
+    datetime: string,
     open: boolean,
     onCancel: Function,
+    tenderId?: string|null
 }
 
 export default function MessageDetailModal(props: MessageDetailModalProps){
@@ -18,12 +21,33 @@ export default function MessageDetailModal(props: MessageDetailModalProps){
                     <tr>
                         <td className="py-2 font-bold">Pesan</td>
                         <td className="py-2 px-2 font-bold">:</td>
-                        <td className="py-2 text-gray-500">{props.dataMessage.message}</td>
+                        <td className="py-2 text-gray-500">{props.message}</td>
                     </tr>
+                    {
+                        props.tenderId && (
+                            <tr>
+                                <td className="py-2 font-bold">Tender</td>
+                                <td className="py-2 px-2 font-bold">:</td>
+                                <td className="py-2 text-gray-500">
+                                    <TextLink path={`/tender/${props.tenderId}`} type="primary">Lihat Tender #{props.tenderId}</TextLink>
+                                </td>
+                            </tr>
+                        )
+                    }
                     <tr>
                         <td className="py-2 font-bold">Tanggal</td>
                         <td className="py-2 px-2 font-bold">:</td>
-                        <td className="py-2 text-gray-500">{props.dataMessage.datetime}</td>
+                        <td className="py-2 text-gray-500">
+                            {new Date(props.datetime).toLocaleString('id-ID', {
+                                weekday: 'long',
+                                year: 'numeric',
+                                month: 'long',
+                                day: 'numeric',
+                                hour: 'numeric',
+                                minute: 'numeric',
+                                second: 'numeric'
+                            })}
+                        </td>
                     </tr>
                 </tbody>
             </table>

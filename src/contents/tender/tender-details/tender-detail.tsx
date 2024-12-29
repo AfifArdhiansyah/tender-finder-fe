@@ -27,10 +27,13 @@ export default function TenderDetailContent(props: TenderDetailContentProps){
                         <ProgressTrack 
                             datas={tenderProject?.tender_statuses as TenderStatusModel[]} 
                             branchId={tenderProject?.branch_id as number} 
+                            namaAO={tenderProject?.account_officer?.nama || null}
                             nilaiTender={tenderProject?.nilai_tender as string} 
                             tender_ltd={tenderProject?.ltd_loc as string} 
                             tender_lng={tenderProject?.lng_loc as string}
-                            refresh={refresh}/>
+                            refresh={refresh}
+                            dataTender={tenderProject || null}
+                        />
                     </div>
                 )
             }
