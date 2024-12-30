@@ -4,12 +4,13 @@ import Table from "@/components/tables/table"
 import MessageListItem from "../components/message-list-item"
 import MessageDetailModal from "../message-modals/message-detail-modal"
 import { useState } from "react"
+import { useReadMessage } from "@/hooks/useMessage"
 
 interface MessageTableProps{
     headers: string[],
     columns: string[]
     datas: any[],
-    setMessageDatas?: Function
+    setMessageRead: Function
 }
 
 export default function MessageTable(props: MessageTableProps){
@@ -17,20 +18,20 @@ export default function MessageTable(props: MessageTableProps){
     const [selectedMessage, setSelectedMessage] = useState("")
     const [selectedTenderId, setSelectedTenderId] = useState<null|string>(null)
     const [messageDate, setMessageDate] = useState("")
+    const { response, loading, error, setReadMessage } = useReadMessage()
     const showModalMessage = () => {
         setIsOpenModalMessage(true);
     };
     const closeModalMessage = () => {
         setIsOpenModalMessage(false);
     };
-    const onMessageSelected = (index:number, message: string, tenderId: string|null, date: string) =>{
+    const onMessageSelected = (index:number, message: string, tenderId: string|null, date: string, userMessageId: number) =>{
         setSelectedMessage(message)
         setMessageDate(date)
         setSelectedTenderId(tenderId)
-        // const newMessageData = props.datas
-        // newMessageData[index]["isRead"] = true
-        // props.setMessageDatas(newMessageData)
+        props.setMessageRead(index)
         showModalMessage()
+        setReadMessage(userMessageId)
     }
     return(
         <>
@@ -47,6 +48,7 @@ export default function MessageTable(props: MessageTableProps){
                                             isRead={data?.is_read} dataIndex={i} 
                                             tenderId={data?.message?.tender_id}
                                             date={data?.created_at}
+                                            userMessageId={data?.id}
                                             hoverBGColor="blue-300" 
                                             hoverTextColor="white" 
                                             onClick={onMessageSelected}
