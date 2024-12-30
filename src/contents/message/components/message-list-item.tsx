@@ -5,6 +5,7 @@ interface MessageListItemInterface{
     message: string,
     isRead: boolean,
     date: string,
+    userMessageId: number
     tenderId?: string,
     dataIndex: number,
     hoverBGColor: string,
@@ -17,7 +18,7 @@ interface MessageListItemInterface{
 
 export default function MessageListItem(props: MessageListItemInterface){
     function onMessageClicked(){
-        props.onClick(props.dataIndex, props.message, props.tenderId, props.date)
+        props.onClick(props.dataIndex, props.message, props.tenderId, props.date, props.userMessageId)
     }
     return (
         <TransparentButton className={props.className} hoverBGColor="gray-200" hoverTextColor="white" onClick={onMessageClicked}>
