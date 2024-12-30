@@ -8,6 +8,7 @@ export const useUploadData = () =>{
     const [errorUpload, setError] = useState<string | null>(null);
     const [success, setSuccess] = useState()
     const cookies = useCookies();
+    const token = cookies.get("authToken")
   
     const uploadDataPenawaranAO = async (formData: FormData) => {
       setLoading(true);
@@ -15,7 +16,10 @@ export const useUploadData = () =>{
       const toastId = toast.loading("Upload data penawaran...");
       try {
         const response = await api.post("/tender-statuses/upload-data-penawaran", formData, {
-            headers: { "Content-Type": "multipart/form-data" },
+            headers: { 
+                "Authorization": `Bearer ${token}`,
+                "Content-Type": "multipart/form-data" 
+            },
         })
   
         if (response.status != 200) {
@@ -43,7 +47,10 @@ export const useUploadData = () =>{
         const toastId = toast.loading("Upload data follow up...");
         try {
             const response = await api.post("/tender-statuses/upload-data-follow-up", formData, {
-                headers: { "Content-Type": "multipart/form-data" },
+                headers: { 
+                    "Authorization": `Bearer ${token}`,
+                    "Content-Type": "multipart/form-data" 
+                },
         })
 
         if (response.status != 200) {
@@ -70,7 +77,13 @@ export const useUploadData = () =>{
         setError(null);
         const toastId = toast.loading("Update status keputusan calon debitur...");
         try {
-            const response = await api.post("/tender-statuses/update-data-diterima", update)
+            const response = await api.post("/tender-statuses/update-data-diterima", update, 
+                {
+                    headers: { 
+                        "Authorization": `Bearer ${token}`,
+                    },
+                }
+            )
 
         if (response.status != 200) {
             const errorData = await response.data;
@@ -101,7 +114,13 @@ export const useUploadData = () =>{
         }
         const toastId = toast.loading("Update status keputusan manajemen...");
         try {
-            const response = await api.post("/tender-statuses/update-keputusan-manajemen", dataUpdate)
+            const response = await api.post("/tender-statuses/update-keputusan-manajemen", dataUpdate, 
+                {
+                    headers: { 
+                        "Authorization": `Bearer ${token}`,
+                    },
+                }
+            )
 
         if (response.status != 200) {
             const errorData = await response.data;
