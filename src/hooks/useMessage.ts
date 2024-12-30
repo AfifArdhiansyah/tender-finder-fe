@@ -66,3 +66,35 @@ export const useReadMessage = () => {
 
     return { response, loading, error, setReadMessage }
 }
+
+export const useUnreadMessage = () => {
+    const cookies = useCookies()
+    const token = cookies.get("authToken")
+    const [loading, setLoading] = useState<boolean>(true)
+    const [error, setError] = useState<string | null>(null)
+    const [unreadCount, setUnreadCount] = useState<number>()
+
+    const getUnreadMessage = async () =>{
+        setLoading(true)
+        try {
+            const response = await api.get("/user-messages/unread-count",
+                {
+                    headers: {
+                        "Authorization": `Bearer ${token}`
+                    }
+                }
+            )
+            setUnreadCount(response.data.data as number)
+        } catch (err: any) {
+            setError(err.message)
+        } finally {
+            setLoading(false)
+        }
+    }
+
+    useEffect(()=>{
+        getUnreadMessage()
+    }, [])
+
+    return { unreadCount, loading, error }
+}
