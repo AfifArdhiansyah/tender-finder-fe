@@ -3,39 +3,55 @@
 import MessageDetailModal from "../message-modals/message-detail-modal"
 import MessageListItem from "../components/message-list-item"
 import { useState } from "react"
+import { useReadMessage } from "@/hooks/useMessage"
 
 interface MessageListAOProps{
     datas: any[],
-    setMessageDatas: Function
+    setMessageRead: Function
 }
 
 export default function MessageListAO(props: MessageListAOProps){
     const [isOpenModalMessage, setIsOpenModalMessage] = useState(false)
-    const [selectedMessage, setSelectedMessage] = useState({})
-    const showModalMessage = () => {
-        setIsOpenModalMessage(true);
-    };
-    const closeModalMessage = () => {
-        setIsOpenModalMessage(false);
-    };
-    const onMessageSelected = (index:number, messageData: any) =>{
-        setSelectedMessage(messageData)
-        const newMessageData = props.datas
-        newMessageData[index]["isRead"] = true
-        props.setMessageDatas(newMessageData)
-        showModalMessage()
-    }
+    const [selectedMessage, setSelectedMessage] = useState("")
+        const [selectedTenderId, setSelectedTenderId] = useState<null|string>(null)
+        const [messageDate, setMessageDate] = useState("")
+        const { response, loading, error, setReadMessage } = useReadMessage()
+        const showModalMessage = () => {
+            setIsOpenModalMessage(true);
+        };
+        const closeModalMessage = () => {
+            setIsOpenModalMessage(false);
+        };
+        const onMessageSelected = (index:number, message: string, tenderId: string|null, date: string, userMessageId: number) =>{
+            setSelectedMessage(message)
+            setMessageDate(date)
+            setSelectedTenderId(tenderId)
+            props.setMessageRead(index)
+            showModalMessage()
+            setReadMessage(userMessageId)
+        }
     return(
         <>
             <div className="flex flex-col gap-2">
                 {
-                    props.datas.map((message, i)=>(
-                        <MessageListItem key={i} className="max-md:text-sm flex justify-between items-center bg-white border rounded-xl px-2 py-3" dataMessage={message} dataIndex={i} onClick={onMessageSelected} hoverBGColor="blue-600" hoverTextColor="white"/>
+                    props.datas.map((data, i)=>(
+                        <MessageListItem 
+                            key={i}
+                            className="flex justify-between items-center" 
+                            message={data?.message?.message as string} 
+                            isRead={data?.is_read} dataIndex={i} 
+                            tenderId={data?.message?.tender_id}
+                            date={data?.created_at}
+                            userMessageId={data?.id}
+                            hoverBGColor="blue-300" 
+                            hoverTextColor="white" 
+                            onClick={onMessageSelected}
+                        />
                     ))
                 }
             </div>
             {
-                isOpenModalMessage ? <MessageDetailModal open={isOpenModalMessage} onCancel={closeModalMessage} dataMessage={selectedMessage}/> : null
+                isOpenModalMessage ? <MessageDetailModal open={isOpenModalMessage} onCancel={closeModalMessage} message={selectedMessage} datetime={messageDate} tenderId={selectedTenderId || null}/> : null
             }
         </>
     )

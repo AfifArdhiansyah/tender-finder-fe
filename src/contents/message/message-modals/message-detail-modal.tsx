@@ -1,5 +1,6 @@
 import Modal from "@/components/items/modals/modal"
 import TextLink from "@/components/items/links/text-link"
+import { useCookies } from "next-client-cookies"
 
 interface MessageDetailModalProps{
     message: string,
@@ -12,6 +13,14 @@ interface MessageDetailModalProps{
 export default function MessageDetailModal(props: MessageDetailModalProps){
     function onModalClose(){
         props.onCancel()
+    }
+    const cookies = useCookies()
+    const role = cookies.get("role")
+    function getPath(){
+        if(role == 'ao'){
+            return `/ao-tender/${props.tenderId}`
+        }
+        return `/tender/${props.tenderId}`
     }
 
     return(
@@ -29,7 +38,7 @@ export default function MessageDetailModal(props: MessageDetailModalProps){
                                 <td className="py-2 font-bold">Tender</td>
                                 <td className="py-2 px-2 font-bold">:</td>
                                 <td className="py-2 text-gray-500">
-                                    <TextLink path={`/tender/${props.tenderId}`} type="primary">Lihat Tender #{props.tenderId}</TextLink>
+                                    <TextLink path={getPath()} type="primary">Lihat Tender #{props.tenderId}</TextLink>
                                 </td>
                             </tr>
                         )
