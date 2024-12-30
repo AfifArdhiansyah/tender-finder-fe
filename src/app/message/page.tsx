@@ -7,6 +7,8 @@ import { useEffect, useState } from "react"
 import Paper from "@/components/frames/papes"
 import { SidebarNavigator } from "@/constants/navigator"
 import { useMessage } from "@/hooks/useMessage"
+import Loading from "@/components/items/progress/loading"
+import Response from "@/components/items/responses/response"
 
 export default function Message(){
     const index = 2
@@ -29,7 +31,17 @@ export default function Message(){
     return(
         <DashboardLayout sideNavIndex={index} bcItems={breadcrumbItems}>
             <Paper className="mb-4 max-md:overflow-x-auto">
-                <MessageTable headers={headers} columns={columns} datas={allMessages} setMessageRead={setMessageRead} />
+                {
+                    loading ? (
+                        <Loading/>
+                    ) : error ? (
+                        <Response message={error} type={"error"}/>
+                    ) : allMessages.length == 0 ? (
+                        <Response message={"notifikasi anda kosong"} type={"empty"}/>
+                    ) : (
+                        <MessageTable headers={headers} columns={columns} datas={allMessages} setMessageRead={setMessageRead} />
+                    )
+                }
             </Paper>
         </DashboardLayout>
         
