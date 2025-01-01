@@ -127,7 +127,8 @@ export default function TenderTable(props: TenderTableProps){
                                         {col == "status" && (
                                             <div className="flex justify-center">
                                                 <StatusAction 
-                                                    status={data.tender_statuses[data.tender_statuses.length-1].status.nama} 
+                                                    status={data.tender_statuses[data.tender_statuses.length-1].status.nama}
+                                                    latestStatus={data.latest_status}
                                                     tenderId={data.id} 
                                                     tenderName={data.nama} 
                                                     dataTender={data} 
