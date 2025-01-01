@@ -17,6 +17,7 @@ export interface TenderProjectModel {
   tender_statuses: TenderStatusModel[];
   account_officer: AccountOfficerModel;
   branch: OfficeModel;
+  latest_status: number;
   created_at: string;
   updated_at: string;
 }

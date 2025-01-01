@@ -251,7 +251,9 @@ export default function ProgressTrack(props: ProgressTrackProps){
                                                             <p className="text-gray-500">Waktu Pelaksanaan: {new Date(data.updated_at).toLocaleString('id-ID')}</p>
                                                             <p className="text-gray-500">SLA: {getRangeTwoDate(data.updated_at, props.datas[0]?.updated_at)}</p>
                                                             <div className="relative h-[150px] w-[250px]">
-                                                                <Image className="absolute h-full w-full" src={data.bukti_file as string} width={300} height={300} alt={"file penawaran"} />
+                                                                {
+                                                                    (data.bukti_file && data.bukti_file.length > 0) && <Image className="absolute h-full w-full" src={data.bukti_file as string} width={300} height={300} alt={"file penawaran"} />
+                                                                }
                                                                 <div className="absolute bg-black opacity-0 w-full h-full flex items-center justify-center text-white hover:opacity-45">
                                                                     <button className="h-full w-full text-sm" onClick={()=>openFotoFollowUpModal(data)}>lihat foto</button>
                                                                 </div>

@@ -33,6 +33,7 @@ export default function MessageListAO(props: MessageListAOProps){
     return(
         <>
             <div className="flex flex-col gap-2">
+                <p className="bg-gray-200 text-center font-bold text-sm mb-2">message</p>
                 {
                     props.datas.map((data, i)=>(
                         <MessageListItem 
