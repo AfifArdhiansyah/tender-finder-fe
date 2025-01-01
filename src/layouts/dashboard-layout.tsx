@@ -2,10 +2,11 @@
 
 import Sidebar from "@/components/sidebar/sidebar";
 import Navbar from "@/components/navbar";
-import { ReactNode } from "react";
+import { ReactNode, useEffect } from "react";
 import { useState } from "react";
 import Breadcrumb from "@/components/breadcrumb/breadcrumb";
 import { BreadcrumbItem } from "@/components/breadcrumb/breadcrumb";
+import Head from "next/head";
 
 interface LayoutProps {
     sideNavIndex: number;
@@ -19,9 +20,15 @@ export default function DashboardLayout(layoutProps: LayoutProps){
     const [indexList, setIndexList] = useState(layoutProps.sideNavIndex)
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
     const toggleSidebar = () => setIsSidebarOpen(prevState => !prevState);
+    useEffect(() => {
+        document.title = layoutProps.bcItems[layoutProps.bcItems.length-1].label + " - bjb Tender Finder";
+    }, []);
     
     return(
         <div className="flex gap-1 min-h-screen primary-bg">
+            <Head>
+                <title>{document.title}</title>
+            </Head>
             {/* Sidebar */}
             <div className="bg-white min-w-fit">
                 <Sidebar indexNav={indexList} setIndexList={setIndexList} isSidebarOpen={isSidebarOpen} setSidebarOpen={setIsSidebarOpen}/>
