@@ -7,8 +7,8 @@ import SidebarList from './sidebar-list';
 import SidebarListChild from './sidebar-list-child';
 import { SidebarNavigator, SidebarNavigatorAO } from '@/constants/navigator';
 import { IoClose } from "react-icons/io5";
-import { useUser } from '@/hooks/useUser';
 import Link from 'next/link';
+import { useUserContext } from '@/contexts/useUserContext';
 
 interface SidebarProps{
     indexNav: number,
@@ -18,7 +18,9 @@ interface SidebarProps{
 }
 
 export default function Sidebar(props: SidebarProps) {
-    const {name, role} = useUser()
+    const {user} = useUserContext()
+    const name = user?.nama || ""
+    const role = user?.role || "ao"
 
     function getDataNavigator(){
         switch(role){

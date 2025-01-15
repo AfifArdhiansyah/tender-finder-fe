@@ -7,14 +7,15 @@ import SummaryContent from "@/contents/summary/summary-content"
 import SummaryTable from "@/contents/summary/summary-table"
 import { SidebarNavigator } from "@/constants/navigator"
 import { MonitoringPusatTableData, MonitoringKanwilTableData, MonitoringKCTableData } from "@/constants/monitoring/monitoring-table-data"
-import { useUser } from "@/hooks/useUser";
 import { useCookies } from "next-client-cookies";
 import Loading from "@/components/items/progress/loading";
 import Response from "@/components/items/responses/response";
 import { useTableSummary } from "@/hooks/useSummary";
+import { useUserContext } from "@/contexts/useUserContext";
 
 export default function Dashboard(){
-    const {role} = useUser()
+    const {user} = useUserContext()
+    const role = user?.role || "ao"
     // const { offices, loading, error, getOfficeByWilayah, getAllWilayah } = useGetOffice()
     //usegetsummary
     const {

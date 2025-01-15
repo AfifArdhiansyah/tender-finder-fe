@@ -16,7 +16,6 @@ export default function DashboardAO(){
     );
     const [currState, setCurrState] = useState("AO")
     const cookies = useCookies()
-    const [currOfficeId, setCurrOfficeId] = useState(cookies.get("office-id")||"0")
     return(
         <DashboardLayout sideNavIndex={index} bcItems={breadcrumbItems} role="ao">
             <div className="flex flex-col gap-4 h-full">

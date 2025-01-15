@@ -1,11 +1,9 @@
-'use client'
-
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import api from "@/services/api";
 import { useCookies } from 'next-client-cookies';
 
-export interface Office{
+export interface Office {
     id: number,
     kota_kab: string,
     nama: string,
@@ -30,78 +28,52 @@ export interface UserModel {
 
 interface UseUserReturn {
     user: UserModel | null;
-    name: string;
-    role: string;
-    officeName: string;
     loading: boolean;
     error: string | null;
+    fetchUser: () => Promise<void>;
 }
 
 export function useUser(): UseUserReturn {
-    const [user, setUser] = useState<UserModel | null>(null)
+    const [user, setUser] = useState<UserModel | null>(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
-    const [name, setName] = useState("")
-    const [role, setRole] = useState("")
-    const [officeName, setOfficeName] = useState("")
-
     const cookies = useCookies();
 
-    useEffect(() => {
-        function getUserData(){
-            const userName = cookies.get("name")
-            if (userName) {
-                setName(userName);
-            }
-            const userRole = cookies.get("role")
-            if (userRole) {
-                setRole(userRole);
-            }
-            const officeName = cookies.get("office-name")
-            if (officeName) {
-                setOfficeName(officeName);
-            }
+    const fetchUser = async () => {
+        setLoading(true);
+        setError(null);
+
+        const token = cookies.get("authToken");
+
+        if (!token) {
+            setError("Authentication token not found");
+            setLoading(false);
+            return;
         }
-        getUserData()
 
-        const fetchUser = async () => {
-            setLoading(true);
-            setError(null);
+        try {
+            const response = await api.get("/user", {
+                headers: {
+                    "Authorization": `Bearer ${token}`
+                },
+            });
 
-            const token = cookies.get("authToken")
-
-            if (!token) {
-                setError("Authentication token not found");
-                setLoading(false);
-                return;
+            if (response.status !== 200) {
+                const errorData = response.data;
+                throw new Error(errorData.message || "Failed to fetch user data");
             }
 
-            try {
-                const response = await api.get("/user", {
-                    headers: {
-                        "Authorization": `Bearer ${token}`
-                    },
-                });
+            const data: UserModel = response.data.data;
+            setUser(data);
+        } catch (err: unknown) {
+            setError(err instanceof Error ? err.message : "An unexpected error occurred");
+            toast.error(
+                err instanceof Error ? err.message : "Failed to load user data"
+            );
+        } finally {
+            setLoading(false);
+        }
+    };
 
-                if (response.status != 200) {
-                    const errorData = response.data;
-                    throw new Error(errorData.message || "Failed to fetch user data");
-                }
-
-                const data: UserModel = response.data.data;
-                setUser(data);
-            } catch (err: unknown) {
-                setError(err instanceof Error ? err.message : "An unexpected error occurred");
-                toast.error(
-                    err instanceof Error ? err.message : "Failed to load user data"
-                );
-            } finally {
-                setLoading(false);
-            }
-        };
-
-        fetchUser();
-    }, []);
-
-    return { user, name, role, officeName, loading, error };
+    return { user, loading, error, fetchUser };
 }

@@ -5,6 +5,7 @@ import { useCookies } from "next-client-cookies";
 import Link from "next/link";
 import { ReactNode } from "react";
 import { Tooltip } from "@mui/material";
+import { useUserContext } from "@/contexts/useUserContext";
 
 interface SummaryBoxProps{
     count: number
@@ -18,8 +19,10 @@ interface SummaryBoxProps{
 
 export default function SummaryBox(props: SummaryBoxProps){
     const cookies = useCookies();
+    const {user} = useUserContext()
+    const role = user?.role
     const goToTender = ()=>{
-        if(cookies.get("role") == "manager-kanwil" && props.stateIndex==2 && props.branchId){
+        if(role == "manager-kanwil" && props.stateIndex==2 && props.branchId){
             cookies.set("selected-branch", props.branchId)
         }
         switch(props.status){

@@ -6,6 +6,7 @@ import toast from "react-hot-toast";
 import api from "@/services/api";
 import { useCookies } from 'next-client-cookies';
 import { Office } from "./useUser";
+import { useUserContext } from "@/contexts/useUserContext";
 
 interface LoginResponse {
     data: {
@@ -36,10 +37,12 @@ export function useAuth(): UseAuthReturn {
     const [error, setError] = useState<string | null>(null);
     const router = useRouter();
     const cookies = useCookies();
+    const { resetUser, fetchUser } = useUserContext()
 
     const login = async (nip: string, password: string) => {
         setLoading(true);
         setError(null);
+        resetUser();
         const toastId = toast.loading("Logging in...");
         try {            
             const response = await api.post("/login", JSON.stringify({ nip, password }))
@@ -52,11 +55,10 @@ export function useAuth(): UseAuthReturn {
             const data: LoginResponse = await response.data;
 
             cookies.set("authToken", data.data.token);
-            cookies.set("name", data.data.nama);
-            cookies.set("role", data.data.role);
-            cookies.set("office-name", data.data.office_name)
             cookies.set("office-id", data.data.office_id)
             toast.success("Login successful!", { id: toastId });
+
+            await fetchUser();
 
             if(data.data.role == "ao"){
                 router.push("/ao-dashboard");
@@ -90,14 +92,12 @@ export function useAuth(): UseAuthReturn {
                 const errorData = await response.data;
                 throw new Error(errorData.message || "Logout failed");
             }
-
             const data: LogoutResponse = await response.data;
 
             cookies.remove("authToken")
-            cookies.remove("name");
-            cookies.remove("role");
-            cookies.remove("office-name")
             cookies.remove("office-id")
+
+            resetUser()
             toast.success("Logout successful!", { id: toastId });
 
             router.push("/auth");
