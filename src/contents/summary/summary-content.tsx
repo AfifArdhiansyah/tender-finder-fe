@@ -95,7 +95,7 @@ export default function SummaryContent(props: SummaryContentProps){
                         </div>
                         <p>Pemenang Tender Baru</p>
                     </SummaryBox>
-                    <SummaryBox branchId={props.officeId?.toString()} stateIndex={props.stateIndex} status={"telah ditawarkan"} className={"hover:bg-green-700 hover:border-green-700 hover:text-white"} count={summary?.total_penawaran as number} color={"group-hover:text-white text-green-700"}>
+                    <SummaryBox branchId={props.officeId?.toString()} stateIndex={props.stateIndex} status={"telah follow up"} className={"hover:bg-green-700 hover:border-green-700 hover:text-white"} count={summary?.total_penawaran as number} color={"group-hover:text-white text-green-700"}>
                         <div className={"p-1 rounded-full bg-green-700"}>
                             <Image src={"/icons/map-pin.svg"} height={18} width={18} alt="sum-icon"/>
                         </div>

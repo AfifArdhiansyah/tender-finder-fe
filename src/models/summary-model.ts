@@ -11,3 +11,39 @@ export interface SummaryModel{
     percent_diserap: number,
     percent_tidak_diserap: number
 }
+
+export interface SummaryPusatModel{
+    kanwil_id: number,
+    total_pemenang_baru: number,
+    percent_kredit_disetujui: number,
+    total_diserap: number,
+    percent_mengajukan_kredit: number
+}
+
+export interface SummaryKanwilModel{
+    id: number,
+    nama: string,
+    total_pemenang_baru: number,
+    percentage_status_success_rate: number,
+    total_daya_serap: number,
+    percentage_status_pengajuan_kredit:number,
+}
+
+export interface SummaryCabangModel{
+    user_id: number,
+    user_nama: string,
+    user_nip: string,
+    office_id: number,
+    office_nama: string,
+    office_kota_kab: string,
+    office_alamat: string,
+    kanwil_id: number,
+    tender_id: string,
+    tender_nama: string,
+    tender_nama_pemenang: string,
+    tender_lokasi_pekerjaan: string,
+    tender_npwp: string,
+    tender_lokasi_instansi: string,
+    tender_nilai_tender: number,
+    tender_nilai_kredit: number
+}

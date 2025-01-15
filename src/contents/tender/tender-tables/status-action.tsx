@@ -45,11 +45,11 @@ export default function StatusAction(props: StatusActionInterface){
                     }
                 </div>
             }
-            else if(!props.dataTender?.tender_statuses[-1]?.penawaran_file){
+            else if(!props.dataTender?.tender_statuses[props.dataTender?.tender_statuses.length-2]?.penawaran_file){
                 return <TextButton size="medium" type="success" onClick={goToDetail}>{"belum ditawarkan"}</TextButton>
             }
             return <div className="flex gap-2">
-                <TextButton size="medium" type="success" onClick={goToDetail}>{"tender baru"}</TextButton>
+                <TextButton size="medium" type="success" onClick={goToDetail}>{"telah ditawarkan"}</TextButton>
                 {
                     !(props.dataTender?.account_officer?.id) && <Button type={role=="manager-cabang"?"alert":"disable"} size="medium" onClick={onShowClickedAO} disabled={role=="manager-cabang"?false:true}>{role=="manager-cabang"?"tawarkan":"tender baru"}</Button>
                 }
