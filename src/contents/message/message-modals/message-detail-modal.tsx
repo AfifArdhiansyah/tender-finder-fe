@@ -1,6 +1,6 @@
 import Modal from "@/components/items/modals/modal"
 import TextLink from "@/components/items/links/text-link"
-import { useCookies } from "next-client-cookies"
+import { useUserContext } from "@/contexts/useUserContext"
 
 interface MessageDetailModalProps{
     message: string,
@@ -14,8 +14,8 @@ export default function MessageDetailModal(props: MessageDetailModalProps){
     function onModalClose(){
         props.onCancel()
     }
-    const cookies = useCookies()
-    const role = cookies.get("role")
+    const {user} = useUserContext()
+    const role = user?.role
     function getPath(){
         if(role == 'ao'){
             return `/ao-tender/${props.tenderId}`

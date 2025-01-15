@@ -4,17 +4,17 @@ import { BreadcrumbItem } from "@/components/breadcrumb/breadcrumb";
 import DashboardLayout from "@/layouts/dashboard-layout";
 import Paper from "@/components/frames/papes";
 import Image from "next/image";
-import { useUser } from "@/hooks/useUser";
 import { useAuth } from "@/hooks/useAuth";
 import Loading from "@/components/items/progress/loading"
 import Response from "@/components/items/responses/response";
 import Button from "@/components/items/buttons/button";
+import { useUserContext } from "@/contexts/useUserContext";
 
 export default function User(){
     const bcItems = [
         {label: "Personal Info", path: "/user"}
     ] as BreadcrumbItem[]
-    const { user, loading, error } = useUser();
+    const { user, loading, error } = useUserContext();
     const {logout} = useAuth()
     function getRole(role:string){
         switch(role){

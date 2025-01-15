@@ -10,6 +10,7 @@ import Loading from "@/components/items/progress/loading"
 import { useEffect, useState } from "react"
 import { useCookies } from "next-client-cookies"
 import { useGetOffice } from "@/hooks/useOffice"
+import { useUserContext } from "@/contexts/useUserContext"
 
 export default function Tender(){
     const cookies = useCookies();
@@ -23,6 +24,8 @@ export default function Tender(){
     
     const index = 1
     const breadcrumbItems = [{ label: SidebarNavigator[index].name, state: "pusat"}]
+    const {user} = useUserContext()
+    const role = user?.role || "ao"
 
     //filtering purpose
     //status filter
@@ -79,7 +82,7 @@ export default function Tender(){
     }
     //branch filter
     const branchOptions = ["Semua Cabang"] as string[]
-    if(cookies.get("role")=="manager-kanwil"){
+    if(role=="manager-kanwil"){
         offices?.map((office) => {
             branchOptions.push(office.nama)
         })

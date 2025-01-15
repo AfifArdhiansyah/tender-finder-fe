@@ -9,7 +9,7 @@ import { useUploadData } from "@/hooks/useTenderStatus";
 import { PdfModal } from "@/components/files/pdf-modal";
 import ChooseAOModal from "@/contents/manager-ao/ao-modals/choose-ao-modal";
 import { TenderProjectModel } from "@/models/tender-project-model";
-import { useCookies } from "next-client-cookies";
+import { useUserContext } from "@/contexts/useUserContext";
 
 interface ProgressTrackProps{
     datas: TenderStatusModel[]
@@ -23,7 +23,8 @@ interface ProgressTrackProps{
 }
 
 export default function ProgressTrack(props: ProgressTrackProps){
-    const cookies = useCookies()
+    const {user} = useUserContext()
+    const role = user?.role
 
     function getIconSource(index: number, data: TenderStatusModel){
         if(index==1 && data.status.id==2) return "/icons/check-progress.svg"
@@ -167,7 +168,6 @@ export default function ProgressTrack(props: ProgressTrackProps){
         props.refresh()
         closeModalAO()
     }
-    const [role, setRole] = useState(cookies.get("role"))
     return(
         <div className="min-h-full flex flex-col gap">
             <>

@@ -12,8 +12,8 @@ import Response from "@/components/items/responses/response"
 import { MdOutlineRefresh } from "react-icons/md";
 import { Tooltip } from "@mui/material"
 import Button from "@/components/items/buttons/button"
-import { useCookies } from "next-client-cookies"
 import Link from "next/link"
+import { useUserContext } from "@/contexts/useUserContext"
 
 interface TenderTableProps{
     headers: string[],
@@ -29,8 +29,8 @@ interface TenderTableProps{
 }
 
 export default function TenderTable(props: TenderTableProps){
-    const cookies = useCookies();
-    const role = cookies.get("role")
+    const {user} = useUserContext()
+    const role = user?.role || "manager-kc"
 
     //search purpose
     const [filteredData, setFilteredData] = useState(props.datas);

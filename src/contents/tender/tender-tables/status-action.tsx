@@ -3,7 +3,7 @@
 import TextButton from "@/components/items/buttons/text-button"
 import Button from "@/components/items/buttons/button"
 import { useRouter } from "next/navigation"
-import { useUser } from "@/hooks/useUser"
+import { useUserContext } from "@/contexts/useUserContext"
 
 interface StatusActionInterface{
     tenderId: string,
@@ -21,7 +21,8 @@ interface StatusActionInterface{
 }
 
 export default function StatusAction(props: StatusActionInterface){
-    const {role} = useUser()
+    const {user} = useUserContext()
+    const role = user?.role
     const router = useRouter()
     function onShowClickedAO(){
         props.setSelectedTender(props.tenderName, props.tenderId, props.dataTender)
