@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import api from "@/services/api";
-import { SummaryModel } from "@/models/summary-model";
+import { SummaryCabangModel, SummaryKanwilModel, SummaryModel, SummaryPusatModel } from "@/models/summary-model";
 import { useCookies } from 'next-client-cookies';
 
 export const useSummary = () => {
@@ -33,4 +33,56 @@ export const useSummary = () => {
     }
 
     return { summary, setOfficeId, loading, error, refresh };
+}
+
+export const useTableSummary = () => {
+    const [tablePusatSummary, setTablePusatSummary] = useState<SummaryPusatModel[]>([]);
+    const [tableKanwilSummary, setTableKanwilSummary] = useState<SummaryKanwilModel[]>([]);
+    const [tableCabangSummary, setTableCabangSummary] = useState<SummaryCabangModel[]>([]);
+    const [loading, setLoading] = useState<boolean>(true);
+    const [error, setError] = useState<string | null>(null);
+
+    async function fetchSummaryPusat(){
+        try {
+            const response = await api.get("/monitor/dashboard-summary");
+            setTablePusatSummary(response.data.data as SummaryPusatModel[]);
+        } catch (err: any) {
+            setError(err.message);
+        } finally {
+            setLoading(false);
+        }
+    }
+
+    async function fetchSummaryKanwil(idKanwil: number){
+        try {
+            const response = await api.get("/monitor/dashboard-summary/"+idKanwil);
+            setTableKanwilSummary(response.data.data as SummaryKanwilModel[]);
+        } catch (err: any) {
+            setError(err.message);
+        } finally {
+            setLoading(false);
+        }
+    }
+
+    async function fetchSummaryCabang(idBranch: number){
+        try {
+            const response = await api.get("/monitor/dashboard-summary/"+idBranch+'/ao');
+            setTableCabangSummary(response.data.data as SummaryCabangModel[]);
+        } catch (err: any) {
+            setError(err.message);
+        } finally {
+            setLoading(false);
+        }
+    }
+
+    return { 
+        fetchSummaryPusat,
+        fetchSummaryKanwil,
+        fetchSummaryCabang,
+        tablePusatSummary, 
+        tableKanwilSummary, 
+        tableCabangSummary, 
+        loading, 
+        error 
+    };
 }

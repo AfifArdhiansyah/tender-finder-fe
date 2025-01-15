@@ -9,29 +9,43 @@ import { SidebarNavigator } from "@/constants/navigator"
 import { MonitoringPusatTableData, MonitoringKanwilTableData, MonitoringKCTableData } from "@/constants/monitoring/monitoring-table-data"
 import { useUser } from "@/hooks/useUser";
 import { useCookies } from "next-client-cookies";
-import { useGetOffice } from "@/hooks/useOffice";
 import Loading from "@/components/items/progress/loading";
 import Response from "@/components/items/responses/response";
+import { useTableSummary } from "@/hooks/useSummary";
 
 export default function Dashboard(){
     const {role} = useUser()
-    const { offices, loading, error, getOfficeByWilayah, getAllWilayah } = useGetOffice()
+    // const { offices, loading, error, getOfficeByWilayah, getAllWilayah } = useGetOffice()
+    //usegetsummary
+    const {
+        fetchSummaryPusat,
+        fetchSummaryKanwil,
+        fetchSummaryCabang,
+        tablePusatSummary, 
+        tableKanwilSummary, 
+        tableCabangSummary, 
+        loading, 
+        error 
+    } = useTableSummary()
 
     async function getDataSummary(){
         switch(currState){
             case "manager-pusat":
                 if(role==currState || currState.length==0){
-                    await getAllWilayah()
-                    setSummaryDatas(offices as any[])
+                    await fetchSummaryPusat()
+                    setSummaryDatas(tablePusatSummary as any[])
                 }
                 break;
             case "manager-kanwil":
                 if(role==currState || currState.length==0){
-                    await getOfficeByWilayah(kanwilId)
+                    await fetchSummaryKanwil(kanwilId as unknown as number)
+                    setSummaryDatas(tableKanwilSummary as any[])
                 }
                 break;
             case "manager-cabang":
-                setSummaryDatas(MonitoringKCTableData)
+                // setSummaryDatas(MonitoringKCTableData)
+                await fetchSummaryCabang(branchId)
+                setSummaryDatas(tableCabangSummary as any[])
                 break;
             default:
                 return MonitoringPusatTableData
@@ -64,6 +78,7 @@ export default function Dashboard(){
     const [currState, setCurrState] = useState("")
     const [currRole, setCurRole] = useState(role)
     const [currOfficeId, setCurrOfficeId] = useState(0)
+    const [branchId, setBranchId] = useState(1)
     const [kanwilId, setKanwilId] = useState("1")
     const [kanwilOfficeId, setKanwilOfficeId] = useState("1111")
 
@@ -89,34 +104,49 @@ export default function Dashboard(){
             setKanwilId(((cookies.get("office-id") || 0) as number) %10 as unknown as string)
             setKanwilOfficeId((cookies.get("office-id") || 0) as unknown as string)
         }
+        else if(role=="manager-cabang"){
+            setBranchId(parseInt(cookies.get("office-id") as string) || 1)
+        }
     }, [role])
     useEffect(() => {
         getDataSummary()
         setBCIndex(getBCIndex())
-        if(currState!="manager-cabang"){
-            setSummaryDatas(offices as any[])
-        }
         setCurrLabel(getCurrLabel())
         if(role=="manager-kanwil"){
             setKanwilId(((cookies.get("office-id") || 0) as number) %10 as unknown as string)
             setKanwilOfficeId((cookies.get("office-id") || 0) as unknown as string)
+            setSummaryDatas(tableKanwilSummary as any[])
         }
-    }, [offices?.length, currState, kanwilId])
+        else if(role=="manager-cabang"){
+            setBranchId(parseInt(cookies.get("office-id") as string) || 1)
+            setSummaryDatas(tableCabangSummary as any[])
+        }
+        else if(role=="manager-pusat"){
+            setSummaryDatas(tablePusatSummary as any[])
+        }
+    }, [
+        tablePusatSummary?.length, 
+        tableKanwilSummary?.length, 
+        tableCabangSummary?.length, 
+        currState, 
+        kanwilId]
+    )
     async function switchBCState(state:string, label?:string, officeId?: number){
         let currItems = breadcrumbItems
         const selectedKanwil = officeId? (officeId as number) % 10 : kanwilId
+        const selectedCabang = officeId? officeId : branchId
 
         switch(state){
             case "manager-pusat":
                 setBreadcrumbItems([
                     { label: SidebarNavigator[index].name, state: "manager-pusat"},
                 ])
-                await getAllWilayah()
+                await fetchSummaryPusat()
                 setCurrLabel(getCurrLabel())
                 setBCIndex(0)
                 break;
             case "manager-kanwil":
-                await getOfficeByWilayah(selectedKanwil as unknown as string)
+                await fetchSummaryKanwil(selectedKanwil as number)
                 if(role==state){
                     setBreadcrumbItems([
                         { label: SidebarNavigator[index].name, state: "manager-kanwil"},
@@ -135,10 +165,11 @@ export default function Dashboard(){
                     setBreadcrumbItems(currItems)
                     setCurrLabel(currItems[currItems.length-1].label)
                 }
-                setSummaryDatas(offices as any[])
+                setSummaryDatas(tableKanwilSummary as any[])
                 setBCIndex(1)
                 break;
             case "manager-cabang":
+                await fetchSummaryCabang(branchId as number)
                 if(role==state){
                     setBreadcrumbItems([
                         { label: SidebarNavigator[index].name, state: "manager-cabang"},
@@ -159,7 +190,7 @@ export default function Dashboard(){
                     setCurrLabel(currItems[currItems.length-1].label)
                 }
                 setBreadcrumbItems(currItems)
-                setSummaryDatas(MonitoringKCTableData)
+                setSummaryDatas(tableCabangSummary as any[])
                 setBCIndex(2)
                 break;
         }
@@ -178,6 +209,9 @@ export default function Dashboard(){
             setKanwilId(officeId%10 as unknown as string)
             setKanwilOfficeId(officeId as unknown as string)
         }
+        else if(state=="manager-cabang"){
+            setBranchId(officeId)
+        }
         setCurrState(state)
         switchBCState(state, label, officeId)
         setCurrOfficeId(officeId)
@@ -190,7 +224,7 @@ export default function Dashboard(){
                 </Paper>
                 <Paper className="max-md:overflow-x-auto">
                     {
-                        (loading && role != "manager-cabang") ? (
+                        loading ? (
                             <Loading/>
                         ) : (
                             error? (
