@@ -7,6 +7,7 @@ import api from "@/services/api";
 import { useCookies } from 'next-client-cookies';
 import { Office } from "./useUser";
 import { useUserContext } from "@/contexts/useUserContext";
+import { useUnreadContext } from "@/contexts/useMessageContext";
 
 interface LoginResponse {
     data: {
@@ -38,11 +39,13 @@ export function useAuth(): UseAuthReturn {
     const router = useRouter();
     const cookies = useCookies();
     const { resetUser, fetchUser } = useUserContext()
+    const {resetCount, getUnreadMessage} = useUnreadContext()
 
     const login = async (nip: string, password: string) => {
         setLoading(true);
         setError(null);
         resetUser();
+        resetCount();
         const toastId = toast.loading("Logging in...");
         try {            
             const response = await api.post("/login", JSON.stringify({ nip, password }))
@@ -59,6 +62,7 @@ export function useAuth(): UseAuthReturn {
             toast.success("Login successful!", { id: toastId });
 
             await fetchUser();
+            await getUnreadMessage();
 
             if(data.data.role == "ao"){
                 router.push("/ao-dashboard");
@@ -98,6 +102,7 @@ export function useAuth(): UseAuthReturn {
             cookies.remove("office-id")
 
             resetUser()
+            resetCount()
             toast.success("Logout successful!", { id: toastId });
 
             router.push("/auth");

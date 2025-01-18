@@ -7,6 +7,7 @@ import { Toaster } from "react-hot-toast";
 import { CookiesProvider } from 'next-client-cookies/server';
 import { UserProvider, useUserContext } from "@/contexts/useUserContext";
 import UserNotifications from "@/contexts/user-notification";
+import { UnreadProvider } from "@/contexts/useMessageContext";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -38,8 +39,10 @@ export default function RootLayout({
         <CookiesProvider>
           <Toaster />
           <UserProvider>
-            <UserNotifications/>
-            {children}
+            <UnreadProvider>
+              <UserNotifications/>
+              {children}
+            </UnreadProvider>
           </UserProvider>
         </CookiesProvider>
       </body>
