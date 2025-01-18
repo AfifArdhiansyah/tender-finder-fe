@@ -2,6 +2,7 @@
 
 import { createContext, useContext, useEffect, useState } from "react";
 import { useUser, UserModel } from "@/hooks/useUser";
+import { useCookies } from "next-client-cookies";
 
 interface UserContextType {
   user: UserModel | null;
@@ -14,6 +15,8 @@ interface UserContextType {
 const UserContext = createContext<UserContextType | undefined>(undefined);
 
 export const UserProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+  const cookies = useCookies()
+  const token = cookies.get('authToken')
   const { user, loading, error, fetchUser } = useUser();
   const [userData, setUserData] = useState<UserContextType>({
     user,
@@ -24,8 +27,14 @@ export const UserProvider: React.FC<{ children: React.ReactNode }> = ({ children
   });
 
   useEffect(() => {
+    if (token) {
+      fetchUser();
+    }
+  }, [token])
+
+  useEffect(() => {
     setUserData({ user, loading, error, resetUser: userData.resetUser, fetchUser: userData.fetchUser });
-  }, [user, loading, error]);
+  }, [user, loading, error, token]);
 
   return (
     <UserContext.Provider value={userData}>

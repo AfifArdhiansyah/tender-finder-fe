@@ -28,7 +28,6 @@ export default function SummaryTable(props: SummaryContentProps) {
         }
         props.openDetail && props.openDetail(state, label, officeId)
     }
-    console.log(props.datas)
 
     return(
         <Table className="h-full" headers={props.bcIndex == 2 ? headerKC : headers} datas={props.datas} usePagination={false}>
