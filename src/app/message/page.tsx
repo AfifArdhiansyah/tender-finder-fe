@@ -9,20 +9,22 @@ import { SidebarNavigator } from "@/constants/navigator"
 import { useMessage } from "@/hooks/useMessage"
 import Loading from "@/components/items/progress/loading"
 import Response from "@/components/items/responses/response"
+import { useUnreadContext } from "@/contexts/useMessageContext"
 
 export default function Message(){
     const index = 2
-    // const [messageDatas, setMessageDatas] = useState(MessageDatas)
     const { messages, refresh, loading, error } = useMessage()
     const [allMessages, setAllMessages] = useState(messages)
     const headers = ["Message", ""]
     const columns = ["message", "is_read"]
-    function setMessageRead(index: number){
+    const {diffCount} = useUnreadContext()
+    async function setMessageRead(index: number){
         const newMessageData = allMessages
         if (newMessageData[index]) {
             newMessageData[index].is_read = true
         }
         setAllMessages(newMessageData)
+        diffCount()
     }
     useEffect(()=>{
         setAllMessages(messages)

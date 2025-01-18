@@ -1,7 +1,7 @@
 import React, {ReactNode } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { useUnreadMessage } from "@/hooks/useMessage";
+import { useUnreadContext } from "@/contexts/useMessageContext";
 
 interface SidebarListChildProps{
     isActive: boolean,
@@ -14,7 +14,7 @@ interface SidebarListChildProps{
 }
 
 export default function SidebarListChild(props: SidebarListChildProps){
-    const { unreadCount, loading, error } = useUnreadMessage()
+    const { unreadCount } = useUnreadContext()
     function switchActiveClass(isActive: boolean):string{
         const activeClass = ""
         switch(isActive){
@@ -33,7 +33,7 @@ export default function SidebarListChild(props: SidebarListChildProps){
                 return activeClass + "bg-blue-500 text-white"
         }
     }
-    function onListClicked(){
+    async function onListClicked(){
         props.onClickChild(props.navIndex)
     }
     return (
