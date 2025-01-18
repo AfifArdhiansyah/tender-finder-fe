@@ -5,7 +5,8 @@ import "./globals.css";
 import { Poppins } from 'next/font/google'
 import { Toaster } from "react-hot-toast";
 import { CookiesProvider } from 'next-client-cookies/server';
-import { UserProvider } from "@/contexts/useUserContext";
+import { UserProvider, useUserContext } from "@/contexts/useUserContext";
+import UserNotifications from "@/contexts/user-notification";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -35,8 +36,9 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <CookiesProvider>
+          <Toaster />
           <UserProvider>
-            <Toaster />
+            <UserNotifications/>
             {children}
           </UserProvider>
         </CookiesProvider>
