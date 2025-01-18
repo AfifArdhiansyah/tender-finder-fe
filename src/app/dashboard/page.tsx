@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useState } from "react";
+import { use, useEffect, useState } from "react";
 import DashboardLayout from "@/layouts/dashboard-layout"
 import Paper from "@/components/frames/papes"
 import SummaryContent from "@/contents/summary/summary-content"
@@ -217,6 +217,7 @@ export default function Dashboard(){
         switchBCState(state, label, officeId)
         setCurrOfficeId(officeId)
     }
+    const [clicked, setClicked] = useState(false)
     return(
         <DashboardLayout sideNavIndex={index} bcItems={breadcrumbItems} onClickBC={handleBreadcrumbClick} role={currRole}>
             <div className="flex flex-col gap-4 h-full">
