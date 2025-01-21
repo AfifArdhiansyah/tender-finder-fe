@@ -35,7 +35,7 @@ export const useMessage = () =>{
         setIsRefresh(!refresh)
     }
 
-    return { messages, refresh, loading, error }
+    return { messages, refresh, fetchMessages, loading, error }
 }
 
 export const useReadMessage = () => {

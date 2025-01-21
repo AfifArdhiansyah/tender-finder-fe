@@ -17,14 +17,14 @@ export default function Message(){
     const [allMessages, setAllMessages] = useState(messages)
     const headers = ["Message", ""]
     const columns = ["message", "is_read"]
-    const {diffCount} = useUnreadContext()
+    const {getUnreadMessage} = useUnreadContext()
     async function setMessageRead(index: number){
         const newMessageData = allMessages
         if (newMessageData[index]) {
             newMessageData[index].is_read = true
         }
         setAllMessages(newMessageData)
-        diffCount()
+        await getUnreadMessage()
     }
     useEffect(()=>{
         setAllMessages(messages)
