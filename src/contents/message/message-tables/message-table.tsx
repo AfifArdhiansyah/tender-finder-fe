@@ -39,24 +39,24 @@ export default function MessageTable(props: MessageTableProps){
                 {props.datas.map((data,i)=>(
                     <tr key={"row-"+i}>
                         {props.columns.map((col,j)=>(
-                            <td key={i.toString() + j.toString()} className={"px-2 py-2 text-sm"}>
-                                {
-                                    col == "message" && (
-                                        <MessageListItem 
-                                            key={i}
-                                            className="flex justify-between items-center" 
-                                            message={data?.message?.message as string} 
-                                            isRead={data?.is_read} dataIndex={i} 
-                                            tenderId={data?.message?.tender_id}
-                                            date={data?.created_at}
-                                            userMessageId={data?.id}
-                                            hoverBGColor="blue-300" 
-                                            hoverTextColor="white" 
-                                            onClick={onMessageSelected}
-                                        />
-                                    )
-                                }
-                            </td>
+                            col != "is_read" && <td key={i.toString() + j.toString()} className={"px-2 py-2 text-sm"}>
+                            {
+                                col == "message" && (
+                                    <MessageListItem 
+                                        key={i}
+                                        className="flex justify-between items-center" 
+                                        message={data?.message?.message as string} 
+                                        isRead={data?.is_read} dataIndex={i} 
+                                        tenderId={data?.message?.tender_id}
+                                        date={data?.created_at}
+                                        userMessageId={data?.id}
+                                        hoverBGColor="blue-300" 
+                                        hoverTextColor="white" 
+                                        onClick={onMessageSelected}
+                                    />
+                                )
+                            }
+                        </td>
                         ))}
                     </tr>
                 ))}

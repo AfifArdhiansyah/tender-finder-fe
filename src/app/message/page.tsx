@@ -15,7 +15,7 @@ export default function Message(){
     const index = 2
     const { messages, refresh, loading, error } = useMessage()
     const [allMessages, setAllMessages] = useState(messages)
-    const headers = ["Message", ""]
+    const headers = ["Message"]
     const columns = ["message", "is_read"]
     const {getUnreadMessage} = useUnreadContext()
     async function setMessageRead(index: number){
