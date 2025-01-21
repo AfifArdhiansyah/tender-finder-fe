@@ -37,7 +37,7 @@ export default function SidebarListChild(props: SidebarListChildProps){
         props.onClickChild(props.navIndex)
     }
     return (
-        <Link href={props.ref} className={"w-full px-4 py-2 flex gap-4 items-center rounded-[10px] md:justify-center lg:justify-start "+ switchActiveClass(props.isActive)} onClick={onListClicked}>
+        <Link href={props.ref} className={"w-full px-4 py-2 flex gap-4 items-center rounded-[10px] md:justify-center md:gap-1 lg:justify-start lg:gap-4 "+ switchActiveClass(props.isActive)} onClick={onListClicked}>
             <Image src={props.isActive? props.iconPath+"-active.png" : props.iconPath+".png"} alt="icon" width={20} height={20}/>
             <p className="md:hidden lg:block">{props.label}</p>
             {

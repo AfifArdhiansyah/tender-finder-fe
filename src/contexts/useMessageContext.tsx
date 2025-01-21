@@ -1,8 +1,9 @@
 'use client'
 
 import { createContext, useContext, useEffect, useState } from "react";
-import { useUnreadMessage } from "@/hooks/useMessage";
+import { useMessage, useUnreadMessage } from "@/hooks/useMessage";
 import { useCookies } from "next-client-cookies";
+import { UserMessageModel } from "@/models/message-model";
 
 interface UnreadContextType {
     unreadCount : number | undefined, 
@@ -23,13 +24,28 @@ export const UnreadProvider: React.FC<{ children: React.ReactNode }> = ({ childr
         unreadCount,
         loading,
         error,
-        diffCount: ()=>{
-            if(unreadCount !== undefined && unreadCount > 0){
-                setUnread({ unreadCount: unreadCount - 1, loading: false, error: null, resetCount: unread.resetCount, diffCount: unread.diffCount, getUnreadMessage: unread.getUnreadMessage })
+        diffCount: () => {
+            if (unreadCount !== undefined && unreadCount > 0) {
+                setUnreadCount(unreadCount - 1);
+                setUnread({
+                    unreadCount: unreadCount - 1,
+                    loading: false,
+                    error: null,
+                    resetCount: unread.resetCount,
+                    diffCount: unread.diffCount,
+                    getUnreadMessage: unread.getUnreadMessage,
+                });
             }
         },
-        resetCount: () => setUnread({ unreadCount: 0, loading: false, error: null, resetCount: unread.resetCount, diffCount: unread.diffCount, getUnreadMessage: unread.getUnreadMessage }),
-        getUnreadMessage
+        resetCount: (): void => setUnread({
+            unreadCount: 0,
+            loading: false,
+            error: null,
+            resetCount: unread.resetCount,
+            diffCount: unread.diffCount,
+            getUnreadMessage: unread.getUnreadMessage,
+        }),
+        getUnreadMessage,
     });
 
     useEffect(() => {
