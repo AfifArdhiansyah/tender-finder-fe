@@ -24,7 +24,8 @@ export default function ToastNotification({
             </div>
         ), {
             position: width<640? "top-right" : "bottom-right",
-            duration: 5000
+            duration: 5000,
+            id: "notification"
         })
     )
 }
