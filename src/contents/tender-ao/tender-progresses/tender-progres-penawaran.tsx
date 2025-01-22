@@ -5,6 +5,7 @@ import toast, {Toaster} from "react-hot-toast";
 import { TenderProjectModel } from "@/models/tender-project-model";
 import Image from "next/image";
 import PdfViewer from "@/components/files/pdf-viewer";
+import UseFile from "@/hooks/useFile";
 
 interface TenderProgresPenawaranProps{
     uploadFile: Function
@@ -13,8 +14,9 @@ interface TenderProgresPenawaranProps{
 }
 
 export default function TenderProgresPenawaran(props: TenderProgresPenawaranProps){
-    function downloadFile(){
-        toast.success("Downloaded!")
+    const {handleDownloadPenawaran} = UseFile()
+    async function downloadFile(){
+        await handleDownloadPenawaran(props.dataTender.id, props.dataTender.lokasi_pekerjaan) //change lokasi pekerjaan
     }
     function uploadFile(file:any){
         props.uploadFile(file, props.dataTender.tender_statuses[props.indexProgress].id)
