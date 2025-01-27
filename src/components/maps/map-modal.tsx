@@ -1,5 +1,6 @@
 
 import Modal from "../items/modals/modal";
+import GoogleMaps from "./google.maps";
 import MapMini from "./map-mini";
 
 interface MapModalProps{
@@ -14,7 +15,7 @@ interface MapModalProps{
 export function MapModal(props: MapModalProps){
     return(
         <Modal open={props.isOpenModal} onCancel={props.onCancel} title={props.title} subTitle={props.subTitle}>
-            <MapMini latitude={props.latitude} longitude={props.longitude}/>
+            <GoogleMaps latitude={props.latitude} longitude={props.longitude}/>
         </Modal>
     )
 }
