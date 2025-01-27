@@ -1,6 +1,4 @@
 import Modal from "@/components/items/modals/modal"
-import InputText from "@/components/inputs/input-text"
-import InputTextArea from "@/components/inputs/input-text-area"
 
 interface NewTenderConfirmationProps{
     isOpenModal: boolean,

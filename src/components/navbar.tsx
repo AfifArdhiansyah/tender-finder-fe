@@ -2,7 +2,7 @@ import { useUserContext } from "@/contexts/useUserContext"
 import { HiMenu } from "react-icons/hi"
 
 interface NavbarProps{
-    toggleSidebar: Function
+    toggleSidebar: () => void
 }
 
 export default function Navbar(props: NavbarProps){
@@ -11,7 +11,7 @@ export default function Navbar(props: NavbarProps){
     return(
         <div className="bg-white flex justify-between items-center py-6 px-6 max-md:px-4">
             <div className="max-md:flex max-md:gap-4 max-md:items-center">
-                <button className="md:hidden flex justify-between items-center" onClick={props.toggleSidebar()} >
+                <button className="md:hidden flex justify-between items-center" onClick={props.toggleSidebar} >
                     <HiMenu size={30}/>
                 </button>
                 <h2 className="font-bold text-lg max-md:text-sm">{officeName}</h2>

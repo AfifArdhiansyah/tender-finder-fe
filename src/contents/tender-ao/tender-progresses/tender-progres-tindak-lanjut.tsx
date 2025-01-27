@@ -4,8 +4,8 @@ import { TenderProjectModel } from "@/models/tender-project-model";
 import Image from "next/image";
 
 interface TenderProgresTindakLanjutProps{
-    uploadFile: Function
-    updateText: Function
+    uploadFile: (file:File, id: number)=>void
+    updateText: (text:string, tenderStatusId:number)=>void
     dataTender: TenderProjectModel
     indexProgress: number
 }
@@ -14,7 +14,7 @@ export default function TenderProgresTindakLanjut(props: TenderProgresTindakLanj
     function handleTextChange(text: string){
         props.updateText(text, props.dataTender.tender_statuses[props.indexProgress].id)
     }
-    function uploadFile(file: any){
+    function uploadFile(file: File){
         props.uploadFile(file, props.dataTender.tender_statuses[props.indexProgress].id)
     }
     return(

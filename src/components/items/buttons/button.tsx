@@ -4,7 +4,7 @@ import { ReactNode } from "react"
 interface ButtonProps{
     type: "general" | "alert" | "danger" | "success" | "primary" | "disable",
     size: "small" | "medium" | "large"
-    onClick: Function,
+    onClick: () => void,
     disabled?: boolean,
     children?: ReactNode
     className?: string

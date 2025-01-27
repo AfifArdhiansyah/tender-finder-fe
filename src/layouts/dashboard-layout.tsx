@@ -12,7 +12,7 @@ interface LayoutProps {
     sideNavIndex: number;
     children?: ReactNode;
     bcItems: BreadcrumbItem[]
-    onClickBC?: Function;
+    onClickBC?: (index: string | undefined) => void;
     role?: string
 }
 

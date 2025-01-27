@@ -4,7 +4,7 @@ import Image from "next/image";
 interface FotoModalProgressProps{
     url?: string
     isOpen: boolean
-    onClose: Function
+    onClose: ()=>void
     title?: string
     subTitle?: string
 }

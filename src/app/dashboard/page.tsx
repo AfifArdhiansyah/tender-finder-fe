@@ -1,12 +1,13 @@
 'use client'
 
-import { use, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import DashboardLayout from "@/layouts/dashboard-layout"
 import Paper from "@/components/frames/papes"
 import SummaryContent from "@/contents/summary/summary-content"
-import SummaryTable from "@/contents/summary/summary-table"
+import SummaryPusatTable from "@/contents/summary/summary-pusat-table";
+import SummaryKanwilTable from "@/contents/summary/summary-kanwil-table";
+import SummaryCabangTable from "@/contents/summary/summary-cabang-table";
 import { SidebarNavigator } from "@/constants/navigator"
-import { MonitoringPusatTableData, MonitoringKanwilTableData, MonitoringKCTableData } from "@/constants/monitoring/monitoring-table-data"
 import { useCookies } from "next-client-cookies";
 import Loading from "@/components/items/progress/loading";
 import Response from "@/components/items/responses/response";
@@ -34,22 +35,19 @@ export default function Dashboard(){
             case "manager-pusat":
                 if(role==currState || currState.length==0){
                     await fetchSummaryPusat()
-                    setSummaryDatas(tablePusatSummary as any[])
+                    
                 }
                 break;
             case "manager-kanwil":
                 if(role==currState || currState.length==0){
                     await fetchSummaryKanwil(kanwilId as unknown as number)
-                    setSummaryDatas(tableKanwilSummary as any[])
+                    
                 }
                 break;
             case "manager-cabang":
-                // setSummaryDatas(MonitoringKCTableData)
                 await fetchSummaryCabang(branchId)
-                setSummaryDatas(tableCabangSummary as any[])
+                
                 break;
-            default:
-                return MonitoringPusatTableData
         }
     }
     function getBCIndex(){
@@ -84,7 +82,6 @@ export default function Dashboard(){
     const [kanwilOfficeId, setKanwilOfficeId] = useState("1111")
 
     const index = 0;
-    const [summaryDatas, setSummaryDatas] = useState<any[]>([])
     const [bcIndex, setBCIndex] = useState(0)
     const [currLabel, setCurrLabel] = useState("Semua Wilayah")
     const [breadcrumbItems, setBreadcrumbItems] = useState(
@@ -116,14 +113,14 @@ export default function Dashboard(){
         if(role=="manager-kanwil"){
             setKanwilId(((cookies.get("office-id") || 0) as number) %10 as unknown as string)
             setKanwilOfficeId((cookies.get("office-id") || 0) as unknown as string)
-            setSummaryDatas(tableKanwilSummary as any[])
+            
         }
         else if(role=="manager-cabang"){
             setBranchId(parseInt(cookies.get("office-id") as string) || 1)
-            setSummaryDatas(tableCabangSummary as any[])
+            
         }
         else if(role=="manager-pusat"){
-            setSummaryDatas(tablePusatSummary as any[])
+            
         }
     }, [
         tablePusatSummary?.length, 
@@ -135,7 +132,6 @@ export default function Dashboard(){
     async function switchBCState(state:string, label?:string, officeId?: number){
         let currItems = breadcrumbItems
         const selectedKanwil = officeId? (officeId as number) % 10 : kanwilId
-        const selectedCabang = officeId? officeId : branchId
 
         switch(state){
             case "manager-pusat":
@@ -166,7 +162,7 @@ export default function Dashboard(){
                     setBreadcrumbItems(currItems)
                     setCurrLabel(currItems[currItems.length-1].label)
                 }
-                setSummaryDatas(tableKanwilSummary as any[])
+                
                 setBCIndex(1)
                 break;
             case "manager-cabang":
@@ -175,7 +171,6 @@ export default function Dashboard(){
                     setBreadcrumbItems([
                         { label: SidebarNavigator[index].name, state: "manager-cabang"},
                     ])
-                    setSummaryDatas(MonitoringKCTableData)
                     setCurrLabel(getCurrLabel())
                     setBCIndex(2)
                     break;
@@ -191,14 +186,14 @@ export default function Dashboard(){
                     setCurrLabel(currItems[currItems.length-1].label)
                 }
                 setBreadcrumbItems(currItems)
-                setSummaryDatas(tableCabangSummary as any[])
+                
                 setBCIndex(2)
                 break;
         }
     }
-    function handleBreadcrumbClick(state:string){
-        setCurrState(state)
-        switchBCState(state)
+    function handleBreadcrumbClick(state:string | undefined){
+        setCurrState(state || "")
+        switchBCState(state || "")
         if(state=="manager-kanwil"){
             setCurrOfficeId(parseInt(kanwilOfficeId))
         } else {
@@ -217,7 +212,6 @@ export default function Dashboard(){
         switchBCState(state, label, officeId)
         setCurrOfficeId(officeId)
     }
-    const [clicked, setClicked] = useState(false)
     return(
         <DashboardLayout sideNavIndex={index} bcItems={breadcrumbItems} onClickBC={handleBreadcrumbClick} role={currRole}>
             <div className="flex flex-col gap-4 h-full">
@@ -232,7 +226,15 @@ export default function Dashboard(){
                             error? (
                                 <Response message={error} type={"error"} />
                             ) : (
-                                <SummaryTable datas={summaryDatas} bcIndex={bcIndex} openDetail={openDetail}/>
+                                bcIndex == 2 ? (
+                                    <SummaryCabangTable datas={tableCabangSummary} bcIndex={bcIndex} openDetail={openDetail}/>
+                                ) : bcIndex == 1 ? (
+                                    <SummaryKanwilTable datas={tableKanwilSummary} bcIndex={bcIndex} openDetail={openDetail}/>
+                                ) : bcIndex == 0 ? (
+                                    <SummaryPusatTable datas={tablePusatSummary} bcIndex={bcIndex} openDetail={openDetail}/>
+                                ) : (
+                                    <></>
+                                )
                             )
                         )
                     }

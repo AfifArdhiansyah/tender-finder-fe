@@ -4,18 +4,18 @@ import { TenderProjectModel } from "@/models/tender-project-model"
 interface ProgressButtonProps{
     progressIndex: number
     currStatus: string
-    setIndexPrev: Function
-    setIndexNext: Function
+    setIndexPrev: ()=>void
+    setIndexNext: ()=>void
     dataTender: TenderProjectModel
-    uploadFile: Function
-    updateFollowUp: Function
-    filePenawaran?: any
-    fileFollowUp?: any
+    uploadFile: ()=>void
+    updateFollowUp: ()=>void
+    filePenawaran?: File | string
+    fileFollowUp?: File | string
     textFollowUp?: string
     produkDipilih: string
     nilaiTender: string
     feedBack: string
-    sendPenawaran: Function
+    sendPenawaran: ()=>void
     disabled?: boolean
     className?: string
 }

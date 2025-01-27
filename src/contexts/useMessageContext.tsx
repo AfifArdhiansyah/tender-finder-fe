@@ -1,9 +1,8 @@
 'use client'
 
 import { createContext, useContext, useEffect, useState } from "react";
-import { useMessage, useUnreadMessage } from "@/hooks/useMessage";
+import { useUnreadMessage } from "@/hooks/useMessage";
 import { useCookies } from "next-client-cookies";
-import { UserMessageModel } from "@/models/message-model";
 
 interface UnreadContextType {
     unreadCount : number | undefined, 

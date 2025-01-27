@@ -7,7 +7,7 @@ interface AssignAOConfirmationProps{
     aoName: string,
     aoID: number,
     open: boolean,
-    onCancel: Function,
+    onCancel: ()=>void,
     refreshTable: ()=>void
 }
 

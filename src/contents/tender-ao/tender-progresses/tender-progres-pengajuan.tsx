@@ -1,6 +1,5 @@
 'use client'
 
-import { useState } from "react"
 import Dropdown from "@/components/items/dropdowns/dropdown"
 import PengajuanDiterima from "./pengajuan-contents/pengajuan-diterima"
 import PengajuanDitolak from "./pengajuan-contents/pengajuan-ditolak"
@@ -9,13 +8,13 @@ import Image from "next/image"
 import BorderedBox from "@/components/boxes/bordered-box"
 
 interface TenderProgresPenyetujuanProps{
-    onChangeChooseInterest: Function,
+    onChangeChooseInterest: (selected:string) => void,
     selectedInterestOption: string,
-    onChangeDiterimaSelect: Function,
+    onChangeDiterimaSelect: (selected:string) => void,
     selectedDiterimaOption: string,
-    onChangeDiterimaText: Function,
+    onChangeDiterimaText: (value: string) => void,
     tenderValue: string
-    onChangeDitolakText: Function,
+    onChangeDitolakText: (value: string) => void,
     feedback: string,
     tenderStatusData: TenderStatusModel
 }

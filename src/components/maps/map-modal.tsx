@@ -1,11 +1,10 @@
 
 import Modal from "../items/modals/modal";
 import GoogleMaps from "./google.maps";
-import MapMini from "./map-mini";
 
 interface MapModalProps{
     isOpenModal: boolean,
-    onCancel: Function,
+    onCancel: () => void,
     title?: string,
     subTitle?: string,
     latitude: number,

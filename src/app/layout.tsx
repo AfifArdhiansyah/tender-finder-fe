@@ -5,7 +5,7 @@ import "./globals.css";
 import { Poppins } from 'next/font/google'
 import { Toaster } from "react-hot-toast";
 import { CookiesProvider } from 'next-client-cookies/server';
-import { UserProvider, useUserContext } from "@/contexts/useUserContext";
+import { UserProvider } from "@/contexts/useUserContext";
 import UserNotifications from "@/contexts/user-notification";
 import { UnreadProvider } from "@/contexts/useMessageContext";
 

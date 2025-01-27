@@ -15,8 +15,12 @@ export const useGetOfficeByWilayah = (kanwilId: string) =>{
             try {
                 const response = await api.get("/offices/wilayah/"+kanwilId);
                 setOffices(response.data.data as OfficeModel[]);
-            } catch (err: any) {
-                setError(err.message);
+            } catch (err) {
+                if (err instanceof Error) {
+                    setError(err.message);
+                } else {
+                    setError(String(err));
+                }
             } finally {
                 setLoading(false);
             }
@@ -41,8 +45,12 @@ export const useGetOffice = () =>{
         try {
             const response = await api.get("/offices/wilayah/"+kanwilId);
             setOffices(response.data as OfficeModel[]);
-        } catch (err: any) {
-            setError(err.message);
+        } catch (err) {
+            if (err instanceof Error) {
+                setError(err.message);
+            } else {
+                setError(String(err));
+            }
         } finally {
             setLoading(false);
         }
@@ -52,8 +60,12 @@ export const useGetOffice = () =>{
         try {
             const response = await api.get("/offices/wilayah");
             setOffices(response.data as OfficeModel[]);
-        } catch (err: any) {
-            setError(err.message);
+        } catch (err) {
+            if (err instanceof Error) {
+                setError(err.message);
+            } else {
+                setError(String(err));
+            }
         } finally {
             setLoading(false);
         }

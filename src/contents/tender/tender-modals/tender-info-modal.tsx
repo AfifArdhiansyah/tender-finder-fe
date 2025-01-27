@@ -1,11 +1,12 @@
 'use client'
 
 import Modal from "@/components/items/modals/modal"
+import { TenderProjectModel } from "@/models/tender-project-model"
 
 interface TenderInfoModalProps{
-    dataTender: any,
+    dataTender: TenderProjectModel,
     open: boolean,
-    onCancel: Function,
+    onCancel: ()=>void,
 }
 
 export default function TenderInfoModal(props: TenderInfoModalProps){
@@ -35,12 +36,12 @@ export default function TenderInfoModal(props: TenderInfoModalProps){
                     <tr>
                         <td className="py-2 font-bold">Alamat Tender</td>
                         <td className="py-2 px-2 font-bold">:</td>
-                        <td className="py-2 text-gray-500">{props.dataTender.alamat_pemenang}</td>
+                        <td className="py-2 text-gray-500">{props.dataTender.lokasi_pekerjaan}</td>
                     </tr>
                     <tr>
                         <td className="py-2 font-bold">Nama AO</td>
                         <td className="py-2 px-2 font-bold">:</td>
-                        <td className="py-2 text-gray-500">{props.dataTender.ao?.nama}</td>
+                        <td className="py-2 text-gray-500">{props.dataTender.account_officer.nama}</td>
                     </tr>
                     <tr>
                         <td className="py-2 font-bold">Dokumen Tanda Terima</td>
@@ -55,12 +56,12 @@ export default function TenderInfoModal(props: TenderInfoModalProps){
                     <tr>
                         <td className="py-2 font-bold">Status Penerimaan</td>
                         <td className="py-2 px-2 font-bold">:</td>
-                        <td className="py-2 text-gray-500">{props.dataTender.status}</td>
+                        <td className="py-2 text-gray-500">{props.dataTender.latest_status}</td>
                     </tr>
                     <tr>
                         <td className="py-2 font-bold">Produk Yang Dipilih</td>
                         <td className="py-2 px-2 font-bold">:</td>
-                        <td className="py-2 text-gray-500">{props.dataTender.produk?.nama}</td>
+                        <td className="py-2 text-gray-500">{props.dataTender.tender_statuses[-1].produk_dipilih}</td>
                     </tr>
                 </tbody>
             </table>

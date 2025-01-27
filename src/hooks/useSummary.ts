@@ -18,8 +18,12 @@ export const useSummary = () => {
             try {
                 const response = await api.get("/monitor/summary/"+officeId);
                 setSummary(response.data.data as SummaryModel);
-            } catch (err: any) {
-                setError(err.message);
+            } catch (err) {
+                if (err instanceof Error) {
+                    setError(err.message);
+                } else {
+                    setError(String(err));
+                }
             } finally {
                 setLoading(false);
             }
@@ -46,8 +50,12 @@ export const useTableSummary = () => {
         try {
             const response = await api.get("/monitor/dashboard-summary");
             setTablePusatSummary(response.data.data as SummaryPusatModel[]);
-        } catch (err: any) {
-            setError(err.message);
+        } catch (err) {
+            if (err instanceof Error) {
+                setError(err.message);
+            } else {
+                setError(String(err));
+            }
         } finally {
             setLoading(false);
         }
@@ -57,8 +65,12 @@ export const useTableSummary = () => {
         try {
             const response = await api.get("/monitor/dashboard-summary/"+idKanwil);
             setTableKanwilSummary(response.data.data as SummaryKanwilModel[]);
-        } catch (err: any) {
-            setError(err.message);
+        } catch (err) {
+            if (err instanceof Error) {
+                setError(err.message);
+            } else {
+                setError(String(err));
+            }
         } finally {
             setLoading(false);
         }
@@ -68,8 +80,12 @@ export const useTableSummary = () => {
         try {
             const response = await api.get("/monitor/dashboard-summary/"+idBranch+'/ao');
             setTableCabangSummary(response.data.data as SummaryCabangModel[]);
-        } catch (err: any) {
-            setError(err.message);
+        } catch (err) {
+            if (err instanceof Error) {
+                setError(err.message);
+            } else {
+                setError(String(err));
+            }
         } finally {
             setLoading(false);
         }

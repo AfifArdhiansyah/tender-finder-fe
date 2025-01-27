@@ -13,6 +13,7 @@ export interface SummaryModel{
 }
 
 export interface SummaryPusatModel{
+    id: number,
     kanwil_id: number,
     total_pemenang_baru: number,
     percent_kredit_disetujui: number,

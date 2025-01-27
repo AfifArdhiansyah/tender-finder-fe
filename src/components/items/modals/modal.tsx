@@ -6,12 +6,12 @@ import Button from "../buttons/button";
 
 interface ModalProps{
     open: boolean,
-    onCancel: Function,
+    onCancel: () => void,
     title: ReactNode,
     subTitle?: string,
     children: ReactNode,
     useFooterAction?: boolean
-    confirmAction?: Function
+    confirmAction?: () => void,
     className?: string
 }
 
@@ -20,7 +20,9 @@ export default function Modal(props: ModalProps){
     props.onCancel()
   }
   function onConfirm(){
-    props.confirmAction && props.confirmAction()
+    if (props.confirmAction) {
+      props.confirmAction();
+    }
   }
   return (
       <>

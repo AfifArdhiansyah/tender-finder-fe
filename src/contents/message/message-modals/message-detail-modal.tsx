@@ -6,7 +6,7 @@ interface MessageDetailModalProps{
     message: string,
     datetime: string,
     open: boolean,
-    onCancel: Function,
+    onCancel: ()=>void,
     tenderId?: string|null
 }
 

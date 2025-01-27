@@ -2,13 +2,13 @@
 interface InputTextAreaProps{
     placeholder?:string
     className?: string
-    onChange?: Function
+    onChange?: (value: string) => void
     value?: string
     disabled?: boolean
 }
 
 export default function InputTextArea(props: InputTextAreaProps){
-    function handleChange(e: any){
+    function handleChange(e: React.ChangeEvent<HTMLTextAreaElement>){
         if(props.onChange) props.onChange(e.target.value)
     }
 

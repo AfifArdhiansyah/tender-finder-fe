@@ -5,7 +5,6 @@ import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 import api from "@/services/api";
 import { useCookies } from 'next-client-cookies';
-import { Office } from "./useUser";
 import { useUserContext } from "@/contexts/useUserContext";
 import { useUnreadContext } from "@/contexts/useMessageContext";
 
@@ -17,12 +16,6 @@ interface LoginResponse {
         office_name: string,
         office_id: string
     },
-    message: string
-}
-
-interface LogoutResponse {
-    success: boolean,
-    data: any,
     message: string
 }
 
@@ -96,7 +89,6 @@ export function useAuth(): UseAuthReturn {
                 const errorData = await response.data;
                 throw new Error(errorData.message || "Logout failed");
             }
-            const data: LogoutResponse = await response.data;
 
             cookies.remove("authToken")
             cookies.remove("office-id")

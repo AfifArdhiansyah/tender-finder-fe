@@ -2,7 +2,6 @@
 
 import DashboardLayout from "@/layouts/dashboard-layout"
 import MessageTable from "@/contents/message/message-tables/message-table"
-import MessageDatas from "@/constants/message-data"
 import { useEffect, useState } from "react"
 import Paper from "@/components/frames/papes"
 import { SidebarNavigator } from "@/constants/navigator"
@@ -13,7 +12,7 @@ import { useUnreadContext } from "@/contexts/useMessageContext"
 
 export default function Message(){
     const index = 2
-    const { messages, refresh, loading, error } = useMessage()
+    const { messages, loading, error } = useMessage()
     const [allMessages, setAllMessages] = useState(messages)
     const headers = ["Message"]
     const columns = ["message", "is_read"]

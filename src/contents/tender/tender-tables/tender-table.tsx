@@ -18,7 +18,7 @@ import { useUserContext } from "@/contexts/useUserContext"
 interface TenderTableProps{
     headers: string[],
     columns: string[]
-    datas: any[],
+    datas: TenderProjectModel[],
     refreshTable: ()=>void,
     filterOption: string[],
     selectedFilter: string | null,
@@ -49,7 +49,7 @@ export default function TenderTable(props: TenderTableProps){
     };
 
     //modal purppose
-    const [selectedTender, setSelectedTender] = useState<any>({})
+    const [selectedTender, setSelectedTender] = useState<TenderProjectModel>()
     const [selectedTenderName, setSelectedTenderName] = useState("")
     const [isOpenModalAO, setIsOpenModalAO] = useState(false)
     const showModalAO = () => {
@@ -58,7 +58,7 @@ export default function TenderTable(props: TenderTableProps){
     const closeModalAO = () => {
         setIsOpenModalAO(false);
     };
-    const onSetTenderSelect = (name:string, id: string, data:any) =>{
+    const onSetTenderSelect = (name:string, id: string, data:TenderProjectModel) =>{
         setSelectedTender(data)
         setSelectedTenderName(name + " - " + id)
     }
@@ -77,14 +77,14 @@ export default function TenderTable(props: TenderTableProps){
     const paginatedData = filteredData.slice(
         (currentPage - 1) * itemsPerPage,
         currentPage * itemsPerPage
-    ) as any[];
+    ) as TenderProjectModel[];
     const handleNext = () => {
         if (currentPage < totalPages) setCurrentPage((prev) => prev + 1);
     };
     const handlePrevious = () => {
         if (currentPage > 1) setCurrentPage((prev) => prev - 1);
     };
-    const handleItemsPerPageChange = (val: any) => {
+    const handleItemsPerPageChange = (val: string) => {
         setItemsPerPage(Number(val));
         setCurrentPage(1);
     };
@@ -154,7 +154,9 @@ export default function TenderTable(props: TenderTableProps){
                                         }
                                         {
                                             !((col == "status") || (col == "nilai_tender") || (col == "kc")) && (
-                                                data[col]
+                                                typeof (data as TenderProjectModel)[col as keyof TenderProjectModel] === 'object' ? 
+                                                JSON.stringify((data as TenderProjectModel)[col as keyof TenderProjectModel]) : 
+                                                String((data as TenderProjectModel)[col as keyof TenderProjectModel])
                                             )
                                         }
                                     </td>
@@ -169,7 +171,7 @@ export default function TenderTable(props: TenderTableProps){
                 isOpenModalAO ? <ChooseAOModal open={isOpenModalAO} onCancel={closeModalAO} tenderName={selectedTenderName} refreshTable={refreshTable} dataTender={selectedTender as TenderProjectModel}/> : null
             }
             {
-                isOpenModalTenderDetail ? <TenderInfoModal open={isOpenModalTenderDetail} onCancel={closeModalTenderDetail} dataTender={selectedTender}/> : null
+                isOpenModalTenderDetail && selectedTender ? <TenderInfoModal open={isOpenModalTenderDetail} onCancel={closeModalTenderDetail} dataTender={selectedTender}/> : null
             }
         </>
     )

@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useCookies } from "next-client-cookies";
 import toast from "react-hot-toast";
 import api from "@/services/api";
@@ -72,7 +72,15 @@ export const useUploadData = () =>{
         }
     }
 
-    const updateDataDiterima = async (update: any) => {
+    const updateDataDiterima = async (update: {
+        id: string | null,
+        tender_id: string,
+        is_debitur_tertarik: boolean,
+        produk_dipilih: string | null,
+        nilai_kredit: number | null,
+        feedback: string | null,
+        branch_id: string
+    }) => {
         setLoading(true);
         setError(null);
         const toastId = toast.loading("Update status keputusan calon debitur...");
@@ -141,6 +149,6 @@ export const useUploadData = () =>{
         }
     }
 
-    return { uploadDataPenawaranAO, uploadDataFollowUpAO, updateDataDiterima, updateManajemenACC, loading, errorUpload }
+    return { uploadDataPenawaranAO, uploadDataFollowUpAO, updateDataDiterima, updateManajemenACC, success, loading, errorUpload }
 }
 
