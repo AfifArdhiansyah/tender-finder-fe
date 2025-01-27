@@ -1,14 +1,12 @@
 import TransparentButton from "@/components/items/buttons/transparent-button"
 import { FiDownload } from "react-icons/fi";
 import FileUpload from "@/components/inputs/input-file";
-import toast, {Toaster} from "react-hot-toast";
 import { TenderProjectModel } from "@/models/tender-project-model";
-import Image from "next/image";
 import PdfViewer from "@/components/files/pdf-viewer";
 import UseFile from "@/hooks/useFile";
 
 interface TenderProgresPenawaranProps{
-    uploadFile: Function
+    uploadFile: (file:File, tenderStatusId:number)=>void
     dataTender: TenderProjectModel
     indexProgress: number
 }
@@ -18,7 +16,7 @@ export default function TenderProgresPenawaran(props: TenderProgresPenawaranProp
     async function downloadFile(){
         await handleDownloadPenawaran(props.dataTender.id, props.dataTender.lokasi_pekerjaan) //change lokasi pekerjaan
     }
-    function uploadFile(file:any){
+    function uploadFile(file:File){
         props.uploadFile(file, props.dataTender.tender_statuses[props.indexProgress].id)
     }
     return(

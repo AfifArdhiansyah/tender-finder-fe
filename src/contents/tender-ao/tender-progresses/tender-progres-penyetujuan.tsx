@@ -7,10 +7,7 @@ interface TenderProgresPenyetujuanProps{
 }
 
 export default function TenderProgresPenyetujuan(props: TenderProgresPenyetujuanProps){
-    const penyetujuan = {
-        disetujui: false,
-        catatan: "Pengajuan kredit ditolak dikarenakan calon debitur tidak sesuai dengan kriteria",
-    }
+
     return(
         <div className="flex flex-col gap-4 text-xs">
             <p className="font-bold">Status Penyetujuan Kredit:</p>

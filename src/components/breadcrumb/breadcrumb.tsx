@@ -10,7 +10,7 @@ export interface BreadcrumbItem {
 
 interface BreadcrumbProps {
     items: BreadcrumbItem[];
-    onClick?: Function;
+    onClick?: (state: string | undefined) => void;
 }
 
 export default function Breadcrumb(props: BreadcrumbProps){

@@ -1,30 +1,40 @@
 'use client'
 
+import { UserModel } from "@/hooks/useUser"
+import { UserMessageModel } from "@/models/message-model"
+import { SummaryCabangModel, SummaryKanwilModel, SummaryPusatModel } from "@/models/summary-model"
+import { TenderProjectModel } from "@/models/tender-project-model"
 import { ReactNode } from "react"
 
 interface TableProps{
     headers: string[],
-    datas: any[],
+    datas: SummaryPusatModel[] | SummaryKanwilModel[] | SummaryCabangModel[] | UserModel[] | UserMessageModel[] | TenderProjectModel[] | null,
     children: ReactNode
     usePagination: boolean
     className?: string
     itemsPerPage?: number
     currentPage?: number
     totalPages?: number
-    handleItemsPerPageChange?: Function
-    handlePrevious?: Function
-    handleNext?: Function
+    handleItemsPerPageChange?: (value: string) => void
+    handlePrevious?: () => void
+    handleNext?: () => void
 }
 
 export default function Table(props: TableProps){
     function handleItemsPerPageChange(e: React.ChangeEvent<HTMLSelectElement>){
-        props.handleItemsPerPageChange? props.handleItemsPerPageChange(e.target.value): null
+        if(props.handleItemsPerPageChange){
+            props.handleItemsPerPageChange(e.target.value)
+        }
     }
     function handlePrevious(){
-        props.handlePrevious? props.handlePrevious(): null
+        if(props.handlePrevious){
+            props.handlePrevious()
+        }
     }
     function handleNext(){
-        props.handleNext? props.handleNext(): null
+        if(props.handleNext){
+            props.handleNext()
+        }
     }
     return (
         <div className={"flex flex-col justify-between min-w-full w-fit " + props.className}>

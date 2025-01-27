@@ -4,7 +4,7 @@ import { ReactNode } from "react"
 interface TransparentButtonProps{
     hoverBGColor: string,
     hoverTextColor: string,
-    onClick: Function,
+    onClick: () => void,
     className?: string,
     disabled?: boolean,
     children?: ReactNode

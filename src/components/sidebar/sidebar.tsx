@@ -12,9 +12,9 @@ import { useUserContext } from '@/contexts/useUserContext';
 
 interface SidebarProps{
     indexNav: number,
-    setIndexList: Function
+    setIndexList: (index: number) => void,
     isSidebarOpen: boolean
-    setSidebarOpen: Function
+    setSidebarOpen: (open: boolean) => void
 }
 
 export default function Sidebar(props: SidebarProps) {

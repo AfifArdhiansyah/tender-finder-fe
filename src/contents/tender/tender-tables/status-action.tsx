@@ -4,6 +4,7 @@ import TextButton from "@/components/items/buttons/text-button"
 import Button from "@/components/items/buttons/button"
 import { useRouter } from "next/navigation"
 import { useUserContext } from "@/contexts/useUserContext"
+import { TenderProjectModel } from "@/models/tender-project-model"
 
 interface StatusActionInterface{
     tenderId: string,
@@ -12,12 +13,12 @@ interface StatusActionInterface{
     latestStatus: number,
     isOpenModalAO: boolean,
     isOpenModalTenderDetail: boolean,
-    showModalAO: Function,
-    showModalTenderDetail: Function,
-    closeModalAO: Function,
-    closeModalTenderDetail: Function,
-    setSelectedTender: Function
-    dataTender?: any
+    showModalAO: ()=>void,
+    showModalTenderDetail: ()=>void,
+    closeModalAO: ()=>void,
+    closeModalTenderDetail: ()=>void,
+    setSelectedTender: (name:string, id:string, data:TenderProjectModel)=>void,
+    dataTender?: TenderProjectModel
 }
 
 export default function StatusAction(props: StatusActionInterface){
@@ -25,12 +26,10 @@ export default function StatusAction(props: StatusActionInterface){
     const role = user?.role
     const router = useRouter()
     function onShowClickedAO(){
-        props.setSelectedTender(props.tenderName, props.tenderId, props.dataTender)
+        if (props.dataTender) {
+            props.setSelectedTender(props.tenderName, props.tenderId, props.dataTender)
+        }
         props.showModalAO()
-    }
-    function onShowClickedTenderDetail(){
-        props.setSelectedTender(props.tenderName, props.tenderId, props.dataTender)
-        props.showModalTenderDetail()
     }
     function goToDetail(){
         router.push("/tender/"+props.tenderId)

@@ -5,7 +5,7 @@ import { useUnreadContext } from "@/contexts/useMessageContext";
 
 interface SidebarListChildProps{
     isActive: boolean,
-    onClickChild: Function,
+    onClickChild: (index: number) => void,
     navIndex: number,
     iconPath: string,
     label: string,

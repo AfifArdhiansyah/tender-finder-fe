@@ -141,9 +141,9 @@ export default function AOTenderDetail(){
     const {uploadDataPenawaranAO, uploadDataFollowUpAO, updateDataDiterima, errorUpload} = useUploadData()
     const branchId = tenderProject?.branch_id
     //penawaran
-    const [filePenawaran, setFilePenawaran] = useState<any|null>()
+    const [filePenawaran, setFilePenawaran] = useState<File|null|undefined>()
     const {ltd, lng} = useGeoLocation()
-    function onUploadFilePenawaran(file:any){
+    function onUploadFilePenawaran(file:File){
         setFilePenawaran(file)
     }
     async function onSubmitFilePenawaran(){
@@ -164,9 +164,9 @@ export default function AOTenderDetail(){
     }
 
     //follow up
-    const [fileFollowUp, setFileFollowUp] = useState<any|null>();
+    const [fileFollowUp, setFileFollowUp] = useState<File|null>();
     const [textFollowUp, setTextFollowUp] = useState("");
-    function onUploadFileFollowUp(file:any){
+    function onUploadFileFollowUp(file:File){
         setFileFollowUp(file)
     }
     async function onSubmitFileFollowUp(){
@@ -211,7 +211,7 @@ export default function AOTenderDetail(){
             tender_id: tenderProject?.id as string,
             is_debitur_tertarik: tertarik,
             produk_dipilih: tertarik? produkDipilih : null,
-            nilai_kredit: tertarik? nilaiKredit : null,
+            nilai_kredit: tertarik? parseFloat(nilaiKredit) : null,
             feedback: !tertarik? feedback : null,
             branch_id: branchId as unknown as string
         }
@@ -253,9 +253,9 @@ export default function AOTenderDetail(){
                                 setIndexPrev={contentPrev}
                                 setIndexNext={contentNext}
                                 dataTender={tenderProject as TenderProjectModel}
-                                filePenawaran={filePenawaran}
+                                filePenawaran={filePenawaran ?? undefined}
                                 uploadFile={onSubmitFilePenawaran}
-                                fileFollowUp={fileFollowUp}
+                                fileFollowUp={fileFollowUp ?? undefined}
                                 textFollowUp={textFollowUp}
                                 updateFollowUp={onSubmitFileFollowUp}
                                 produkDipilih= {produkDipilih}

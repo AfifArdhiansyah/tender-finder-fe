@@ -2,7 +2,7 @@
 import InputTextArea from "@/components/inputs/input-text-area"
 
 interface PengajuanDitolakProps{
-    onChangeText: Function
+    onChangeText: (text:string) => void
     feedback: string
 }
 

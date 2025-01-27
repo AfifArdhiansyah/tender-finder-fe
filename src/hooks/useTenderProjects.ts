@@ -23,7 +23,7 @@ export const useTenderProjects = () => {
     const fetchTenderProjects = async () => {
       setLoading(true)
       try {
-        let url = "/tender-projects"
+        const url = "/tender-projects"
         const params = new URLSearchParams();
         if(selectedFilter){
           params.append("status", selectedFilter)
@@ -38,8 +38,12 @@ export const useTenderProjects = () => {
             },
         });
         setTenderProjects(response.data);
-      } catch (err: any) {
-        setError(err.message);
+      } catch (err) {
+        if (err instanceof Error) {
+          setError(err.message);
+        } else {
+            setError(String(err));
+        }
       } finally {
         cookies.remove("selected-status")
         cookies.remove("selected-branch")
@@ -70,8 +74,12 @@ export const useGetTenderById = (id: string) => {
         const response = await api.get<TenderProjectModel>("/tender-projects/id/"+id);
         setTenderProject(response.data);
         setTenderProjectStatuses(response.data.tender_statuses);
-      } catch (err: any) {
-        setError(err.message);
+      } catch (err) {
+        if (err instanceof Error) {
+          setError(err.message);
+        } else {
+            setError(String(err));
+        }
       } finally {
         setLoading(false);
       }
@@ -94,14 +102,14 @@ export const useGetTendersByUser = () =>{
 
   const cookies = useCookies();
   const token = cookies.get("authToken")
-    if (!token) {
-      setError("Authentication token not found");
-      setLoading(false);
-      return { tenderProjects, loading, error };
-  }
 
   useEffect(() => {
     const fetchTenderProjects = async () => {
+      if (!token) {
+        setError("Authentication token not found");
+        setLoading(false);
+        return { tenderProjects, loading, error };
+      }
       try {
         const response = await api.get<TenderProjectModel[]>("/tender-projects/user", {
           headers: {
@@ -109,13 +117,16 @@ export const useGetTendersByUser = () =>{
           },
         });
         setTenderProjects(response.data);
-      } catch (err: any) {
-        setError(err.message);
+      } catch (err) {
+        if (err instanceof Error) {
+          setError(err.message);
+        } else {
+            setError(String(err));
+        }
       } finally {
         setLoading(false);
       }
     };
-
     fetchTenderProjects();
   }, []);
 
@@ -164,7 +175,7 @@ export const useAssignAO = () =>{
     }
   }
 
-  return { assignAOToTender, loading, error };
+  return { assignAOToTender, dataTender, loading, error };
 }
 
 export function useNewTenderProject(){
@@ -209,5 +220,5 @@ export function useNewTenderProject(){
     }
   }
 
-  return { createTenderProject, loading, error };
+  return { createTenderProject, dataTender, loading, error };
 }

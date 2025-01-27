@@ -10,7 +10,7 @@ import { TenderProjectModel } from "@/models/tender-project-model"
 interface ChooseAOModalProps{
     tenderName: string,
     open: boolean,
-    onCancel: Function,
+    onCancel: ()=>void,
     dataTender: TenderProjectModel
     refreshTable: ()=>void
 }
@@ -34,7 +34,7 @@ export default function ChooseAOModal(props: ChooseAOModalProps){
                     <Response message={error as string} type={"error"}/>
                 ) : (
                     <div className="w-full overflow-y-auto max-h-[70vh]">
-                        <AOListTable headers={tableHeads} columns={tableColumns} datas={aos as any[]} dataTender={props.dataTender} refreshTable={props.refreshTable}/>
+                        <AOListTable headers={tableHeads} columns={tableColumns} datas={aos} dataTender={props.dataTender} refreshTable={props.refreshTable}/>
                     </div>
                 )
             }

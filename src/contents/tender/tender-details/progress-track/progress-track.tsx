@@ -18,7 +18,7 @@ interface ProgressTrackProps{
     nilaiTender: string,
     tender_ltd: string,
     tender_lng: string,
-    refresh: Function
+    refresh: ()=>void,
     dataTender: TenderProjectModel | null
 }
 
@@ -117,10 +117,6 @@ export default function ProgressTrack(props: ProgressTrackProps){
     }
     //foto modal purpose
     const [showFotoPenawaranModal, setShowFotoPenawaranModal] = useState(false)
-    const openFotoPenawaranModal = (data: TenderStatusModel) =>{
-        setSelectedProgress(data)
-        setShowFotoPenawaranModal(true)
-    }
     const closeFotoPenawaranModal = () =>{
         setShowFotoPenawaranModal(false)
     }
@@ -154,7 +150,7 @@ export default function ProgressTrack(props: ProgressTrackProps){
     }
     //modal purpose
     const [isOpenModalAO, setIsOpenModalAO] = useState(false)
-    const [selectedTenderName, setSelectedTenderName] = useState("")
+    const [selectedTenderName] = useState("")
     const showModalAO = () => {
         setIsOpenModalAO(true);
     };

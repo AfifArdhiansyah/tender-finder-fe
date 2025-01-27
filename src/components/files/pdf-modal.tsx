@@ -3,7 +3,7 @@ import PdfViewer from "./pdf-viewer";
 
 interface PdfModalProps{
     isOpenModal: boolean,
-    onCancel: Function,
+    onCancel: () => void,
     title?: string,
     subTitle?: string,
     url: string,

@@ -113,8 +113,8 @@ export default function AddNewTenderContent() {
     }
     //format input NPWP
     function formatNPWP(val: string){
-        var cleaned = ("" + val).replace(/\D/g, "");
-        var match = cleaned.match(/(\d{0,2})?(\d{0,3})?(\d{0,3})?(\d{0,1})?(\d{0,3})?(\d{0,3})$/);
+        const cleaned = ("" + val).replace(/\D/g, "");
+        const match = cleaned.match(/(\d{0,2})?(\d{0,3})?(\d{0,3})?(\d{0,1})?(\d{0,3})?(\d{0,3})$/);
         if (!match) return val;
         return [
                 match[1],

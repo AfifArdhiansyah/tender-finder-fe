@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import Image from "next/image";
 import InputText from "@/components/inputs/input-text";
 import Button from "@/components/items/buttons/button";
@@ -13,7 +13,7 @@ export default function LoginForm() {
     const [formData, setFormData] = useState({ nip: "", password: "" });
     const [showPassword, setShowPassword] = useState(false);
 
-    const { login, error, loading } = useAuth();
+    const { login } = useAuth();
 
     const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>, field: string) => {
         if (e.key === "Enter") {

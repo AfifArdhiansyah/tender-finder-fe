@@ -5,12 +5,13 @@ import MessageListItem from "../components/message-list-item"
 import MessageDetailModal from "../message-modals/message-detail-modal"
 import { useState } from "react"
 import { useReadMessage } from "@/hooks/useMessage"
+import { UserMessageModel } from "@/models/message-model"
 
 interface MessageTableProps{
     headers: string[],
     columns: string[]
-    datas: any[],
-    setMessageRead: Function
+    datas: UserMessageModel[],
+    setMessageRead: (index: number)=>void
 }
 
 export default function MessageTable(props: MessageTableProps){
@@ -18,20 +19,22 @@ export default function MessageTable(props: MessageTableProps){
     const [selectedMessage, setSelectedMessage] = useState("")
     const [selectedTenderId, setSelectedTenderId] = useState<null|string>(null)
     const [messageDate, setMessageDate] = useState("")
-    const { response, loading, error, setReadMessage } = useReadMessage()
+    const {setReadMessage } = useReadMessage()
     const showModalMessage = () => {
         setIsOpenModalMessage(true);
     };
     const closeModalMessage = () => {
         setIsOpenModalMessage(false);
     };
-    const onMessageSelected = (index:number, message: string, tenderId: string|null, date: string, userMessageId: number) =>{
+    const onMessageSelected =  (index: number, message: string, tenderId?: string, date?: string, userMessageId?: number) =>{
         setSelectedMessage(message)
-        setMessageDate(date)
-        setSelectedTenderId(tenderId)
+        setMessageDate(date ?? "")
+        setSelectedTenderId(tenderId ?? null)
         props.setMessageRead(index)
         showModalMessage()
-        setReadMessage(userMessageId)
+        if (userMessageId !== undefined) {
+            setReadMessage(userMessageId)
+        }
     }
     return(
         <>

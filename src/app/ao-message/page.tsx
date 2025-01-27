@@ -4,7 +4,6 @@ import { useEffect, useState } from "react"
 import DashboardLayout from "@/layouts/dashboard-layout"
 import { SidebarNavigatorAO } from "@/constants/navigator"
 import { BreadcrumbItem } from "@/components/breadcrumb/breadcrumb"
-import MessageDatas from "@/constants/message-data"
 import MessageListAO from "@/contents/message/message-list-ao/message-list-ao"
 import { useMessage } from "@/hooks/useMessage"
 import Loading from "@/components/items/progress/loading"
@@ -18,7 +17,7 @@ export default function AOMessage(){
         {label: SidebarNavigatorAO[index].name, path: SidebarNavigatorAO[index].ref}
     ] as BreadcrumbItem[]
     // const [messageDatas, setMessageDatas] = useState(MessageDatas)
-    const { messages, refresh, loading, error } = useMessage()
+    const { messages, loading, error } = useMessage()
     const [allMessages, setAllMessages] = useState(messages)
     function setMessageRead(index: number){
         const newMessageData = allMessages

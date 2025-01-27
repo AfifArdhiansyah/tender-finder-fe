@@ -20,8 +20,12 @@ export const useMessage = () =>{
                 }
             })
             setMessages(response.data.data as UserMessageModel[])
-        } catch (err: any) {
-            setError(err.message)
+        } catch (err) {
+            if (err instanceof Error) {
+                setError(err.message)
+            } else {
+                setError(String(err))
+            }
         } finally {
             setLoading(false)
         }
@@ -57,8 +61,12 @@ export const useReadMessage = () => {
                 }
             )
             setResponse(response.data.data as UserMessageModel)
-        } catch (err: any) {
-            setError(err.message)
+        } catch (err) {
+            if (err instanceof Error) {
+                setError(err.message)
+            } else {
+                setError(String(err))
+            }
         } finally {
             setLoading(false)
         }
@@ -85,9 +93,13 @@ export const useUnreadMessage = () => {
                 }
             )
             setUnreadCount(response.data.data as number)
-        } catch (err: any) {
+        } catch (err) {
             setUnreadCount(0)
-            setError(err.message)
+            if (err instanceof Error) {
+                setError(err.message)
+            } else {
+                setError(String(err))
+            }
         } finally {
             setLoading(false)
         }

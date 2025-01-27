@@ -1,13 +1,12 @@
 'use client'
 
-import { useState } from "react"
 import Dropdown from "@/components/items/dropdowns/dropdown"
 import InputText from "@/components/inputs/input-text"
 
 interface PengajuanDiterimaProps{
-    onChangeSelect: Function,
+    onChangeSelect: (selected:string) => void,
     selectedOption: string,
-    onChangeText: Function,
+    onChangeText: (value: string) => void,
     tenderValue: string
 }
 
@@ -17,7 +16,7 @@ export default function PengajuanDiterima(props: PengajuanDiterimaProps){
         props.onChangeSelect(selected)
     }
     const onChangeText = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const { name, value } = e.target;
+        const { value } = e.target;
         props.onChangeText(value)
     };
     return(

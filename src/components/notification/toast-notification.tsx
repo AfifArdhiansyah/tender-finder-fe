@@ -1,7 +1,6 @@
 import toast from "react-hot-toast"
 import { IoMdClose } from "react-icons/io";
 import Link from "next/link";
-import { useUserContext } from "@/contexts/useUserContext";
 
 
 export default function ToastNotification({

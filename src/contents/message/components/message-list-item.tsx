@@ -10,7 +10,7 @@ interface MessageListItemInterface{
     dataIndex: number,
     hoverBGColor: string,
     hoverTextColor: string,
-    onClick: Function,
+    onClick: (index: number, message: string, tenderId?: string, date?: string, userMessageId?: number) => void,
     className?: string,
     disabled?: boolean,
     children?: ReactNode

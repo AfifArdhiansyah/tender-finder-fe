@@ -4,7 +4,7 @@ import { UserModel } from "@/hooks/useUser"
 interface StatusAOActionInterface{
     status: string,
     ao?: UserModel,
-    onClick: Function
+    onClick: (ao: UserModel | undefined) => void
 }
 
 export default function StatusAOAction(props: StatusAOActionInterface){
