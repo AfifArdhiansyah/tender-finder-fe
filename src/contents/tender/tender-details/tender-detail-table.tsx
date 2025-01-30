@@ -1,4 +1,9 @@
+'use client';
+
 import { TenderProjectModel } from "@/models/tender-project-model";
+import { useState } from "react";
+import { getGeocode } from "@/services/geocode";
+import { MapModal } from "@/components/maps/map-modal";
 
 interface TenderDetailTableProps{
     idTender: string
@@ -6,6 +11,23 @@ interface TenderDetailTableProps{
 }
 
 export default function TenderDetailTable(props: TenderDetailTableProps){
+
+    const [geocode, setGeocode] = useState<{ lat: number, lng: number } | null>(null);
+    const handleAddressClick = async (address: string) => {
+        const location = await getGeocode(address);
+        if (location) {
+            setGeocode(location);
+            openMapPenawaranModal();
+        }
+    };
+
+    const [showMapPenawaranModal, setShowMapPenawaranModal] = useState<boolean>(false);
+    const openMapPenawaranModal = () => {
+        setShowMapPenawaranModal(true);
+    }
+    const closeMapPenawaranModal = () => {
+        setShowMapPenawaranModal(false);
+    }
     
     return(
         <div className="grid grid-cols-12 gap-y-2 text-sm">
@@ -22,7 +44,7 @@ export default function TenderDetailTable(props: TenderDetailTableProps){
             <p className="text-gray-500 col-span-10 max-md:col-span-7 max-lg:col-span-8"><span className="font-bold mr-2">:</span> Rp. {parseFloat(props.tenderProject?.nilai_tender as string).toLocaleString('id-ID')}</p>
 
             <p className="font-bold col-span-2 max-md:col-span-5 max-lg:col-span-4">Alamat Tender</p>
-            <p className="text-gray-500 col-span-10 max-md:col-span-7 max-lg:col-span-8"><span className="font-bold mr-2">:</span> {props.tenderProject?.lokasi_pekerjaan}</p>
+            <p onClick={()=>handleAddressClick(props.tenderProject?.lokasi_pekerjaan as string)} className="text-blue-500 col-span-10 max-md:col-span-7 max-lg:col-span-8 cursor-pointer"><span className="font-bold mr-2">:</span> {props.tenderProject?.lokasi_pekerjaan}</p>
 
             <p className="font-bold col-span-2 max-md:col-span-5 max-lg:col-span-4">Cabang Inisiatior</p>
             <p className="text-gray-500 col-span-10 max-md:col-span-7 max-lg:col-span-8"><span className="font-bold mr-2">:</span> {props.tenderProject?.branch.nama}</p>
@@ -41,6 +63,17 @@ export default function TenderDetailTable(props: TenderDetailTableProps){
 
             <p className="font-bold col-span-2 max-md:col-span-5 max-lg:col-span-4">Produk Yang Dipilih</p>
             <p className="text-gray-500 col-span-10 max-md:col-span-7 max-lg:col-span-8"><span className="font-bold mr-2">:</span> {"KMKK"}</p>
+
+            {
+                showMapPenawaranModal && <MapModal 
+                    title="Lokasi Pekejaan Tender" 
+                    subTitle="Lokasi tempat projek tender dilaksanakan"
+                    isOpenModal={showMapPenawaranModal} 
+                    onCancel={closeMapPenawaranModal} 
+                    latitude={geocode?.lat as number} 
+                    longitude={geocode?.lng as number} 
+                />
+            }
         </div>
     )
 }
