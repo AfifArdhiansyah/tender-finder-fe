@@ -19,10 +19,13 @@ interface LayoutProps {
 export default function DashboardLayout(layoutProps: LayoutProps){
     const [indexList, setIndexList] = useState(layoutProps.sideNavIndex)
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-    const toggleSidebar = () => setIsSidebarOpen(prevState => !prevState);
+    const toggleSidebar = () => {
+        setIsSidebarOpen(prevState => !prevState)
+    }
     useEffect(() => {
         document.title = layoutProps.bcItems[layoutProps.bcItems.length-1].label + " - bjb Tender Finder";
     }, []);
+    
     
     return(
         <div className="flex gap-1 min-h-screen primary-bg">
@@ -35,7 +38,7 @@ export default function DashboardLayout(layoutProps: LayoutProps){
             </div>
             <div className="flex flex-col gap-6 w-full">
                 {/* Navbar */}
-                <Navbar toggleSidebar={()=>toggleSidebar}/>
+                <Navbar toggleSidebar={toggleSidebar}/>
                 <div className="mx-6 flex gap-2 max-md:mx-4">
                     <div className="w-[4px] h-full blue-bg"></div>
                     <Breadcrumb items={layoutProps.bcItems} onClick={layoutProps.onClickBC} />
