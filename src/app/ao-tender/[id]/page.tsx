@@ -236,10 +236,10 @@ export default function AOTenderDetail(){
                             <BorderedBox className="text-sm flex flex-col gap-2">
                                 <h2 className="font-bold">Detail Tender</h2>
                                 <p>{tenderProject?.nama}</p>
-                                <p className="text-xs text-blue-400">{tenderProject?.nama_pemenang}</p>
+                                <p className="text-xs text-blue-400">{tenderProject?.lokasi_pekerjaan}</p>
                                 <p className="text-xs text-gray-500">Rp. {parseFloat(tenderProject?.nilai_tender as string).toLocaleString('id-ID')}</p>
                                 <p className="text-xs">Pemenang Tender:</p>
-                                <p className="text-xs text-gray-500">{tenderProject?.lokasi_pekerjaan}</p>
+                                <p className="text-xs text-gray-500">{tenderProject?.nama_pemenang}</p>
                             </BorderedBox>
                             <p className="text-sm font-bold">Progres</p>
                             <Progress items={getDataProgress()} visitedIndex={contentIndex}/>

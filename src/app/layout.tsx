@@ -36,6 +36,7 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
+        <link rel="icon" href="/logo-bank-bjb-only-icon.png" sizes="any" />
         <CookiesProvider>
           <Toaster />
           <UserProvider>
