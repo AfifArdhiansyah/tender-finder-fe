@@ -17,7 +17,7 @@ export default function TransparentButton(props: TransparentButtonProps){
     }
 
     return(
-        <button className={"text-start w-full hover:bg-"+props.hoverBGColor + " hover:text-"+props.hoverTextColor + " " + props.className} onClick={buttonClicked} disabled={props.disabled}>
+        <button className={"text-start hover:bg-"+props.hoverBGColor + " hover:text-"+props.hoverTextColor + " " + props.className} onClick={buttonClicked} disabled={props.disabled}>
             {props.children}
         </button>
     )
