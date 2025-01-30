@@ -20,6 +20,8 @@ import { TenderProjectModel } from "@/models/tender-project-model"
 import { useUploadData } from "@/hooks/useTenderStatus"
 import { useGeoLocation } from "@/hooks/useLocation"
 import { TenderStatusModel } from "@/models/tender-status-model"
+import { getGeocode } from "@/services/geocode"
+import { MapModal } from "@/components/maps/map-modal"
 
 export default function AOTenderDetail(){
     const index = 1
@@ -223,6 +225,22 @@ export default function AOTenderDetail(){
         }
     }
 
+    const [geocode, setGeocode] = useState<{ lat: number, lng: number } | null>(null);
+    const handleAddressClick = async (address: string) => {
+        const location = await getGeocode(address);
+        if (location) {
+            setGeocode(location);
+            openMapPenawaranModal();
+        }
+    };
+    const [showMapPenawaranModal, setShowMapPenawaranModal] = useState<boolean>(false);
+    const openMapPenawaranModal = () => {
+        setShowMapPenawaranModal(true);
+    }
+    const closeMapPenawaranModal = () => {
+        setShowMapPenawaranModal(false);
+    }
+
     return(
         <DashboardLayout sideNavIndex={index} bcItems={bcItems} role={role}>
             {
@@ -236,7 +254,7 @@ export default function AOTenderDetail(){
                             <BorderedBox className="text-sm flex flex-col gap-2">
                                 <h2 className="font-bold">Detail Tender</h2>
                                 <p>{tenderProject?.nama}</p>
-                                <p className="text-xs text-blue-400">{tenderProject?.lokasi_pekerjaan}</p>
+                                <p onClick={()=>handleAddressClick(tenderProject?.lokasi_pekerjaan as string)} className="text-xs text-blue-400 cursor-pointer">{tenderProject?.lokasi_pekerjaan}</p>
                                 <p className="text-xs text-gray-500">Rp. {parseFloat(tenderProject?.nilai_tender as string).toLocaleString('id-ID')}</p>
                                 <p className="text-xs">Pemenang Tender:</p>
                                 <p className="text-xs text-gray-500">{tenderProject?.nama_pemenang}</p>
@@ -267,6 +285,16 @@ export default function AOTenderDetail(){
                         </Paper>
                     </div>
                 )
+            }
+            {
+                showMapPenawaranModal && <MapModal 
+                    title="Lokasi Pekejaan Tender" 
+                    subTitle="Lokasi tempat projek tender dilaksanakan"
+                    isOpenModal={showMapPenawaranModal} 
+                    onCancel={closeMapPenawaranModal} 
+                    latitude={geocode?.lat as number} 
+                    longitude={geocode?.lng as number} 
+                />
             }
         </DashboardLayout>
     )
