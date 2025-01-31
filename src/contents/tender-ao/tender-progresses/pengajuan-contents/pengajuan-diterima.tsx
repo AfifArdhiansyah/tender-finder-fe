@@ -2,6 +2,7 @@
 
 import Dropdown from "@/components/items/dropdowns/dropdown"
 import InputText from "@/components/inputs/input-text"
+import { stringToIdrFormat } from "@/services/formatIDR"
 
 interface PengajuanDiterimaProps{
     onChangeSelect: (selected:string) => void,
@@ -17,14 +18,14 @@ export default function PengajuanDiterima(props: PengajuanDiterimaProps){
     }
     const onChangeText = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { value } = e.target;
-        props.onChangeText(value)
+        props.onChangeText(stringToIdrFormat(value));
     };
     return(
         <div className="flex flex-col gap-4">
             <p className="font-bold">Produk yang ditawarkan:</p>
             <Dropdown label={"Produk yang ditawarkan"} options={options} onSelect={(selected)=>onChangeSelect(selected)}/>
             <p className="font-bold">Besaran Penawaran:</p>
-            <InputText placeholder="Rp. xxx.xxx.xxx" onChange={onChangeText} value={props.tenderValue}/>
+            <InputText prefix="Rp." placeholder="Masukkan jumlah kredit yang akan diajukan" onChange={onChangeText} value={props.tenderValue}/>
         </div>
     )
 }
