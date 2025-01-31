@@ -36,7 +36,7 @@ export default function Dropdown(props: DropdownProps){
         )}
       </button>
       {isOpen && (
-        <div className="absolute z-10 w-full mt-2 origin-top-right bg-white border rounded-md shadow-lg max-h-[312px] overflow-y-auto">
+        <div className="absolute z-20 w-full mt-2 origin-top-right bg-white border rounded-md shadow-lg max-h-[312px] overflow-y-auto">
           <ul className="py-1 text-gray-700">
             {props.options.map((option, index) => (
               <li

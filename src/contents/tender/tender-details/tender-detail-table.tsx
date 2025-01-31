@@ -38,7 +38,7 @@ export default function TenderDetailTable(props: TenderDetailTableProps){
             <p className="text-gray-500 col-span-10 max-md:col-span-7 max-lg:col-span-8"><span className="font-bold mr-2">:</span> {props.tenderProject?.nama}</p>
 
             <p className="font-bold col-span-2 max-md:col-span-5 max-lg:col-span-4">Nama Pemenang</p>
-            <p className="text-gray-500 col-span-10 max-md:col-span-7 max-lg:col-span-8"><span className="font-bold mr-2">:</span> {props.tenderProject?.nama_pemenang}</p>
+            <p onClick={()=>handleAddressClick(props.tenderProject?.nama_pemenang as string)} className="text-blue-500 col-span-10 max-md:col-span-7 max-lg:col-span-8 cursor-pointer"><span className="font-bold mr-2">:</span> {props.tenderProject?.nama_pemenang}</p>
 
             <p className="font-bold col-span-2 max-md:col-span-5 max-lg:col-span-4">Nominal Tender</p>
             <p className="text-gray-500 col-span-10 max-md:col-span-7 max-lg:col-span-8"><span className="font-bold mr-2">:</span> Rp. {parseFloat(props.tenderProject?.nilai_tender as string).toLocaleString('id-ID')}</p>
@@ -58,11 +58,8 @@ export default function TenderDetailTable(props: TenderDetailTableProps){
             <p className="font-bold col-span-2 max-md:col-span-5 max-lg:col-span-4">Foto Follow Up</p>
             <p className="text-gray-500 col-span-10 max-md:col-span-7 max-lg:col-span-8"><span className="font-bold mr-2">:</span> ini data follow up</p> */}
 
-            <p className="font-bold col-span-2 max-md:col-span-5 max-lg:col-span-4">Status Penerimaan</p>
+            <p className="font-bold col-span-2 max-md:col-span-5 max-lg:col-span-4">Status Saat Ini</p>
             <p className="text-gray-500 col-span-10 max-md:col-span-7 max-lg:col-span-8"><span className="font-bold mr-2">:</span> {props.tenderProject?.tender_statuses[props.tenderProject.tender_statuses?.length-1].status.nama}</p>
-
-            <p className="font-bold col-span-2 max-md:col-span-5 max-lg:col-span-4">Produk Yang Dipilih</p>
-            <p className="text-gray-500 col-span-10 max-md:col-span-7 max-lg:col-span-8"><span className="font-bold mr-2">:</span> {"KMKK"}</p>
 
             {
                 showMapPenawaranModal && <MapModal 

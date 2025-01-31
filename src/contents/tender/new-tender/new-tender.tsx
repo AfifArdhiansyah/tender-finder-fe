@@ -12,6 +12,7 @@ import toast from "react-hot-toast"
 import { NewTenderProjectModel } from "@/models/new-tender-project-model"
 import { useNewTenderProject } from "@/hooks/useTenderProjects"
 import { useCookies } from "next-client-cookies"
+import { stringToIdrFormat, idrToStringFormat } from "@/services/formatIDR"
 
 export default function AddNewTenderContent() {
     const {offices, getOfficeByWilayah} = useGetOffice()
@@ -33,7 +34,10 @@ export default function AddNewTenderContent() {
     }
     const [nilaiTender, setNilaiTender] = useState<string>("")
     function handleChangeNilaiTender(e: React.ChangeEvent<HTMLInputElement>){
-        setNilaiTender(e.target.value)
+        const value = e.target.value
+        const formatted = stringToIdrFormat(value)
+        console.log(formatted)
+        setNilaiTender(formatted)
     }
     //pemenang tender
     const [namaPemenang, setNamaPemenang] = useState<string>("")
@@ -95,7 +99,7 @@ export default function AddNewTenderContent() {
             lokasi_instansi: alamatPemenang,
             ltd_loc: '0.00000000',
             lng_loc: '0.00000000',
-            nilai_tender: nilaiTender,
+            nilai_tender: idrToStringFormat(nilaiTender),
             branch_id: offices?.find(office => office.nama === selectedBranch)?.id || null,
             ao_id: aos?.find(ao => ao.nama === selectedAO)?.id ? aos.find(ao => ao.nama === selectedAO)?.id.toString() : null,
         } as NewTenderProjectModel
@@ -151,7 +155,7 @@ export default function AddNewTenderContent() {
                 </div>
                 <div className="flex flex-col gap-1.5">
                     <label className="text-sm">Nilai Tender</label>
-                    <InputText placeholder="Masukkan nilai harga projek tender..." type="number" className="text-sm rounded-md" value={nilaiTender} onChange={handleChangeNilaiTender}/>
+                    <InputText prefix="Rp." placeholder="Masukkan nilai harga projek tender..." type="text" className="text-sm rounded-md" value={stringToIdrFormat(nilaiTender)} onChange={handleChangeNilaiTender}/>
                 </div>
             </div>
             {/* <div className="h-[0px] w-[95%] flex self-center outline-dashed outline-1 outline-gray-300"/> */}

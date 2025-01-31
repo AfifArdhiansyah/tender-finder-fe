@@ -29,13 +29,13 @@ export default function Modal(props: ModalProps){
         <div
           className={"justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none "}
         >
-          <div className={"relative my-6 mx-auto min-w-[50vw] max-w-[80vw] " + props.className}>
+          <div className={"relative my-6 mx-auto min-w-[50vw] max-w-[80vw] max-md:max-w-[95vw] max-md:my-3 w-full " + props.className}>
             {/*content*/}
             <div className={"border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none"}>
               {/*header*/}
-              <div className="flex items-start justify-between p-5 border-b border-solid border-blueGray-200 rounded-t">
-                <div className="flex flex-col gap-2">
-                  <h3 className="text-xl font-semibold">
+              <div className="flex items-start justify-between p-6 max-md:p-3 border-b border-solid border-blueGray-200 rounded-t">
+                <div className="flex flex-col gap-2 max-md:gap-1">
+                  <h3 className="text-xl font-semibold max-md:text-lg">
                     {props.title}
                   </h3>
                   <p className="text-gray-500 font-xs">{props.subTitle}</p>
@@ -48,7 +48,7 @@ export default function Modal(props: ModalProps){
                 </button>
               </div>
               {/*body*/}
-              <div className="p-6 flex-auto w-full">
+              <div className="p-6 flex-auto w-full max-md:p-3">
                 {props.children}
               </div>
               {/*footer*/}
