@@ -6,7 +6,6 @@ import PieChartSummary from "./components/pie-chart-summary";
 import { useSummary } from "@/hooks/useSummary";
 import Loading from "@/components/items/progress/loading";
 import Response from "@/components/items/responses/response";
-import { useEffect } from "react";
 
 interface SummaryContentProps{
     title: string
@@ -15,10 +14,7 @@ interface SummaryContentProps{
 }
 
 export default function SummaryContent(props: SummaryContentProps){
-    const {summary, loading, error, setOfficeId} = useSummary()
-    useEffect(()=>{
-        setOfficeId(props.officeId?.toString())
-    }, [props.officeId])
+    const {summary, loading, error} = useSummary()
     return(
         <div className="flex flex-col gap-4">
             <h1 className="font-bold text-sm">{props.title}</h1>

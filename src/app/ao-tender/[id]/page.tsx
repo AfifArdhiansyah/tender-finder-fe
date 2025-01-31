@@ -22,6 +22,7 @@ import { useGeoLocation } from "@/hooks/useLocation"
 import { TenderStatusModel } from "@/models/tender-status-model"
 import { getGeocode } from "@/services/geocode"
 import { MapModal } from "@/components/maps/map-modal"
+import { idrToNumberFormat } from "@/services/formatIDR"
 
 export default function AOTenderDetail(){
     const index = 1
@@ -213,7 +214,7 @@ export default function AOTenderDetail(){
             tender_id: tenderProject?.id as string,
             is_debitur_tertarik: tertarik,
             produk_dipilih: tertarik? produkDipilih : null,
-            nilai_kredit: tertarik? parseFloat(nilaiKredit) : null,
+            nilai_kredit: tertarik? idrToNumberFormat(nilaiKredit) : null,
             feedback: !tertarik? feedback : null,
             branch_id: branchId as unknown as string
         }
@@ -257,7 +258,7 @@ export default function AOTenderDetail(){
                                 <p onClick={()=>handleAddressClick(tenderProject?.lokasi_pekerjaan as string)} className="text-xs text-blue-400 cursor-pointer">{tenderProject?.lokasi_pekerjaan}</p>
                                 <p className="text-xs text-gray-500">Rp. {parseFloat(tenderProject?.nilai_tender as string).toLocaleString('id-ID')}</p>
                                 <p className="text-xs">Pemenang Tender:</p>
-                                <p className="text-xs text-gray-500">{tenderProject?.nama_pemenang}</p>
+                                <p onClick={()=>handleAddressClick(tenderProject?.nama_pemenang as string)} className="text-xs text-blue-400 cursor-pointer">{tenderProject?.nama_pemenang}</p>
                             </BorderedBox>
                             <p className="text-sm font-bold">Progres</p>
                             <Progress items={getDataProgress()} visitedIndex={contentIndex}/>

@@ -10,7 +10,7 @@ export const useSummary = () => {
     const [refreshTP, setRefreshTP] = useState(false);
 
     const cookies = useCookies();
-    const [officeId, setOfficeId] = useState(cookies.get("office-id") || "0")
+    const [officeId, setOfficeId] = useState(cookies.get("office-id"))
 
     useEffect(() => {
         const fetchTenderProjects = async () => {
