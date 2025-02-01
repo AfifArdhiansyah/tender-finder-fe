@@ -47,7 +47,7 @@ export default function MessageTable(props: MessageTableProps){
                                 col == "message" && (
                                     <MessageListItem 
                                         key={i}
-                                        className="flex justify-between items-center w-full" 
+                                        className="flex items-center w-full gap-2 px-2" 
                                         message={data?.message?.message as string} 
                                         isRead={data?.is_read} dataIndex={i} 
                                         tenderId={data?.message?.tender_id}
