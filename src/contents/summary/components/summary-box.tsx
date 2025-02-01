@@ -22,6 +22,9 @@ export default function SummaryBox(props: SummaryBoxProps){
     const {user} = useUserContext()
     const role = user?.role
     const goToTender = ()=>{
+        if(role == "ao"){
+            return
+        }
         if(role == "manager-kanwil" && props.stateIndex==2 && props.branchId){
             cookies.set("selected-branch", props.branchId)
         }
@@ -52,8 +55,8 @@ export default function SummaryBox(props: SummaryBoxProps){
         }
     }
     return(
-        <Tooltip title={"lihat detail data"} placement="top" arrow>
-            <Link href="/tender" onClick={goToTender}>
+        role == "ao" ?
+            <Link href={""} onClick={goToTender} className={"cursor-default"} >
                 <BorderedBox className={"group items-center flex justify-between " + props.className}>
                     <div className="flex gap-2 items-center max-md:text-sm">
                         {props.children}
@@ -61,6 +64,16 @@ export default function SummaryBox(props: SummaryBoxProps){
                     <p className={"text-2xl font-bold max-md:text-lg "+props.color}>{props.count}</p>
                 </BorderedBox>
             </Link>
-        </Tooltip>
+        :
+            <Tooltip title={"lihat detail data"} placement="top" arrow >
+                <Link href={"/tender"} onClick={goToTender} className={""} >
+                    <BorderedBox className={"group items-center flex justify-between " + props.className}>
+                        <div className="flex gap-2 items-center max-md:text-sm">
+                            {props.children}
+                        </div>
+                        <p className={"text-2xl font-bold max-md:text-lg "+props.color}>{props.count}</p>
+                    </BorderedBox>
+                </Link>
+            </Tooltip>
     )
 }
