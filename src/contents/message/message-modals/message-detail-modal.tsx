@@ -30,7 +30,7 @@ export default function MessageDetailModal(props: MessageDetailModalProps){
                     <tr>
                         <td className="py-2 font-bold">Pesan</td>
                         <td className="py-2 px-2 font-bold">:</td>
-                        <td className="py-2 text-gray-500">{props.message}</td>
+                        <td className="py-2 text-gray-500 w-full">{props.message}</td>
                     </tr>
                     {
                         props.tenderId && (

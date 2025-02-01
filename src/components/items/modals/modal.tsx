@@ -29,7 +29,7 @@ export default function Modal(props: ModalProps){
         <div
           className={"justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none "}
         >
-          <div className={"relative my-6 mx-auto min-w-[50vw] max-w-[80vw] max-md:max-w-[95vw] max-md:my-3 w-full " + props.className}>
+          <div className={"relative my-6 mx-auto min-w-[50vw] max-w-[60vw] max-lg:max-w-[80vw] max-md:max-w-[95vw] max-md:my-3 w-full " + props.className}>
             {/*content*/}
             <div className={"border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none"}>
               {/*header*/}

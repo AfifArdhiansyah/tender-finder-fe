@@ -28,7 +28,7 @@ export default function DashboardLayout(layoutProps: LayoutProps){
     
     
     return(
-        <div className="flex gap-1 min-h-screen primary-bg">
+        <div className="flex gap-1 min-h-screen primary-bg h-screen">
             <Head>
                 <title>{document.title}</title>
             </Head>
@@ -36,7 +36,7 @@ export default function DashboardLayout(layoutProps: LayoutProps){
             <div className="bg-white min-w-fit">
                 <Sidebar indexNav={indexList} setIndexList={setIndexList} isSidebarOpen={isSidebarOpen} setSidebarOpen={setIsSidebarOpen}/>
             </div>
-            <div className="flex flex-col gap-6 w-full">
+            <div className="flex flex-col gap-6 w-full overflow-y-auto">
                 {/* Navbar */}
                 <Navbar toggleSidebar={toggleSidebar}/>
                 <div className="mx-6 flex gap-2 max-md:mx-4">
