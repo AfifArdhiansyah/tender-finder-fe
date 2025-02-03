@@ -13,9 +13,12 @@ import { NewTenderProjectModel } from "@/models/new-tender-project-model"
 import { useNewTenderProject } from "@/hooks/useTenderProjects"
 import { useCookies } from "next-client-cookies"
 import { stringToIdrFormat, idrToStringFormat } from "@/services/formatIDR"
+import { useUserContext } from "@/contexts/useUserContext"
 
 export default function AddNewTenderContent() {
     const {offices, getOfficeByWilayah} = useGetOffice()
+    const {user} = useUserContext()
+    const officeId = user?.office_id || "1"
     const {aos} = useAOs()
     const {createTenderProject, loading, error} = useNewTenderProject()
     useEffect(()=>{
@@ -36,7 +39,6 @@ export default function AddNewTenderContent() {
     function handleChangeNilaiTender(e: React.ChangeEvent<HTMLInputElement>){
         const value = e.target.value
         const formatted = stringToIdrFormat(value)
-        console.log(formatted)
         setNilaiTender(formatted)
     }
     //pemenang tender
@@ -54,11 +56,14 @@ export default function AddNewTenderContent() {
         setAlamatPemenang(val)
     }
     //kantor cabang
-    const [selectedBranch, setSelectedBranch] = useState<string | null>(null)
-    function handleSelectBranch(branch: string | null){
-        setSelectedBranch(branch)
-    }
+    const [selectedBranch] = useState<string>(officeId as string)
+    // function handleSelectBranch(branch: string | null){
+    //     setSelectedBranch(branch)
+    // }
     //account officer
+    function getOfficeByBranch(branch: string){
+        return offices?.find(office => office.id === branch as unknown as number)?.nama || null
+    }
     const [selectedAO, setSelectedAO] = useState<string | null>(null)
     function handleSelectAO(ao: string | null){
         setSelectedAO(ao)
@@ -183,15 +188,15 @@ export default function AddNewTenderContent() {
                     <h1 className="font-bold">Informasi Kantor Cabang</h1>
                     <p className="text-xs text-gray-500">pilih kantor cabang yang melaksanakan proses kredit dari projek di atas</p>
                 </div>
-                <div className="flex flex-col gap-1.5">
+                {/* <div className="flex flex-col gap-1.5">
                     <label className="text-sm">Pilih Kantor Cabang</label>
                     <Dropdown label={"pilih kantor cabang"} options={offices?.map(office => office.nama) || []} onSelect={handleSelectBranch} />
-                </div>
+                </div> */}
                 {
                     selectedBranch && (
                         <div className="flex flex-col gap-1.5">
                             <label className="text-sm">Kantor Cabang</label>
-                            <InputText value={selectedBranch || undefined} className="text-sm rounded-md" disabled/>
+                            <InputText value={getOfficeByBranch(selectedBranch) || ""} className="text-sm rounded-md" disabled/>
                         </div>
                     )
                 }
