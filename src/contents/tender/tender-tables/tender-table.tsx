@@ -111,9 +111,13 @@ export default function TenderTable(props: TenderTableProps){
                         </button>
                     </Tooltip>
                 </div>
-                <Link href="/tender/add">
-                    <Button onClick={()=>{}} type={"primary"} className={"h-full px-4"} size={"medium"}>new tender</Button>
-                </Link>
+                {
+                    role  == "manager-cabang" && (
+                        <Link href="/tender/add">
+                            <Button onClick={()=>{}} type={"primary"} className={"h-full px-4"} size={"medium"}>new tender</Button>
+                        </Link>
+                    )
+                }
             </div>
             {
                 props.datas.length == 0 ? (

@@ -39,7 +39,7 @@ export default function SummaryKanwilTable(props: SummaryKanwilContentProps) {
                     <td className="px-2 py-2 text-sm">{data.nama}</td>
                     <td className="px-2 py-2 text-sm">{data.total_pemenang_baru}</td>
                     <td className="px-2 py-2 text-sm">{data.percentage_status_success_rate} %</td>
-                    <td className="px-2 py-2 text-sm">{Number(parseFloat(data.total_daya_serap.toString()))?.toLocaleString('id-ID')}</td>
+                    <td className="px-2 py-2 text-sm">{Number(parseFloat(data.total_daya_serap?.toString() || "0"))?.toLocaleString('id-ID')}</td>
                     <td className="px-2 py-2 text-sm">{data.percentage_status_pengajuan_kredit} %</td>
                     <td className="px-2 py-2 text-sm">
                         <div className="flex justify-center">
