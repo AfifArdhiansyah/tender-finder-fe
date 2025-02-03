@@ -1,6 +1,6 @@
 
 export function numberToIdrFormat(num: number): string {
-    return num.toLocaleString('id-ID');
+    return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.');
 }
 
 export function stringToIdrFormat(str: string): string {
