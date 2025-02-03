@@ -8,8 +8,15 @@ export interface SummaryModel{
     total_kredit_tidak_disetujui: number,
     total_diserap: number,
     total_tidak_diserap: number,
+    total_nilai_tender: number,
     percent_diserap: number,
-    percent_tidak_diserap: number
+    percent_tidak_diserap: number,
+    percent_mengajukan_kredit: number,
+    percent_tidak_mengajukan_kredit: number,
+    percent_mengajukan_kredit_sisa: number,
+    percent_kredit_disetujui: number,
+    percent_kredit_tidak_disetujui: number,
+    percent_kredit_disetujui_sisa: number,
 }
 
 export interface SummaryPusatModel{

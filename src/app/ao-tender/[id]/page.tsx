@@ -227,8 +227,10 @@ export default function AOTenderDetail(){
     }
 
     const [geocode, setGeocode] = useState<{ lat: number, lng: number } | null>(null);
-    const handleAddressClick = async (address: string) => {
+    const [labelModalMap, setLabelModalMap] = useState<string>("")
+    const handleAddressClick = async (address: string, label: string) => {
         const location = await getGeocode(address);
+        setLabelModalMap(label)
         if (location) {
             setGeocode(location);
             openMapPenawaranModal();
@@ -255,10 +257,10 @@ export default function AOTenderDetail(){
                             <BorderedBox className="text-sm flex flex-col gap-2">
                                 <h2 className="font-bold">Detail Tender</h2>
                                 <p>{tenderProject?.nama}</p>
-                                <p onClick={()=>handleAddressClick(tenderProject?.lokasi_pekerjaan as string)} className="text-xs text-blue-400 cursor-pointer">{tenderProject?.lokasi_pekerjaan}</p>
+                                <p onClick={()=>handleAddressClick(tenderProject?.lokasi_pekerjaan as string, "Lokasi Pekerjaan Tender")} className="text-xs text-blue-400 cursor-pointer">{tenderProject?.lokasi_pekerjaan}</p>
                                 <p className="text-xs text-gray-500">Rp. {parseFloat(tenderProject?.nilai_tender as string).toLocaleString('id-ID')}</p>
                                 <p className="text-xs">Pemenang Tender:</p>
-                                <p onClick={()=>handleAddressClick(tenderProject?.nama_pemenang as string)} className="text-xs text-blue-400 cursor-pointer">{tenderProject?.nama_pemenang}</p>
+                                <p onClick={()=>handleAddressClick(tenderProject?.nama_pemenang as string, "Lokasi Pemenang Tender")} className="text-xs text-blue-400 cursor-pointer">{tenderProject?.nama_pemenang}</p>
                             </BorderedBox>
                             <p className="text-sm font-bold">Progres</p>
                             <Progress items={getDataProgress()} visitedIndex={contentIndex}/>
@@ -289,8 +291,7 @@ export default function AOTenderDetail(){
             }
             {
                 showMapPenawaranModal && <MapModal 
-                    title="Lokasi Pekejaan Tender" 
-                    subTitle="Lokasi tempat projek tender dilaksanakan"
+                    title={labelModalMap}
                     isOpenModal={showMapPenawaranModal} 
                     onCancel={closeMapPenawaranModal} 
                     latitude={geocode?.lat as number} 
