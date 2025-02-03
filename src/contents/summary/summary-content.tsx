@@ -7,6 +7,7 @@ import { useSummary } from "@/hooks/useSummary";
 import Loading from "@/components/items/progress/loading";
 import Response from "@/components/items/responses/response";
 import { numberToIdrFormat } from "@/services/formatIDR";
+import { useEffect } from "react";
 
 interface SummaryContentProps{
     title: string
@@ -15,7 +16,14 @@ interface SummaryContentProps{
 }
 
 export default function SummaryContent(props: SummaryContentProps){
-    const {summary, loading, error} = useSummary()
+    const {summary, loading, error, setOfficeId} = useSummary()
+    useEffect(() => {
+        if(props.stateIndex == 1){
+            const officeId = props.officeId % 10
+            return setOfficeId((officeId.toString()+officeId.toString()+officeId.toString()+officeId.toString()) || "")
+        }
+        setOfficeId(props.officeId?.toString() || "")
+    }, [props.stateIndex])
     return(
         <div className="flex flex-col gap-4">
             <h1 className="font-bold text-sm">{props.title}</h1>
@@ -63,7 +71,7 @@ export default function SummaryContent(props: SummaryContentProps){
                 </div>
                 {
                     props.title != "AO" &&(
-                        <div className="grid grid-cols-3 max-lg:grid-cols-2 max-md:grid-cols-1">
+                        <div className="grid grid-cols-3 gap-4 max-lg:grid-cols-2 max-md:grid-cols-1">
                             <PieChartSummary title={"Success Rate (%)"} data={[
                                 {
                                     // value: Math.floor(((summary?.total_mengajukan_kredit || 0) / ((summary?.total_mengajukan_kredit || 0) + (summary?.total_tidak_mengajukan_kredit || 0)) || 0)*100),
@@ -99,11 +107,11 @@ export default function SummaryContent(props: SummaryContentProps){
                             <div className="flex flex-col h-full items-center gap-2">
                                 <p className="gray-400">Kredit Diserap</p>
                                 <div className="flex flex-col h-full items-center justify-center">
-                                    <p className="text-green-500 text-4xl font-bold border border-green-500 rounded-lg p-2">Rp. {numberToIdrFormat(summary?.total_diserap || 0)}</p>
+                                    <p className="text-green-500 text-4xl font-bold border border-green-500 rounded-lg p-2 max-lg:text-2xl max-md:text-xl">Rp. {numberToIdrFormat(summary?.total_diserap || 0)}</p>
                                 </div>
                                 <p className="gray-400">Total Nilai Tender</p>
                                 <div className="flex flex-col h-full items-center justify-center">
-                                    <p className="text-[#9ebde0] text-4xl font-bold border border-[#9ebde0] rounded-lg p-2">Rp. {numberToIdrFormat(summary?.total_nilai_tender || 0)}</p>
+                                    <p className="text-[#9ebde0] text-4xl font-bold border border-[#9ebde0] rounded-lg p-2 max-lg:text-2xl max-md:text-xl">Rp. {numberToIdrFormat(summary?.total_nilai_tender || 0)}</p>
                                 </div>
                             </div>
                             <PieChartSummary title={"Pengajuan Kredit (%)"} data={[

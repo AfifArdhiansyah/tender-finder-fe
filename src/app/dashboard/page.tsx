@@ -17,8 +17,7 @@ import { useUserContext } from "@/contexts/useUserContext";
 export default function Dashboard(){
     const {user} = useUserContext()
     const role = user?.role || "ao"
-    // const { offices, loading, error, getOfficeByWilayah, getAllWilayah } = useGetOffice()
-    //usegetsummary
+    const cookies = useCookies();
     const {
         fetchSummaryPusat,
         fetchSummaryKanwil,
@@ -76,7 +75,7 @@ export default function Dashboard(){
     }
     const [currState, setCurrState] = useState("")
     const [currRole, setCurRole] = useState(role)
-    const [currOfficeId, setCurrOfficeId] = useState(0)
+    const [currOfficeId, setCurrOfficeId] = useState(cookies.get("office-id") as unknown as number)
     const [branchId, setBranchId] = useState(1)
     const [kanwilId, setKanwilId] = useState("1")
     const [kanwilOfficeId, setKanwilOfficeId] = useState("1111")
@@ -89,7 +88,6 @@ export default function Dashboard(){
             { label: SidebarNavigator[index].name, state: currState}
         ]
     );
-    const cookies = useCookies();
     useEffect(() => {
         setBCIndex(getBCIndex())
         setCurrLabel(getCurrLabel())
@@ -208,13 +206,16 @@ export default function Dashboard(){
         else if(state=="manager-cabang"){
             setBranchId(officeId)
         }
+        else if(state=="manager-pusat"){
+            officeId = Number(officeId.toString() + officeId.toString() + officeId.toString() + officeId.toString())
+        }
         setCurrState(state)
         switchBCState(state, label, officeId)
         setCurrOfficeId(officeId)
     }
     return(
         <DashboardLayout sideNavIndex={index} bcItems={breadcrumbItems} onClickBC={handleBreadcrumbClick} role={currRole}>
-            <div className="flex flex-col gap-4 h-full">
+            <div className="flex flex-col gap-4 h-full pb-8">
                 <Paper className="">
                     <SummaryContent title={currLabel} stateIndex={bcIndex} officeId={currOfficeId}/>
                 </Paper>
