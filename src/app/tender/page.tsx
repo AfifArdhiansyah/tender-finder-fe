@@ -18,7 +18,7 @@ export default function Tender(){
     const { tenderProjects, setSelectedFilter, loading, selectedBranch, setSelectedBranch, refresh, error } = useTenderProjects();
     const { offices,  getOfficeByWilayah} = useGetOffice()
 
-    const tableHeads = ["Nama Tender", "Pemenang Tender", "Alamat Pemenang", "Harga Tender (Rp.)", "KC Inisiator", "Status"]
+    const tableHeads = ["Nama Tender", "Pemenang Tender", "Alamat Tender", "Harga Tender (Rp.)", "KC Inisiator", "Status"]
     const tableColumns = ["nama", "nama_pemenang", "lokasi_pekerjaan", "nilai_tender", "kc", "status"]
     const tableDatas = tenderProjects
     
